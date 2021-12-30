@@ -38,7 +38,7 @@ public  class Home extends AnchorPane {
         btnLocal.setText("Local Playing");
         
         btnLocal.setOnAction((event) -> {
-           Scene scene = new Scene(new TwoPlayerScene(stage));
+           Scene scene = new Scene(new LocalPlayingScene(stage));
             myStage.setScene(scene);
 
         });
@@ -56,6 +56,11 @@ public  class Home extends AnchorPane {
         btnVsPc.setPrefHeight(63.0);
         btnVsPc.setPrefWidth(144.0);
         btnVsPc.setText("VS Pc");
+        
+         btnVsPc.setOnAction((event) -> {
+           Scene scene = new Scene(new VsPcScene(stage));
+            myStage.setScene(scene);
+        });
 
         label.setAlignment(javafx.geometry.Pos.CENTER);
         label.setLayoutX(91.0);
@@ -68,9 +73,7 @@ public  class Home extends AnchorPane {
         getChildren().add(btnOnline);
         getChildren().add(btnVsPc);
         getChildren().add(label);
-        // Im already married
-        
-      
+              
 
     }
 }
