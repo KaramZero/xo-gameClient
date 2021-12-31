@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import xogameclient.ai.BestMove;
+import xogameclient.ai.NormalMove;
 import xogameclient.localplaying.LocalPlayingrMode;
 
 public class VsPcScene extends AnchorPane {
@@ -17,14 +18,13 @@ public class VsPcScene extends AnchorPane {
     private Label labelWin;
     private Button[][] buttons;
     private char[][] myBoard;
-    boolean flag = true;
     private BestMove.Move pcMove;
+    private char player , pc;
 
     EventHandler a = (EventHandler) (Event event) -> {
         Button btnTemp = ((Button) event.getSource());
-        if(btnTemp.getText().equalsIgnoreCase("")){
         if (btnTemp.getText().equalsIgnoreCase("")) {
-            btnTemp.setText("O");  
+                btnTemp.setText(String.valueOf(player)); 
         }
         
         copyToBoard();
@@ -32,16 +32,17 @@ public class VsPcScene extends AnchorPane {
             labelWin.setText(btnTemp.getText() + " Wins :D ");
             setBTNs();
             setDisableBtn(true);
-        }
-        
+        }       
         else if (!(LocalPlayingrMode.isEmptyBoard(myBoard))) {
             labelWin.setText(" No one wins .. Play again ");
             setBTNs();
             setDisableBtn(true);
         }
-        
-        pcMove =BestMove.findBestMove(myBoard);
-        buttons[pcMove.row][pcMove.col].setText("X");
+           
+        else{
+        pcMove =BestMove.findBestMove(myBoard,pc);
+        //pcMove = NormalMove.normalMove(myBoard,pc);
+        buttons[pcMove.row][pcMove.col].setText(String.valueOf(pc));
         copyToBoard();
         //myBoard[pcMove.row][pcMove.col] ='X';
         System.out.println("row "+pcMove.row+ " col "+pcMove.col);
@@ -56,6 +57,7 @@ public class VsPcScene extends AnchorPane {
             setBTNs();
             setDisableBtn(true);
         }
+        
         }
     };
 
@@ -74,7 +76,7 @@ public class VsPcScene extends AnchorPane {
     private void setBTNs() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                 getChildren().remove(buttons[i][j]);
+                getChildren().remove(buttons[i][j]);
                 buttons[i][j] = new Button();
                 buttons[i][j].setPrefSize(50, 50);
                 buttons[i][j].setLayoutX(180 + j * 50);
@@ -126,8 +128,8 @@ public class VsPcScene extends AnchorPane {
         btnX.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                flag = true;
-               
+               player ='X';
+               pc = 'O';
                btnO.setDisable(true);
                 btnX.setDisable(true);
                 labelWin.setText("");
@@ -137,10 +139,11 @@ public class VsPcScene extends AnchorPane {
         btnO.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                flag = false;
+                player ='O';
+                pc = 'X';
                
                  btnO.setDisable(true);
-                btnX.setDisable(true);
+                 btnX.setDisable(true);
                   labelWin.setText("");
                  setDisableBtn(false);
             }

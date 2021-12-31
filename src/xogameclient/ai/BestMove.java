@@ -12,8 +12,11 @@ package xogameclient.ai;
 public class BestMove {
 
     public static class Move {
+         public int row, col;
 
-        public int row, col;
+        public Move(){
+            row = col = -1;
+        }
     };
 
     static char player = 'X', opponent = 'O';
@@ -155,7 +158,12 @@ public class BestMove {
 
 // This will return the best possible
 // move for the player
-   public static Move findBestMove(char board[][]) {
+   public static Move findBestMove(char board[][],char c){
+       player = c;
+       if(player=='X')
+           opponent='O';
+       else
+           opponent ='X';
         int bestVal = -1000;
         Move bestMove = new Move();
         bestMove.row = -1;

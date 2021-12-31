@@ -85,7 +85,6 @@ public class LocalPlayingScene extends AnchorPane {
             }
         }
     }
-
     public LocalPlayingScene(Stage s) {
 
         buttons = new Button[3][3];
