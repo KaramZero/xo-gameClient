@@ -22,7 +22,9 @@ public class VsPcScene extends AnchorPane {
     private char player , pc;
 
     EventHandler a = (EventHandler) (Event event) -> {
+        
         Button btnTemp = ((Button) event.getSource());
+        if(btnTemp.getText().isEmpty()){
         if (btnTemp.getText().equalsIgnoreCase("")) {
                 btnTemp.setText(String.valueOf(player)); 
         }
@@ -40,8 +42,8 @@ public class VsPcScene extends AnchorPane {
         }
            
         else{
-        pcMove =BestMove.findBestMove(myBoard,pc);
-        //pcMove = NormalMove.normalMove(myBoard,pc);
+        //pcMove =BestMove.findBestMove(myBoard,pc);
+        pcMove = NormalMove.normalMove(myBoard,pc);
         buttons[pcMove.row][pcMove.col].setText(String.valueOf(pc));
         copyToBoard();
         //myBoard[pcMove.row][pcMove.col] ='X';
@@ -58,6 +60,7 @@ public class VsPcScene extends AnchorPane {
             setDisableBtn(true);
         }
         
+        }
         }
     };
 

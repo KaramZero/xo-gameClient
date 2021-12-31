@@ -18,6 +18,8 @@ public class TwoPlayerScene extends AnchorPane {
     boolean flag = true;
     
     EventHandler a = (EventHandler) (Event event) -> {
+        Button btnTemp = ((Button) event.getSource());
+        if(btnTemp.getText().isEmpty()){
         if (flag && ((Button) event.getSource()).getText().equalsIgnoreCase("")) {
             ((Button) event.getSource()).setText("X");
             flag = false;
@@ -33,7 +35,7 @@ public class TwoPlayerScene extends AnchorPane {
         label.setText(" No one wins .. Play again ");
         setBTNs();
         }
-
+        }
     };
     
     
