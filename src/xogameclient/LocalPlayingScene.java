@@ -3,6 +3,8 @@ package xogameclient;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +15,8 @@ public class LocalPlayingScene extends AnchorPane {
 
     private Button btnX;
     private Button btnO;
+    private Button backBTN;
+    private Button newGameBTN;
     private Label labelWin;
     private Button[][] buttons;
     private char[][] myBoard;
@@ -36,13 +40,13 @@ public class LocalPlayingScene extends AnchorPane {
 
         if (LocalPlayingrMode.checkWin(myBoard)) {
             labelWin.setText(((Button) event.getSource()).getText() + " Wins :D ");
-            setBTNs();
+            clearBoard();
             setDisableBtn(true);
         }
         
         else if (!(LocalPlayingrMode.isEmptyBoard(myBoard))) {
             labelWin.setText(" No one wins .. Play again ");
-            setBTNs();
+            clearBoard();
             setDisableBtn(true);
 
         }
@@ -63,11 +67,10 @@ public class LocalPlayingScene extends AnchorPane {
     private void setBTNs() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-               getChildren().remove(buttons[i][j]);
                 buttons[i][j] = new Button();
-                buttons[i][j].setPrefSize(50, 50);
-                buttons[i][j].setLayoutX(180 + j * 50);
-                buttons[i][j].setLayoutY(150 + i * 50);
+                buttons[i][j].setPrefSize(80, 80);
+                buttons[i][j].setLayoutX(310 + j * 80);
+                buttons[i][j].setLayoutY(210 + i * 80);
                 buttons[i][j].setMnemonicParsing(false);
                 buttons[i][j].setOnAction(a);
                 buttons[i][j].setText("");
@@ -78,6 +81,18 @@ public class LocalPlayingScene extends AnchorPane {
         btnO.setDisable(false);
         btnX.setDisable(false);
     }
+    
+    
+    private void clearBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                buttons[i][j].setText("");
+                myBoard[i][j] = '_';
+            }
+        }
+    }
+    
+    
     private void setDisableBtn(boolean status){
        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -91,24 +106,50 @@ public class LocalPlayingScene extends AnchorPane {
         myBoard = new char[3][3];
         btnO = new Button();
         btnX = new Button();
+        backBTN = new Button();
+        newGameBTN = new Button();
         labelWin = new Label();
 
         setBTNs();
         setDisableBtn(true);
 
         setId("AnchorPane");
-        setPrefHeight(400);
-        setPrefWidth(520);
+        setPrefHeight(650);
+        setPrefWidth(850);
 
-        btnX.setLayoutX(180);
-        btnX.setLayoutY(20);
-        btnX.setPrefSize(50, 50);
+        btnX.setLayoutX(310);
+        btnX.setLayoutY(50);
+        btnX.setPrefSize(80, 80);
         btnX.setText("X");
 
-        btnO.setLayoutX(280);
-        btnO.setLayoutY(20);
-        btnO.setPrefSize(50, 50);
+        btnO.setLayoutX(470);
+        btnO.setLayoutY(50);
+        btnO.setPrefSize(80, 80);
         btnO.setText("O");
+        
+          backBTN.setLayoutX(650);
+        backBTN.setLayoutY(20);
+        backBTN.setPrefSize(100, 30);
+        backBTN.setText("Back");
+        backBTN.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Scene scene = new Scene(new Home(s));
+                s.setScene(scene);
+            }
+        });
+        
+         newGameBTN.setLayoutX(130);
+        newGameBTN.setLayoutY(20);
+        newGameBTN.setPrefSize(100, 30);
+        newGameBTN.setText("New Game");
+        newGameBTN.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Scene scene = new Scene(new LocalPlayingScene(s));
+                s.setScene(scene);
+            }
+        });
 
         btnX.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -118,7 +159,7 @@ public class LocalPlayingScene extends AnchorPane {
                
                btnO.setDisable(true);
                 btnX.setDisable(true);
-                labelWin.setText("");
+             
                 setDisableBtn(false);
             }
         });
@@ -130,19 +171,24 @@ public class LocalPlayingScene extends AnchorPane {
                
                  btnO.setDisable(true);
                 btnX.setDisable(true);
-                  labelWin.setText("");
+                
                  setDisableBtn(false);
             }
         });
 
-        labelWin.setLayoutX(230);
-        labelWin.setLayoutY(80);
-        labelWin.setMinHeight(16);
-        labelWin.setMinWidth(69);
+         labelWin.setLayoutX(310);
+        labelWin.setLayoutY(150);
+        labelWin.setMinHeight(50);
+        labelWin.setMinWidth(240);
+        labelWin.setAlignment(Pos.CENTER);
+        labelWin.setText("Who will win?");
 
         getChildren().add(btnO);
         getChildren().add(btnX);
 
+        getChildren().add(newGameBTN);
+        getChildren().add(backBTN);
+               
         getChildren().add(labelWin);
 
     }

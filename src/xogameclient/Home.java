@@ -27,10 +27,10 @@ public  class Home extends AnchorPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(691.0);
-        setPrefWidth(812.0);
+        setPrefHeight(650.0);
+        setPrefWidth(850.0);
 
-        btnLocal.setLayoutX(336.0);
+        btnLocal.setLayoutX(350.0);
         btnLocal.setLayoutY(300.0);
         btnLocal.setMnemonicParsing(false);
         btnLocal.setPrefHeight(63.0);
@@ -43,14 +43,14 @@ public  class Home extends AnchorPane {
 
         });
 
-        btnOnline.setLayoutX(333.0);
+        btnOnline.setLayoutX(350.0);
         btnOnline.setLayoutY(198.0);
         btnOnline.setMnemonicParsing(false);
         btnOnline.setPrefHeight(72.0);
         btnOnline.setPrefWidth(144.0);
         btnOnline.setText("Online Mode");
 
-        btnVsPc.setLayoutX(336.0);
+        btnVsPc.setLayoutX(350.0);
         btnVsPc.setLayoutY(386.0);
         btnVsPc.setMnemonicParsing(false);
         btnVsPc.setPrefHeight(63.0);

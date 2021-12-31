@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/2y/Documents/GitHub/xo-game/src/xogameclient/TwoPlayerScene.java</file>
-            <file>file:/C:/Users/2y/Documents/GitHub/xo-game/src/xogameclient/VsPcScene.java</file>
-            <file>file:/C:/Users/2y/Documents/GitHub/xo-game/src/xogameclient/XOGameCLient.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/Home.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/ai/BestMove.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/ai/NormalMove.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/LocalPlayingScene.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/XOGameCLient.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/localplaying/LocalPlayingrMode.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/VsPcScene.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/TwoPlayerScene.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xogameclient/TwoPlayers/TwoPlayersMode.java</file>
         </group>
     </open-files>
 </project-private>

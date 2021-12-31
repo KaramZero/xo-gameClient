@@ -31,7 +31,7 @@ public class LocalPlayingrMode {
         
            if((myBoard[0][2]!='_') &&(myBoard[0][2] == myBoard[1][1]) && (myBoard[0][2]==myBoard[2][0]))
             result = true;
-           System.out.println("win"+result);
+        
         return result;
     }
     public static boolean isEmptyBoard(char [][] board){
@@ -44,7 +44,7 @@ public class LocalPlayingrMode {
                  }
             }
         }
-          System.out.println("empty"+result);
+       
 
         return result;
     }
