@@ -34,6 +34,8 @@ public class LocalPlayingrMode {
         
         return result;
     }
+    
+    
     public static boolean isEmptyBoard(char [][] board){
         boolean result = false;
         

@@ -1,12 +1,25 @@
 package xogameclient;
 
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 
 public  class Home extends AnchorPane {
+
+    public static Label closeLBL;
+    public static Label minimizeLBL;
+    public static   Background bGround;
 
     protected final Button btnLocal;
     protected final Button btnOnline;
@@ -22,7 +35,41 @@ public  class Home extends AnchorPane {
         btnVsPc = new Button();
         label = new Label();
         myStage = stage;
+        closeLBL = new Label();
+        minimizeLBL = new Label();
 
+       
+
+         Image closeIMG = new Image("Icons/close.png");
+
+          Image miniIMG = new Image("Icons/minimize.png");
+        closeLBL.setLayoutX(5);
+        closeLBL.setLayoutY(5);
+        closeLBL.setPrefSize(100, 100);
+        closeLBL.setGraphic(new ImageView(closeIMG));
+        closeLBL.setOnMouseClicked((MouseEvent event) -> {
+            System.exit(0);
+        });
+                
+        
+        
+        minimizeLBL.setLayoutX(105);
+        minimizeLBL.setLayoutY(5);
+        minimizeLBL.setPrefSize(100, 100);
+        minimizeLBL.setGraphic(new ImageView(miniIMG));
+        minimizeLBL.setOnMouseClicked((MouseEvent event) -> {
+            stage.setIconified(true);
+        });
+        
+        Image back =new Image("Icons/background.jpg");
+       
+        BackgroundImage bImg = new BackgroundImage(back, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+       
+         bGround = new Background(bImg);
+       
+        setBackground(bGround);
+        getChildren().add(minimizeLBL);
+        getChildren().add(closeLBL);
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);

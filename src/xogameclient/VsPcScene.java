@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import static xogameclient.Home.bGround;
+import static xogameclient.Home.closeLBL;
+import static xogameclient.Home.minimizeLBL;
 import xogameclient.ai.BestMove;
 import xogameclient.ai.NormalMove;
 import xogameclient.localplaying.LocalPlayingrMode;
@@ -246,6 +249,8 @@ public class VsPcScene extends AnchorPane {
         labelWin.setMinWidth(240);
         labelWin.setAlignment(Pos.CENTER);
         labelWin.setText("Who will win?");
+        setBackground(bGround);
+
 
         getChildren().add(btnO);
         getChildren().add(btnX);
@@ -254,6 +259,9 @@ public class VsPcScene extends AnchorPane {
         getChildren().add(backBTN);
 
         getChildren().add(labelWin);
+        
+         getChildren().add(minimizeLBL);
+        getChildren().add(closeLBL);
 
     }
 
