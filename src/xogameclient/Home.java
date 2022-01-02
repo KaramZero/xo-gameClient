@@ -41,12 +41,12 @@ public  class Home extends AnchorPane {
 
        
 
-         Image closeIMG = new Image("Icons/close.png");
+         Image closeIMG = new Image("Icons/close.png",50,50,true,true);
 
-          Image miniIMG = new Image("Icons/minimize.png");
-        closeLBL.setLayoutX(5);
+          Image miniIMG = new Image("Icons/minimize.png",50,50,true,true);
+        closeLBL.setLayoutX(800);
         closeLBL.setLayoutY(5);
-        closeLBL.setPrefSize(100, 100);
+        closeLBL.setPrefSize(50, 50);
         closeLBL.setGraphic(new ImageView(closeIMG));
         closeLBL.setOnMouseClicked((MouseEvent event) -> {
             System.exit(0);
@@ -54,15 +54,18 @@ public  class Home extends AnchorPane {
                 
         
         
-        minimizeLBL.setLayoutX(105);
+        minimizeLBL.setLayoutX(750);
         minimizeLBL.setLayoutY(5);
-        minimizeLBL.setPrefSize(100, 100);
+        minimizeLBL.setPrefSize(50, 50);
         minimizeLBL.setGraphic(new ImageView(miniIMG));
-        minimizeLBL.setOnMouseClicked((MouseEvent event) -> {
-            stage.setIconified(true);
+        minimizeLBL.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setIconified(true);
+            }
         });
         
-        Image back =new Image("Icons/background.jpg");
+        Image back =new Image("Icons/Back.jpg");
        
         BackgroundImage bImg = new BackgroundImage(back, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
        

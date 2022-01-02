@@ -7,6 +7,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import static xogameclient.Home.bGround;
@@ -17,52 +20,69 @@ import xogameclient.ai.NormalMove;
 import xogameclient.localplaying.LocalPlayingrMode;
 
 public class VsPcScene extends AnchorPane {
-
-    private Button btnX;
-    private Button btnO;
-    private Button backBTN;
-    private Button newGameBTN;
-    private Label labelWin;
+ private Label btnX;
+    private Label btnO;
+    private Label backBTN;
+    private Label newGameBTN;
+    private Label boardLBL;
     private Button[][] buttons;
     private char[][] myBoard;
     private BestMove.Move pcMove;
-    private char player, pc;
-
     boolean flag = true;
+    
+    Image player = new Image("Icons/x.png",60,60,true,true);
+    ImageView x = new ImageView(player);
+    char playerChar;
+
+    Image pc =new Image("Icons/o.png",60,60,true,true);
+    ImageView o = new ImageView(pc);
+    char pcChar;
+
 
     EventHandler a = (EventHandler) (Event event) -> {
 
         Button btnTemp = ((Button) event.getSource());
-        if (btnTemp.getText().isEmpty()) {
-            if (btnTemp.getText().equalsIgnoreCase("")) {
-                btnTemp.setText(String.valueOf(player));
+        
+         int xCord=0, yCord=0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (buttons[i][j] == btnTemp) {
+                    xCord = i;
+                    yCord = j;
+                }
             }
+        }
+        
+        if (myBoard[xCord][yCord] == '_') {
+           
+            btnTemp.setGraphic(new ImageView(player));
+            myBoard[xCord][yCord] = playerChar;
 
-            copyToBoard();
-            if (LocalPlayingrMode.checkWin(myBoard)) {
-                labelWin.setText(btnTemp.getText() + " Wins :D ");
+           
+           
+            if (LocalPlayingrMode.checkWin(myBoard)) {               
                 clearBoard();
                 setDisableBtn(true);
             } else if (!(LocalPlayingrMode.isEmptyBoard(myBoard))) {
-                labelWin.setText(" No one wins .. Play again ");
                 clearBoard();
                 setDisableBtn(true);
             } else {
                 if (flag) {
-                    pcMove = BestMove.findBestMove(myBoard, pc);
+                    pcMove = BestMove.findBestMove(myBoard, pcChar);
                 } else {
-                    pcMove = NormalMove.normalMove(myBoard, pc);
+                    pcMove = NormalMove.normalMove(myBoard, pcChar);
                 }
-                buttons[pcMove.row][pcMove.col].setText(String.valueOf(pc));
+                buttons[pcMove.row][pcMove.col].setGraphic(new ImageView(pc));
+                 myBoard[pcMove.row][pcMove.col] = pcChar;
                 //copyToBoard();
-                myBoard[pcMove.row][pcMove.col] = pc;
+               // myBoard[pcMove.row][pcMove.col] = pc;
              
                 if (LocalPlayingrMode.checkWin(myBoard)) {
-                    labelWin.setText(" Pc Wins :D ");
+                  //  labelWin.setText(" Pc Wins :D ");
                     clearBoard();
                     setDisableBtn(true);
                 } else if (!(LocalPlayingrMode.isEmptyBoard(myBoard))) {
-                    labelWin.setText(" No one wins .. Play again ");
+                    //labelWin.setText(" No one wins .. Play again ");
                     clearBoard();
                     setDisableBtn(true);
                 }
@@ -89,11 +109,13 @@ public class VsPcScene extends AnchorPane {
 
                 buttons[i][j] = new Button();
                 buttons[i][j].setPrefSize(80, 80);
-                buttons[i][j].setLayoutX(310 + j * 80);
-                buttons[i][j].setLayoutY(210 + i * 80);
+                buttons[i][j].setLayoutX(310 + j * 90);
+                buttons[i][j].setLayoutY(210 + i * 90);
                 buttons[i][j].setMnemonicParsing(false);
+                buttons[i][j].setBackground(null);
                 buttons[i][j].setOnAction(a);
                 getChildren().add(buttons[i][j]);
+                myBoard[i][j] = '_';
             }
         }
 
@@ -102,12 +124,13 @@ public class VsPcScene extends AnchorPane {
     private void clearBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                buttons[i][j].setText("");
+               buttons[i][j].setBackground(null);
+               
                 myBoard[i][j] = '_';
             }
         }
-        btnO.setDisable(false);
-        btnX.setDisable(false);
+      //  btnO.setDisable(false);
+       // btnX.setDisable(false);
     }
 
     private void setDisableBtn(boolean status) {
@@ -122,12 +145,21 @@ public class VsPcScene extends AnchorPane {
 
         buttons = new Button[3][3];
         myBoard = new char[3][3];
-        btnO = new Button();
-        btnX = new Button();
-        backBTN = new Button();
-        newGameBTN = new Button();
-        labelWin = new Label();
+        btnO = new Label();
+        btnX = new Label();
+        backBTN = new Label();
+        newGameBTN = new Label();
+        boardLBL = new Label();
         pcMove = new BestMove.Move();
+            
+        boardLBL.setLayoutX(310);
+        boardLBL.setLayoutY(210);
+        boardLBL.setPrefSize(270, 270);
+        boardLBL.setGraphic(new ImageView(new Image("Icons/board.png",270,270,true,true)));
+        
+       getChildren().add(boardLBL);
+        
+
 
         Button hard = new Button();
         hard.setLayoutX(310);
@@ -136,7 +168,7 @@ public class VsPcScene extends AnchorPane {
         hard.setText("Hard");
        
         Button normal = new Button();
-        normal.setLayoutX(470);
+        normal.setLayoutX(500);
         normal.setLayoutY(200);
         normal.setPrefSize(80, 80);
         normal.setText("Normal");
@@ -183,35 +215,39 @@ public class VsPcScene extends AnchorPane {
         setPrefWidth(850);
 
         btnX.setLayoutX(310);
-        btnX.setLayoutY(50);
+        btnX.setLayoutY(80);
         btnX.setPrefSize(80, 80);
-        btnX.setText("X");
+        btnX.setGraphic(new ImageView(new Image("Icons/x.png",60,60,true,true)));
 
         btnO.setLayoutX(470);
-        btnO.setLayoutY(50);
+        btnO.setLayoutY(80);
         btnO.setPrefSize(80, 80);
-        btnO.setText("O");
+        btnO.setGraphic(new ImageView(new Image("Icons/o.png",60,60,true,true)));
 
-        btnX.setOnAction(new EventHandler<ActionEvent>() {
+        btnX.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
-            public void handle(ActionEvent event) {
-                player = 'X';
-                pc = 'O';
+           public void handle(MouseEvent event)  {
+                player = new Image("Icons/x.png",60,60,true,true);
+                pc =  new Image("Icons/o.png",60,60,true,true);
+                playerChar = 'X';
+                pcChar = 'O';
                 btnO.setDisable(true);
                 btnX.setDisable(true);
 
                 setDisableBtn(false);
             }
         });
-        btnO.setOnAction(new EventHandler<ActionEvent>() {
+        btnO.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
-            public void handle(ActionEvent event) {
-                player = 'O';
-                pc = 'X';
+           public void handle(MouseEvent event)  {
+                player = new Image("Icons/o.png",60,60,true,true);
+                pc =  new Image("Icons/x.png",60,60,true,true);
+                playerChar = 'O';
+                pcChar = 'X';
 
                 btnO.setDisable(true);
                 btnX.setDisable(true);
-
+                
                 setDisableBtn(false);
             }
         });
@@ -222,10 +258,10 @@ public class VsPcScene extends AnchorPane {
         backBTN.setLayoutX(650);
         backBTN.setLayoutY(20);
         backBTN.setPrefSize(100, 30);
-        backBTN.setText("Back");
-        backBTN.setOnAction(new EventHandler<ActionEvent>() {
+        backBTN.setGraphic(new ImageView(new Image("Icons/Home.png",80,80,true,true)));
+        backBTN.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
-            public void handle(ActionEvent event) {
+           public void handle(MouseEvent event)  {
                 Scene scene = new Scene(new Home(s));
                 s.setScene(scene);
             }
@@ -234,21 +270,17 @@ public class VsPcScene extends AnchorPane {
         newGameBTN.setLayoutX(130);
         newGameBTN.setLayoutY(20);
         newGameBTN.setPrefSize(100, 30);
-        newGameBTN.setText("New Game");
-        newGameBTN.setOnAction(new EventHandler<ActionEvent>() {
+      
+        newGameBTN.setGraphic(new ImageView(new Image("Icons/reNew.png",80,80,true,true)));
+        newGameBTN.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
-            public void handle(ActionEvent event) {
+           public void handle(MouseEvent event)  {
                 Scene scene = new Scene(new VsPcScene(s));
                 s.setScene(scene);
             }
         });
 
-        labelWin.setLayoutX(310);
-        labelWin.setLayoutY(150);
-        labelWin.setMinHeight(50);
-        labelWin.setMinWidth(240);
-        labelWin.setAlignment(Pos.CENTER);
-        labelWin.setText("Who will win?");
+      
         setBackground(bGround);
 
 
@@ -258,7 +290,6 @@ public class VsPcScene extends AnchorPane {
         getChildren().add(newGameBTN);
         getChildren().add(backBTN);
 
-        getChildren().add(labelWin);
         
          getChildren().add(minimizeLBL);
         getChildren().add(closeLBL);

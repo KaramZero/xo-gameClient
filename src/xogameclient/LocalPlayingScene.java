@@ -7,45 +7,76 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.stage.Stage;
+import static xogameclient.Home.bGround;
+import static xogameclient.Home.closeLBL;
+import static xogameclient.Home.minimizeLBL;
 import xogameclient.localplaying.LocalPlayingrMode;
+import javafx.scene.layout.Background;
+
 
 public class LocalPlayingScene extends AnchorPane {
 
-    private Button btnX;
-    private Button btnO;
-    private Button backBTN;
-    private Button newGameBTN;
+    private Label btnX;
+    private Label btnO;
+    private Label backBTN;
+    private Label newGameBTN;
     private Label labelWin;
+    private Label boardLBL;
     private Button[][] buttons;
     private char[][] myBoard;
     boolean flag = true;
+    
+    Image xIMG = new Image("Icons/x.png",60,60,true,true);
+    ImageView x = new ImageView(xIMG);
 
+    Image oIMG =new Image("Icons/o.png",60,60,true,true);
+    ImageView o = new ImageView(oIMG);
+
+        
     EventHandler a = (EventHandler) (Event event) -> {
-        if (flag && ((Button) event.getSource()).getText().equalsIgnoreCase("")) {
-            ((Button) event.getSource()).setText("X");
+        Button t = ((Button) event.getSource());
+        
+        int xCord=0, yCord=0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (buttons[i][j] == t) {
+                    xCord = i;
+                    yCord = j;
+                }
+            }
+        }
+        
+        if (flag && myBoard[xCord][yCord] == '_') {
+            t.setGraphic(new ImageView(xIMG));
+            myBoard[xCord][yCord] = 'X';
             flag = false;
-        } else if (!flag && ((Button) event.getSource()).getText().equalsIgnoreCase("")) {
-            ((Button) event.getSource()).setText("O");
+        } else if (!flag && myBoard[xCord][yCord] == '_') {
+            t.setGraphic(new ImageView(oIMG));
+             myBoard[xCord][yCord] = 'O';
             flag = true;
         }
         if(flag){
-           labelWin.setText("X turn");
+           labelWin.setGraphic(new ImageView(xIMG));
         }
         else{
-           labelWin.setText("O turn");
+           labelWin.setGraphic(new ImageView(oIMG));
         }
-        copyToBoard();
+       // copyToBoard();
 
         if (LocalPlayingrMode.checkWin(myBoard)) {
-            labelWin.setText(((Button) event.getSource()).getText() + " Wins :D ");
+            labelWin.setGraphic(null);
             clearBoard();
             setDisableBtn(true);
         }
         
         else if (!(LocalPlayingrMode.isEmptyBoard(myBoard))) {
-            labelWin.setText(" No one wins .. Play again ");
+            //labelWin.setText(" No one wins .. Play again ");
             clearBoard();
             setDisableBtn(true);
 
@@ -55,10 +86,14 @@ public class LocalPlayingScene extends AnchorPane {
     private void copyToBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (buttons[i][j].getText().equalsIgnoreCase("")) {
+                if (buttons[i][j].getGraphic() == null) {
                     myBoard[i][j] = '_';
-                } else {
-                    myBoard[i][j] = buttons[i][j].getText().charAt(0);
+                } else if (buttons[i][j].getGraphic() == x) {
+                    
+                    myBoard[i][j] = 'X';
+                } else if (buttons[i][j].getGraphic() == o) {
+                    
+                    myBoard[i][j] = 'O';
                 }
             }
         }
@@ -69,11 +104,11 @@ public class LocalPlayingScene extends AnchorPane {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j] = new Button();
                 buttons[i][j].setPrefSize(80, 80);
-                buttons[i][j].setLayoutX(310 + j * 80);
-                buttons[i][j].setLayoutY(210 + i * 80);
+                buttons[i][j].setLayoutX(310 + j * 90);
+                buttons[i][j].setLayoutY(210 + i * 90);
                 buttons[i][j].setMnemonicParsing(false);
                 buttons[i][j].setOnAction(a);
-                buttons[i][j].setText("");
+                buttons[i][j].setBackground(null);
                 myBoard[i][j] = '_';
                 getChildren().add(buttons[i][j]);
             }
@@ -86,7 +121,7 @@ public class LocalPlayingScene extends AnchorPane {
     private void clearBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                buttons[i][j].setText("");
+                buttons[i][j].setBackground(null);
                 myBoard[i][j] = '_';
             }
         }
@@ -106,57 +141,75 @@ public class LocalPlayingScene extends AnchorPane {
 
         buttons = new Button[3][3];
         myBoard = new char[3][3];
-        btnO = new Button();
-        btnX = new Button();
-        backBTN = new Button();
-        newGameBTN = new Button();
+        btnO = new Label();
+        btnX = new Label();
+        boardLBL = new Label();
+        backBTN = new Label();
+        newGameBTN = new Label();
         labelWin = new Label();
 
+         
+        boardLBL.setLayoutX(310);
+        boardLBL.setLayoutY(210);
+        boardLBL.setPrefSize(270, 270);
+        boardLBL.setGraphic(new ImageView(new Image("Icons/board.png",270,270,true,true)));
+        
+       getChildren().add(boardLBL);
+        
+
+        
         setBTNs();
         setDisableBtn(true);
 
         setId("AnchorPane");
         setPrefHeight(650);
         setPrefWidth(850);
-
-        btnX.setLayoutX(310);
-        btnX.setLayoutY(50);
+        
+       
+        btnX.setLayoutX(350);
+        btnX.setLayoutY(100);
         btnX.setPrefSize(80, 80);
-        btnX.setText("X");
+        
+        btnX.setGraphic(x);
+       // btnX.setText("X");
 
         btnO.setLayoutX(470);
-        btnO.setLayoutY(50);
+        btnO.setLayoutY(100);
         btnO.setPrefSize(80, 80);
-        btnO.setText("O");
+        btnO.setGraphic(o);
+
+       // btnO.setText("O");
         
-          backBTN.setLayoutX(650);
-        backBTN.setLayoutY(20);
-        backBTN.setPrefSize(100, 30);
-        backBTN.setText("Back");
-        backBTN.setOnAction(new EventHandler<ActionEvent>() {
+        backBTN.setLayoutX(650);
+        backBTN.setLayoutY(60);
+        backBTN.setPrefSize(80, 80);
+        backBTN.setGraphic(new ImageView(new Image("Icons/Home.png",80,80,true,true)));
+
+        backBTN.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
-            public void handle(ActionEvent event) {
+           public void handle(MouseEvent event)  {
                 Scene scene = new Scene(new Home(s));
                 s.setScene(scene);
             }
         });
         
-         newGameBTN.setLayoutX(130);
-        newGameBTN.setLayoutY(20);
-        newGameBTN.setPrefSize(100, 30);
-        newGameBTN.setText("New Game");
-        newGameBTN.setOnAction(new EventHandler<ActionEvent>() {
+        newGameBTN.setLayoutX(130);
+        newGameBTN.setLayoutY(60);
+        newGameBTN.setPrefSize(80, 80);
+        newGameBTN.setGraphic(new ImageView(new Image("Icons/reNew.png",80,80,true,true)));
+
+        newGameBTN.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
-            public void handle(ActionEvent event) {
+           public void handle(MouseEvent event)  {
                 Scene scene = new Scene(new LocalPlayingScene(s));
                 s.setScene(scene);
             }
         });
 
-        btnX.setOnAction(new EventHandler<ActionEvent>() {
+        btnX.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
-            public void handle(ActionEvent event) {
-                flag = true;
+           public void handle(MouseEvent event)  {
+                  flag = true;
                
                
                btnO.setDisable(true);
@@ -165,10 +218,10 @@ public class LocalPlayingScene extends AnchorPane {
                 setDisableBtn(false);
             }
         });
-        btnO.setOnAction(new EventHandler<ActionEvent>() {
+        btnO.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
-            public void handle(ActionEvent event) {
-                flag = false;
+           public void handle(MouseEvent event)  {
+                   flag = false;
               
                
                  btnO.setDisable(true);
@@ -178,13 +231,16 @@ public class LocalPlayingScene extends AnchorPane {
             }
         });
 
-         labelWin.setLayoutX(310);
-        labelWin.setLayoutY(150);
+        labelWin.setLayoutX(310);
+        labelWin.setLayoutY(10);
         labelWin.setMinHeight(50);
-        labelWin.setMinWidth(240);
+        labelWin.setMinWidth(270);
         labelWin.setAlignment(Pos.CENTER);
-        labelWin.setText("Who will win?");
+        
 
+        setBackground(bGround);
+        getChildren().add(minimizeLBL);
+        getChildren().add(closeLBL);
         getChildren().add(btnO);
         getChildren().add(btnX);
 
