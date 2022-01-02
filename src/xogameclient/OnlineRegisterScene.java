@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public  class OnlinePlayerScene extends AnchorPane {
+public  class OnlineRegisterScene extends AnchorPane {
 
     protected final TextField textField;
     protected final TextField textField0;
@@ -13,7 +13,7 @@ public  class OnlinePlayerScene extends AnchorPane {
     protected final Button button0;
     private Stage myStage;
 
-    public OnlinePlayerScene(Stage stage) {
+    public OnlineRegisterScene(Stage stage) {
         
         myStage = stage;
         textField = new TextField();

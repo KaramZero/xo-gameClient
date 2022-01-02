@@ -2,6 +2,7 @@
 package xogameclient.online.login;
 
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 
 public class LoginViewModel {
     private Repo repo;
@@ -15,7 +16,7 @@ public class LoginViewModel {
     public  String getLoginData(){
          return repo.getLoginData();
     }  
-    public  ArrayList<String> getListUserOnline(){
+    public  ObservableList<String> getListUserOnline(){
          return repo.getListUserOnline();
     } 
 }

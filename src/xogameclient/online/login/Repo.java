@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +28,7 @@ public class Repo extends Thread{
     private PrintStream ps;
     private JSONObject json;
     private  String  str;
-    private ArrayList<String> listUsersOnline;
+    private ObservableList<String> listUsersOnline;
 
   
     private Repo(){
@@ -35,7 +37,8 @@ public class Repo extends Thread{
             ps = new PrintStream(mySocket.getOutputStream());
             dis = new DataInputStream(mySocket.getInputStream());
             str  = null;
-            listUsersOnline = new ArrayList<>();
+             listUsersOnline= FXCollections.observableArrayList();
+
             json = new JSONObject();
         
         }catch (IOException ex) {
@@ -67,18 +70,25 @@ public class Repo extends Thread{
             System.out.println(str);
          return str;
     }
-    public ArrayList<String> getListUserOnline(){
-        try {
-                  str = dis.readLine();
-                  String []arr = str.split("\\*");
-                for(int i = 0; i<arr.length;i++){
-                    listUsersOnline.add(arr[i]);
-                }
-            
+    public ObservableList<String> getListUserOnline(){
+                 try {
+                  while(true){
+                ps.println("getusers");
+               str = dis.readLine();
+            if(str.length()!=0){
+            String[] arr = str.split("\\*");
+                             for (int i = 0; i < arr.length; i++) {
+                                 listUsersOnline.add(arr[i]);
+                                 System.out.println("hhhhhh"+arr[i]);
+                             }
+                           break;
+            }
+            }
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return listUsersOnline;
+       System.out.println("size"+listUsersOnline.size());
+
+      return listUsersOnline;                        
     }
 }

@@ -17,7 +17,7 @@ import static xogameclient.Home.minimizeLBL;
 import xogameclient.online.login.LoginData;
 import xogameclient.online.login.LoginViewModel;
 
-public  class OnlineScene extends AnchorPane {
+public  class OnlineLoginScene extends AnchorPane {
 
     protected final TextField txtUserName;
     protected final Button btnSignUp;
@@ -35,7 +35,7 @@ public  class OnlineScene extends AnchorPane {
     private LoginData loginData;
     private LoginViewModel loginViewModel;
 
-    public OnlineScene(Stage stage) {
+    public OnlineLoginScene(Stage stage) {
         
         myStage = stage;
         loginData = new LoginData();

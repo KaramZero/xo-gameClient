@@ -104,7 +104,7 @@ public  class Home extends AnchorPane {
         btnOnline.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-             Scene scene = new Scene(new OnlineScene(stage));
+             Scene scene = new Scene(new OnlineLoginScene(stage));
             myStage.setScene(scene);
             }
         });

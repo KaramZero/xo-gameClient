@@ -1,6 +1,9 @@
 package xogameclient;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -17,12 +20,12 @@ public  class OnlineGameScene extends AnchorPane {
     protected final Label label;
     private Stage myStage;
     private LoginViewModel loginViewModel;
-    private ArrayList<String> listUsersOnline;
+    private ObservableList<String> listUsersOnline;
 
     public OnlineGameScene(Stage stage) {
         myStage = stage;
         loginViewModel = new LoginViewModel();
-        listUsersOnline = new ArrayList<>();
+        listUsersOnline= FXCollections.observableArrayList();
 
         lstOnlinePlayers = new ListView();
         label = new Label();
@@ -31,8 +34,8 @@ public  class OnlineGameScene extends AnchorPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(691.0);
-        setPrefWidth(812.0);
+        setPrefHeight(650.0);
+        setPrefWidth(850.0);
 
         lstOnlinePlayers.setLayoutX(590.0);
         lstOnlinePlayers.setLayoutY(59.0);
@@ -40,10 +43,28 @@ public  class OnlineGameScene extends AnchorPane {
         lstOnlinePlayers.setPrefWidth(200.0);   
         lstOnlinePlayers.setBackground(bGround);
         
-         /* listUsersOnline = loginViewModel.getListUserOnline();
-          if(listUsersOnline.size()!=0)
-          lstOnlinePlayers.setItems((ObservableList) listUsersOnline);*/
-          
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                while(true){
+                listUsersOnline = loginViewModel.getListUserOnline();
+                  if (listUsersOnline.size()>0) {
+                    lstOnlinePlayers.setItems(listUsersOnline);
+                     //lstOnlinePlayers.refresh();
+
+                    break;
+                   }
+            }
+                    System.out.println("hello"+listUsersOnline.size());
+                 Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(OnlineGameScene.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            }           
+        }.start();
+        
+         
           
         label.setAlignment(javafx.geometry.Pos.CENTER);
         label.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
