@@ -1,5 +1,6 @@
 package xogameclient;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -96,6 +97,14 @@ public  class Home extends AnchorPane {
         btnOnline.setPrefHeight(72.0);
         btnOnline.setPrefWidth(144.0);
         btnOnline.setText("Online Mode");
+        
+        btnOnline.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+             Scene scene = new Scene(new OnlineScene(stage));
+            myStage.setScene(scene);
+            }
+        });
 
         btnVsPc.setLayoutX(350.0);
         btnVsPc.setLayoutY(386.0);
