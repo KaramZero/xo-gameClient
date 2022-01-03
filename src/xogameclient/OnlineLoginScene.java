@@ -58,8 +58,8 @@ public  class OnlineLoginScene extends AnchorPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(691.0);
-        setPrefWidth(812.0);
+        setPrefHeight(650.0);
+        setPrefWidth(850.0);
 
         txtUserName.setLayoutX(303.0);
         txtUserName.setLayoutY(97.0);

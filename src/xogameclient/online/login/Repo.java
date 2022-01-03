@@ -20,75 +20,82 @@ import javafx.collections.ObservableList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+public class Repo extends Thread {
 
-public class Repo extends Thread{
     private static Repo repo;
     private Socket mySocket;
-    private DataInputStream dis ;
+    private DataInputStream dis;
     private PrintStream ps;
     private JSONObject json;
-    private  String  str;
-    private ObservableList<String> listUsersOnline;
+    private String str;
 
-  
-    private Repo(){
+    private Repo() {
         try {
             mySocket = new Socket("127.0.0.1", 7001);
             ps = new PrintStream(mySocket.getOutputStream());
             dis = new DataInputStream(mySocket.getInputStream());
-            str  = null;
-             listUsersOnline= FXCollections.observableArrayList();
-
+            str = null;
             json = new JSONObject();
-        
-        }catch (IOException ex) {
+
+        } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static Repo getInstance(){
-        if(repo==null){
+
+    public static Repo getInstance() {
+        if (repo == null) {
             repo = new Repo();
         }
         return repo;
     }
-    public void sendLoginData(LoginData loginData){
+
+    public void sendLoginData(LoginData loginData) {
         try {
-            json.put("username",loginData.getUsername());
+            json.put("username", loginData.getUsername());
             json.put("password", loginData.getPassword());
-            //json = new JSONObject(loginData);
             ps.println(json.toString());
         } catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public String getLoginData(){
+
+    public String getLoginData() {
         try {
             str = dis.readLine();
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
-            System.out.println(str);
-         return str;
+        System.out.println(str);
+        return str;
     }
-    public ObservableList<String> getListUserOnline(){
-                 try {
-                  while(true){
-                ps.println("getusers");
-               str = dis.readLine();
-            if(str.length()!=0){
-            String[] arr = str.split("\\*");
-                             for (int i = 0; i < arr.length; i++) {
-                                 listUsersOnline.add(arr[i]);
-                                 System.out.println("hhhhhh"+arr[i]);
-                             }
-                           break;
+
+    public ObservableList<String> getListUserOnline() {
+        ObservableList<String> listUsersOnline = FXCollections.observableArrayList();
+        try {
+            ps.println("getusers");
+            str = dis.readLine();
+            if (str.length() > 0) {
+                String[] arr = str.split("\\*");
+                for (int i = 0; i < arr.length; i++) {
+                    listUsersOnline.add(arr[i]);
+                }
             }
-            }
+
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
-       System.out.println("size"+listUsersOnline.size());
-
-      return listUsersOnline;                        
+        System.out.println("size" + listUsersOnline.size());
+        return listUsersOnline;
+    }
+   
+    public String sendRequestGame(String username){
+        try {
+            ps.println("request");
+            ps.println(username);
+            str = dis.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return str;
     }
 }

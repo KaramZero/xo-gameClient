@@ -46,26 +46,20 @@ public  class OnlineGameScene extends AnchorPane {
         new Thread(){
             @Override
             public void run() {
-                try {
                 while(true){
                 listUsersOnline = loginViewModel.getListUserOnline();
                   if (listUsersOnline.size()>0) {
-                    lstOnlinePlayers.setItems(listUsersOnline);
-                     //lstOnlinePlayers.refresh();
-
-                    break;
+                         lstOnlinePlayers.setItems(listUsersOnline);
                    }
-            }
-                    System.out.println("hello"+listUsersOnline.size());
-                 Thread.sleep(1000);
+                    try {
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(OnlineGameScene.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }       
             }           
         }.start();
-        
-         
-          
+                       
         label.setAlignment(javafx.geometry.Pos.CENTER);
         label.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         label.setLayoutX(592.0);

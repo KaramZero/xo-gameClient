@@ -25,8 +25,8 @@ public  class OnlineRegisterScene extends AnchorPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(691.0);
-        setPrefWidth(812.0);
+        setPrefHeight(650.0);
+        setPrefWidth(850.0);
 
         textField.setLayoutX(277.0);
         textField.setLayoutY(196.0);

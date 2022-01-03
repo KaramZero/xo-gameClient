@@ -16,7 +16,10 @@ public class LoginViewModel {
     public  String getLoginData(){
          return repo.getLoginData();
     }  
-    public  ObservableList<String> getListUserOnline(){
+    public ObservableList<String> getListUserOnline(){
          return repo.getListUserOnline();
-    } 
+    }
+    public String sendRequestGame(String username){
+        return repo.sendRequestGame(username);
+    }
 }
