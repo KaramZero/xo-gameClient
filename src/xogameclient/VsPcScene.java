@@ -16,6 +16,8 @@ import static xogameclient.Home.bGround;
 import static xogameclient.Home.closeLBL;
 import static xogameclient.Home.minimizeLBL;
 import xogameclient.ai.BestMove;
+import xogameclient.ai.EasyMove;
+import xogameclient.ai.Move;
 import xogameclient.ai.NormalMove;
 import xogameclient.localplaying.LocalPlayingrMode;
 
@@ -27,7 +29,7 @@ public class VsPcScene extends AnchorPane {
     private Label boardLBL;
     private Button[][] buttons;
     private char[][] myBoard;
-    private BestMove.Move pcMove;
+    private Move pcMove;
     boolean flag = true;
     
     Image player = new Image("Icons/x.png",60,60,true,true);
@@ -59,7 +61,6 @@ public class VsPcScene extends AnchorPane {
             myBoard[xCord][yCord] = playerChar;
 
            
-           
             if (LocalPlayingrMode.checkWin(myBoard)) {               
                 clearBoard();
                 setDisableBtn(true);
@@ -70,7 +71,7 @@ public class VsPcScene extends AnchorPane {
                 if (flag) {
                     pcMove = BestMove.findBestMove(myBoard, pcChar);
                 } else {
-                    pcMove = NormalMove.normalMove(myBoard, pcChar);
+                    pcMove = EasyMove.findEasyMove(myBoard, pcChar);
                 }
                 buttons[pcMove.row][pcMove.col].setGraphic(new ImageView(pc));
                  myBoard[pcMove.row][pcMove.col] = pcChar;
@@ -150,7 +151,7 @@ public class VsPcScene extends AnchorPane {
         backBTN = new Label();
         newGameBTN = new Label();
         boardLBL = new Label();
-        pcMove = new BestMove.Move();
+        pcMove = new Move();
             
         boardLBL.setLayoutX(310);
         boardLBL.setLayoutY(210);
@@ -192,7 +193,6 @@ public class VsPcScene extends AnchorPane {
 
             }
         });
-         
           hard.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -11,13 +11,6 @@ package xogameclient.ai;
  */
 public class BestMove {
 
-    public static class Move {
-         public int row, col;
-
-        public Move(){
-            row = col = -1;
-        }
-    };
 
     static char player = 'X', opponent = 'O';
 
@@ -166,8 +159,6 @@ public class BestMove {
            opponent ='X';
         int bestVal = -1000;
         Move bestMove = new Move();
-        bestMove.row = -1;
-        bestMove.col = -1;
 
         // Traverse all cells, evaluate minimax function
         // for all empty cells. And return the cell
