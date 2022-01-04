@@ -30,6 +30,12 @@ public class XOGameCLient extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+System.exit(0);
+    }
+    
+
     /**
      * @param args the command line arguments
      */

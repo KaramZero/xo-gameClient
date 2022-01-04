@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.json.JSONException;
 import org.json.JSONObject;
+import xogameclient.ai.Move;
 
 public class Repo extends Thread {
 
@@ -28,6 +29,10 @@ public class Repo extends Thread {
     private PrintStream ps;
     private JSONObject json;
     private String str;
+    public static ObservableList<String> listUsersOnline;
+    public static String gameRequest;
+    public Move move;
+    Thread t;
 
     private Repo() {
         try {
@@ -36,6 +41,17 @@ public class Repo extends Thread {
             dis = new DataInputStream(mySocket.getInputStream());
             str = null;
             json = new JSONObject();
+            listUsersOnline = null;
+            gameRequest = null;
+
+            t = new Thread() {
+                @Override
+                public void run() {
+                    while (true) {
+                        readStream();
+                    }
+                }
+            };
 
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,37 +81,57 @@ public class Repo extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(str);
+
+        t.start();
         return str;
     }
 
-    public ObservableList<String> getListUserOnline() {
-        ObservableList<String> listUsersOnline = FXCollections.observableArrayList();
+    public void readStream() {
         try {
-            ps.println("getusers");
+
             str = dis.readLine();
-            if (str.length() > 0) {
-                String[] arr = str.split("\\*");
-                for (int i = 0; i < arr.length; i++) {
-                    listUsersOnline.add(arr[i]);
+
+            JSONObject js = new JSONObject(str);
+
+            if (js.get("header").equals("usersList")) {
+                listUsersOnline = FXCollections.observableArrayList();
+                String s = (String) js.get("list");
+                if (s.length() > 0) {
+                    String[] arr = s.split("\\*");
+                    for (int i = 0; i < arr.length; i++) {
+                        listUsersOnline.add(arr[i]);
+                    }
                 }
+            }
+            else if (js.get("header").equals("request")) {
+                gameRequest =new String();
+                gameRequest = (String) js.get("username");
+            }
+            else if (js.get("header").equals("playing")) {
+                move = new Move();
+                move.row = (int) js.get("row");
+                move.col = (int) js.get("col");
             }
 
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("size" + listUsersOnline.size());
-        return listUsersOnline;
-    }
-   
-    public String sendRequestGame(String username){
-        try {
-            ps.println("request");
-            ps.println(username);
-            str = dis.readLine();
-        } catch (IOException ex) {
+        } catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return str;
+
+    }
+
+    public void sendRequestGame(String username) {
+         JSONObject js = new JSONObject();
+        try {
+           js.put("header","request");
+            js.put("username",username);
+            ps.println(js.toString());
+            System.out.println("request sent from repo to " + username);
+        
+        }catch (JSONException ex) {
+            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }
 }

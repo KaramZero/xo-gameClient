@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 
 public class LoginViewModel {
+    public static ObservableList<String> listUsersOnline ;
+    public static String gameRequest;
     private Repo repo;
     
     public LoginViewModel(){
         repo = Repo.getInstance();
+        listUsersOnline = repo.listUsersOnline;
+        gameRequest = repo.gameRequest;
     }
     public  void sendLoginData(LoginData loginData){
          repo.sendLoginData(loginData);
@@ -16,10 +20,10 @@ public class LoginViewModel {
     public  String getLoginData(){
          return repo.getLoginData();
     }  
-    public ObservableList<String> getListUserOnline(){
-         return repo.getListUserOnline();
+  
+    public void sendRequestGame(String username){
+        repo.sendRequestGame(username);
     }
-    public String sendRequestGame(String username){
-        return repo.sendRequestGame(username);
-    }
+    
+    
 }

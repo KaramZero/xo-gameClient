@@ -3,20 +3,24 @@ package xogameclient;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import static xogameclient.Home.bGround;
 import static xogameclient.Home.closeLBL;
 import static xogameclient.Home.minimizeLBL;
 import xogameclient.online.login.LoginViewModel;
+import xogameclient.online.login.Repo;
 
 public  class OnlineGameScene extends AnchorPane {
 
-    protected final ListView lstOnlinePlayers;
+    protected  ListView lstOnlinePlayers;
     protected final Label label;
     private Stage myStage;
     private LoginViewModel loginViewModel;
@@ -42,17 +46,41 @@ public  class OnlineGameScene extends AnchorPane {
         lstOnlinePlayers.setPrefHeight(599.0);
         lstOnlinePlayers.setPrefWidth(200.0);   
         lstOnlinePlayers.setBackground(bGround);
+        lstOnlinePlayers.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String s = new String();
+               s = (String) lstOnlinePlayers.getSelectionModel().getSelectedItem();
+
+               loginViewModel.sendRequestGame(s);
+            }
+        });
         
         new Thread(){
             @Override
             public void run() {
                 while(true){
-                listUsersOnline = loginViewModel.getListUserOnline();
-                  if (listUsersOnline.size()>0) {
-                         lstOnlinePlayers.setItems(listUsersOnline);
+              // loginViewModel.getListUserOnline();
+               
+               //loginViewModel.readstream();                     
+
+                  if (Repo.listUsersOnline != null) {                  
+                     
+                      listUsersOnline = Repo.listUsersOnline;
+                       Platform.runLater(() -> {
+                          lstOnlinePlayers.setItems(listUsersOnline);
+                    });
+                      
+                       // lstOnlinePlayers.setItems(Repo.listUsersOnline);
+                        Repo.listUsersOnline = null;
+                   }
+                  if(Repo.gameRequest != null ){
+                       System.out.println("request from  "+Repo.gameRequest);
+                       Repo.gameRequest = null;
+                   
                    }
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(OnlineGameScene.class.getName()).log(Level.SEVERE, null, ex);
                     }
