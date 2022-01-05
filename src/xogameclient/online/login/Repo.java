@@ -99,7 +99,7 @@ public class Repo extends Thread {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     public String getRegisterData() {
+   /*  public String getRegisterData() {
         try {
             str = dis.readLine();
         } catch (IOException ex) {
@@ -109,7 +109,7 @@ public class Repo extends Thread {
             t.start();
         }
         return str;
-    }
+    }*/
 
     public void readStream() {
         try {

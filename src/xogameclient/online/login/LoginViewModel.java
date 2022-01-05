@@ -22,7 +22,7 @@ public class LoginViewModel {
     } 
     
      public  void sendregisterData(LoginData loginData){
-         repo.sendLoginData(loginData);
+         repo.sendRegisterData(loginData);
     }
     public  String getregisterData(){
          return repo.getLoginData();

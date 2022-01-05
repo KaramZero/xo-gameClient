@@ -122,7 +122,7 @@ public  class OnlineLoginScene extends AnchorPane {
 
                         loginViewModel.sendregisterData(loginData);
 
-                        if (loginViewModel.getregisterData().equals("true")) {
+                        if (loginViewModel.getLoginData().equals("true")) {
                             Scene scene = new Scene(new OnlineGameScene(myStage));
                             myStage.setScene(scene);
                         } else {
