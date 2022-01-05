@@ -81,8 +81,9 @@ public class Repo extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        t.start();
+        if (str.equals("true")) {
+            t.start();
+        }
         return str;
     }
 

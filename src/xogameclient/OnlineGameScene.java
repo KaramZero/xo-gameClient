@@ -71,7 +71,6 @@ public  class OnlineGameScene extends AnchorPane {
                           lstOnlinePlayers.setItems(listUsersOnline);
                     });
                       
-                       // lstOnlinePlayers.setItems(Repo.listUsersOnline);
                         Repo.listUsersOnline = null;
                    }
                   if(Repo.gameRequest != null ){
