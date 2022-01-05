@@ -67,6 +67,7 @@ public class Repo extends Thread {
 
     public void sendLoginData(LoginData loginData) {
         try {
+            json.put("header", "login");
             json.put("username", loginData.getUsername());
             json.put("password", loginData.getPassword());
             ps.println(json.toString());
@@ -76,6 +77,29 @@ public class Repo extends Thread {
     }
 
     public String getLoginData() {
+        try {
+            str = dis.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (str.equals("true")) {
+            t.start();
+        }
+        return str;
+    }
+     public void sendRegisterData(LoginData loginData) {
+        try {
+            json.put("header", "register");
+            json.put("username", loginData.getUsername());
+            json.put("password", loginData.getPassword());
+            json.put("name", loginData.getName());
+            json.put("email", loginData.getEmail());
+            ps.println(json.toString());
+        } catch (JSONException ex) {
+            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public String getRegisterData() {
         try {
             str = dis.readLine();
         } catch (IOException ex) {

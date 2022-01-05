@@ -9,6 +9,33 @@ package xogameclient.online.login;
 public class LoginData {
     private String username;
     private String password;
+    private String email;
+    private String name;
+    private int score;
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
     private static int idToken;
     
     public LoginData(){

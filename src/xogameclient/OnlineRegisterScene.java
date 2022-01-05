@@ -20,6 +20,8 @@ public  class OnlineRegisterScene extends AnchorPane {
         textField0 = new TextField();
         button = new Button();
         button0 = new Button();
+        
+        
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);

@@ -19,7 +19,14 @@ public class LoginViewModel {
     }
     public  String getLoginData(){
          return repo.getLoginData();
-    }  
+    } 
+    
+     public  void sendregisterData(LoginData loginData){
+         repo.sendLoginData(loginData);
+    }
+    public  String getregisterData(){
+         return repo.getLoginData();
+    } 
   
     public void sendRequestGame(String username){
         repo.sendRequestGame(username);

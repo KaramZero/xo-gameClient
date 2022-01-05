@@ -103,6 +103,49 @@ public  class OnlineLoginScene extends AnchorPane {
                 }
             }
         });
+        btnSignUp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String username = txtUserName.getText().trim();
+                String name = txtName.getText().trim();
+                String password = txtPassword.getText().trim();
+                String confirmPassword = txtConfirmPassword.getText().trim();
+                String email=txtEmail.getText().trim();
+                
+                if(!(username.isEmpty())&&(!(password.isEmpty()))&&(!(confirmPassword.isEmpty()))&&(!(email.isEmpty()))&&(!(name.isEmpty()))){
+                    if (password.equals(confirmPassword)) {
+                        loginData.setUsername(username);
+                        loginData.setPassword(password);
+                        loginData.setName(name);
+                        loginData.setEmail(email);
+                        loginData.setScore(0);
+
+                        loginViewModel.sendregisterData(loginData);
+
+                        if (loginViewModel.getregisterData().equals("true")) {
+                            Scene scene = new Scene(new OnlineGameScene(myStage));
+                            myStage.setScene(scene);
+                        } else {
+                            Alert a = new Alert(AlertType.ERROR);
+                            a.setContentText("This Email Already Exist");
+                            a.show();
+                        }
+                    }
+                    else {
+                        Alert a = new Alert(AlertType.ERROR);
+                        a.setContentText("Confirm Your Password Correctly");
+                        a.show();
+                    }
+                  
+                   
+                }
+                else {
+                    Alert a = new Alert(AlertType.ERROR);
+                    a.setContentText("Please Complete Your Data");
+                    a.show();
+                }
+            }
+        });
 
         txtPassword.setLayoutX(303.0);
         txtPassword.setLayoutY(301.0);
