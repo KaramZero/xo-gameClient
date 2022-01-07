@@ -1,5 +1,7 @@
-package xogameclient;
+package xogameclient.home;
 
+import xogameclient.localPlayingMode.LocalPlayingScene;
+import xogameclient.onlineMode.OnlineLoginScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -15,6 +17,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
+import xogameclient.onlineMode.OnlineMode;
+import xogameclient.vsPcMode.VsPcScene;
 
 public  class Home extends AnchorPane {
 
@@ -40,9 +44,7 @@ public  class Home extends AnchorPane {
         minimizeLBL = new Label();
 
        
-
          Image closeIMG = new Image("Icons/close.png",50,50,true,true);
-
           Image miniIMG = new Image("Icons/minimize.png",50,50,true,true);
         closeLBL.setLayoutX(800);
         closeLBL.setLayoutY(5);
@@ -104,7 +106,7 @@ public  class Home extends AnchorPane {
         btnOnline.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-             Scene scene = new Scene(new OnlineLoginScene(stage));
+             Scene scene = new Scene(new OnlineMode(stage));
             myStage.setScene(scene);
             }
         });

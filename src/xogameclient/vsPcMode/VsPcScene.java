@@ -1,5 +1,9 @@
-package xogameclient;
+package xogameclient.vsPcMode;
 
+import xogameclient.vsPcMode.levels.Move;
+import xogameclient.vsPcMode.levels.HardLevel;
+import xogameclient.vsPcMode.levels.EasyLevel;
+import xogameclient.home.Home;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -12,14 +16,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import static xogameclient.Home.bGround;
-import static xogameclient.Home.closeLBL;
-import static xogameclient.Home.minimizeLBL;
-import xogameclient.ai.BestMove;
-import xogameclient.ai.EasyMove;
-import xogameclient.ai.Move;
-import xogameclient.ai.NormalMove;
-import xogameclient.localplaying.LocalPlayingrMode;
+import static xogameclient.home.Home.bGround;
+import static xogameclient.home.Home.closeLBL;
+import static xogameclient.home.Home.minimizeLBL;
+import xogameclient.pojo.XOModel;
 
 public class VsPcScene extends AnchorPane {
  private Label btnX;
@@ -61,28 +61,28 @@ public class VsPcScene extends AnchorPane {
             myBoard[xCord][yCord] = playerChar;
 
            
-            if (LocalPlayingrMode.checkWin(myBoard)) {               
+            if (XOModel.checkWin(myBoard)) {               
                 clearBoard();
                 setDisableBtn(true);
-            } else if (!(LocalPlayingrMode.isEmptyBoard(myBoard))) {
+            } else if (!(XOModel.isEmptyBoard(myBoard))) {
                 clearBoard();
                 setDisableBtn(true);
             } else {
                 if (flag) {
-                    pcMove = BestMove.findBestMove(myBoard, pcChar);
+                    pcMove = HardLevel.findBestMove(myBoard, pcChar);
                 } else {
-                    pcMove = EasyMove.findEasyMove(myBoard, pcChar);
+                    pcMove = EasyLevel.findEasyMove(myBoard, pcChar);
                 }
                 buttons[pcMove.row][pcMove.col].setGraphic(new ImageView(pc));
                  myBoard[pcMove.row][pcMove.col] = pcChar;
                 //copyToBoard();
                // myBoard[pcMove.row][pcMove.col] = pc;
              
-                if (LocalPlayingrMode.checkWin(myBoard)) {
+                if (XOModel.checkWin(myBoard)) {
                   //  labelWin.setText(" Pc Wins :D ");
                     clearBoard();
                     setDisableBtn(true);
-                } else if (!(LocalPlayingrMode.isEmptyBoard(myBoard))) {
+                } else if (!(XOModel.isEmptyBoard(myBoard))) {
                     //labelWin.setText(" No one wins .. Play again ");
                     clearBoard();
                     setDisableBtn(true);

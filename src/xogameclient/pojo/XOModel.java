@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xogameclient.localplaying;
+package xogameclient.pojo;
 
 import javafx.scene.control.Button;
 
-public class LocalPlayingrMode {
+public class XOModel {
     
     
     //check any player win 

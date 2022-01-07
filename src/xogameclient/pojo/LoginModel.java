@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xogameclient.online.login;
+package xogameclient.pojo;
 
 
-public class LoginData {
+public class LoginModel {
     private String username;
     private String password;
     private String email;
@@ -38,7 +38,7 @@ public class LoginData {
     }
     private static int idToken;
     
-    public LoginData(){
+    public LoginModel(){
         idToken =0;
     }
     

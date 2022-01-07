@@ -1,4 +1,4 @@
-package xogameclient;
+package xogameclient.localPlayingMode;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -13,11 +13,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.stage.Stage;
-import static xogameclient.Home.bGround;
-import static xogameclient.Home.closeLBL;
-import static xogameclient.Home.minimizeLBL;
-import xogameclient.localplaying.LocalPlayingrMode;
+import static xogameclient.home.Home.bGround;
+import static xogameclient.home.Home.closeLBL;
+import static xogameclient.home.Home.minimizeLBL;
+import xogameclient.pojo.XOModel;
 import javafx.scene.layout.Background;
+import xogameclient.home.Home;
 
 
 public class LocalPlayingScene extends AnchorPane {
@@ -69,13 +70,13 @@ public class LocalPlayingScene extends AnchorPane {
         }
        // copyToBoard();
 
-        if (LocalPlayingrMode.checkWin(myBoard)) {
+        if (XOModel.checkWin(myBoard)) {
             labelWin.setGraphic(null);
             clearBoard();
             setDisableBtn(true);
         }
         
-        else if (!(LocalPlayingrMode.isEmptyBoard(myBoard))) {
+        else if (!(XOModel.isEmptyBoard(myBoard))) {
             //labelWin.setText(" No one wins .. Play again ");
             clearBoard();
             setDisableBtn(true);

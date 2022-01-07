@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/2y/Documents/GitHub/xo-game/src/xogameclient/online/login/LoginViewModel.java</file>
-            <file>file:/C:/Users/2y/Documents/GitHub/xo-game/src/xogameclient/online/login/LoginData.java</file>
-            <file>file:/C:/Users/2y/Documents/GitHub/xo-game/src/xogameclient/OnlineLoginScene.java</file>
-            <file>file:/C:/Users/2y/Documents/GitHub/xo-game/src/xogameclient/online/login/Repo.java</file>
+            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/xogameclient/onlineMode/OnlineGame.java</file>
+            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/xogameclient/repository/Repo.java</file>
+            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/xogameclient/onlineMode/OnlineGameScene.java</file>
+            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/xogameclient/viewModels/GameViewModel.java</file>
         </group>
     </open-files>
 </project-private>

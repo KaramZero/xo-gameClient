@@ -3,27 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xogameclient.ai;
+package xogameclient.vsPcMode.levels;
 
 /**
  *
  * @author karam
  */
-public class NormalMove {
+public class EasyLevel {
     
-     public static Move findNormalMove(char[][] board,char c){
+     public static Move findEasyMove(char[][] board,char c){
          
          // Check Winning 
-       Move temp = checkWinning(board, c);
-        char t;
-         if(c == 'X') t='O';
-           else t = 'X';
-        
-         // Check Blocking
-        if(temp.row == -1 ) temp = checkWinning(board, t);
-        
-        // Get First empty cell
-        
+      Move temp = checkWinning(board, c);
+       
+        // Get First empty cell 
         if(temp.row == -1){
             for(int i = 0 ; i < 3 &&temp.row ==-1 ; i++){
                 for(int j = 0; j < 3&&temp.row ==-1 ; j++){
@@ -39,7 +32,7 @@ public class NormalMove {
     
     private static Move checkWinning(char[][] board,char c){
       Move temp = new Move();
-            //   Check for winning Rows
+                //   Check for winning Rows
         for(int i = 0 ; i < 3 ; i++)
            {
                 if(board[i][0] == c && board[i][0] == board[i][1] && board[i][2] == '_') {
