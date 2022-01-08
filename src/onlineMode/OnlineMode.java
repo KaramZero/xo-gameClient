@@ -40,11 +40,18 @@ public  class OnlineMode extends AnchorPane {
         setId("AnchorPane");
         setPrefHeight(400.0);
         setPrefWidth(600.0);
+     
+        anchorPane.setBackground(bGround);
+        anchorPane.getChildren().add(minimizeLBL);
+        anchorPane.getChildren().add(closeLBL);
+        anchorPane.setMaxHeight(USE_PREF_SIZE);
+        anchorPane.setMaxWidth(USE_PREF_SIZE);
+        anchorPane.setMinHeight(USE_PREF_SIZE);
+        anchorPane.setMinWidth(USE_PREF_SIZE);
+        anchorPane.setPrefHeight(650.0);
+        anchorPane.setPrefWidth(850.0);
 
-        anchorPane.setLayoutX(-1.0);
-        anchorPane.setLayoutY(-3.0);
-        anchorPane.setPrefHeight(400.0);
-        anchorPane.setPrefWidth(600.0);
+     
 
         label.setAlignment(javafx.geometry.Pos.CENTER);
         label.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);

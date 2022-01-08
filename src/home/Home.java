@@ -33,6 +33,7 @@ public  class Home extends AnchorPane {
     protected final Label label;
     private Stage myStage;
     public static boolean  onlineFlag =false;
+    
     public static Scene onlineScene;
     
     public Home(Stage stage) {

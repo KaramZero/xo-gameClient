@@ -28,8 +28,8 @@ public class GameViewModel {
     public void sendRequestConfirm(String username, String res) {
         repo.sendRequestConfirm(username, res);
     }
-    public void sendMove(int x, int y) {
-        repo.sendMove(x, y);
+    public void sendMove(int x, int y , String move) {
+        repo.sendMove(x, y,move);
     }
     
     public void sendPlayingChar(String s){
@@ -40,42 +40,43 @@ public class GameViewModel {
     public ObservableList<String> getListUsersOnline() {
 
         ObservableList<String> listUsersOnline = Repo.listUsersOnline;
-        if (Repo.listUsersOnline != null) {
-            Repo.listUsersOnline = null;
-        }
+        Repo.listUsersOnline = null;
         return listUsersOnline;
 
     }
 
     public String getGameRequest() {
 
-         String gameRequest = Repo.gameRequest;
-        if (Repo.gameRequest != null) {
-            Repo.gameRequest = null;
-        }
+        String gameRequest = Repo.gameRequest;
+        Repo.gameRequest = null;
         return gameRequest;
     }
-    
-    public String[] getRequestConfirm(){
-    
-         String requestConfirm[] = Repo.requestConfirm;
-        if(Repo.requestConfirm != null) Repo.requestConfirm = null;
+
+    public String[] getRequestConfirm() {
+
+        String requestConfirm[] = Repo.requestConfirm;
+        Repo.requestConfirm = null;
         return requestConfirm;
     }
-    
-    public Move getMove(){
-    
+
+    public Move getMove() {
+
         Move move = Repo.move;
-        if(Repo.move != null) Repo.move = null;
+        Repo.move = null;
         return move;
     }
+
     public String getPlayingChar() {
-        
+
         String t = Repo.playingChar;
-        if (Repo.playingChar != null) {
-            Repo.playingChar = null;
-        }
+        Repo.playingChar = null;
         return t;
-        
+
+    }
+
+    public String getState() {
+        String t = Repo.state;
+        Repo.state = null;
+        return t;
     }
 }

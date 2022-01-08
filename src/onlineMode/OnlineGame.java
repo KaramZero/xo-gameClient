@@ -35,11 +35,12 @@ public class OnlineGame extends AnchorPane {
     private Label btnX;
     private Label btnO;
     private Label backBTN;
-    private Label newGameBTN;
+
     private Label boardLBL;
     private GameViewModel gameViewModel;
     boolean flag = true;
     boolean playFlag = true;
+    private String move;
 
     Image player = new Image("Icons/x.png", 60, 60, true, true);
     ImageView x = new ImageView(player);
@@ -47,14 +48,16 @@ public class OnlineGame extends AnchorPane {
 
     Image pc = new Image("Icons/o.png", 60, 60, true, true);
     ImageView o = new ImageView(pc);
-    char pcChar; 
+    char pcChar;
+    Stage myStage;
 
-    public OnlineGame(Stage s , boolean myTurn) {
+    public OnlineGame(Stage s, boolean myTurn) {
 
+        myStage = s;
         btnO = new Label();
         btnX = new Label();
         backBTN = new Label();
-        newGameBTN = new Label();
+
         boardLBL = new Label();
         gameViewModel = new GameViewModel();
         t.start();
@@ -65,12 +68,13 @@ public class OnlineGame extends AnchorPane {
         boardLBL.setPrefSize(270, 270);
         boardLBL.setGraphic(new ImageView(new Image("Icons/board.png", 270, 270, true, true)));
         getChildren().add(boardLBL);
-        
+
         setBTNs();
-        setButtons();
         clearBoard();
-        setDisableBtn(true);
+        setButtons();
         
+        setDisableBtn(true);
+
         setId("AnchorPane");
         setPrefHeight(650);
         setPrefWidth(850);
@@ -114,9 +118,10 @@ public class OnlineGame extends AnchorPane {
                 setDisableBtn(false);
             }
         });
-        
-        
-        if(!myTurn){getMyChar();}
+
+        if (!myTurn) {
+            getMyChar();
+        }
 
         backBTN.setLayoutX(650);
         backBTN.setLayoutY(20);
@@ -125,21 +130,14 @@ public class OnlineGame extends AnchorPane {
         backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-            
+
+                if (move.equals("playing")) {
+                    gameViewModel.sendMove(-1, -1,move);
+                }
+                clearBoard();
+                t.stop();
+                Scene sc = new Scene(new OnlineGameScene(myStage));
                 s.setScene(Home.onlineScene);
-            }
-        });
-
-        newGameBTN.setLayoutX(130);
-        newGameBTN.setLayoutY(20);
-        newGameBTN.setPrefSize(100, 30);
-
-        newGameBTN.setGraphic(new ImageView(new Image("Icons/reNew.png", 80, 80, true, true)));
-        newGameBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Scene scene = new Scene(new VsPcScene(s));
-                s.setScene(scene);
             }
         });
 
@@ -148,104 +146,129 @@ public class OnlineGame extends AnchorPane {
         Platform.runLater(() -> {
             getChildren().add(btnO);
             getChildren().add(btnX);
-            getChildren().add(newGameBTN);
+
             getChildren().add(backBTN);
             getChildren().add(minimizeLBL);
             getChildren().add(closeLBL);
         });
     }
-    
+
     void getMyChar() {
         btnO.setDisable(true);
         btnX.setDisable(true);
-        
-        new Thread(){
+       
+        playFlag = false;
+
+        new Thread() {
             @Override
             public void run() {
-                
-                while(true){
+
+                while (true) {
                     try {
                         sleep(500);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                     String s = gameViewModel.getPlayingChar();
-                    if(s != null){
-                        if(s.equals("O")) setx();
-                        else if (s.equals("X")) seto();
+                    if (s != null) {
+                        if (s.equals("O")) {
+                            setx();
+                        } else if (s.equals("X")) {
+                            seto();
+                        }
                         break;
                     }
-                
+
                 }
             }
-        
+
         }.start();
 
     }
-    
-    void seto(){
-    
-          player = new Image("Icons/o.png", 60, 60, true, true);
-                pc = new Image("Icons/x.png", 60, 60, true, true);
-                playerChar = 'O';
-                pcChar = 'X';
 
-                btnO.setOnMouseClicked(null);
-                btnX.setDisable(true);
+    void seto() {
 
-                btnO.setDisable(false);
+        player = new Image("Icons/o.png", 60, 60, true, true);
+        pc = new Image("Icons/x.png", 60, 60, true, true);
+        playerChar = 'O';
+        pcChar = 'X';
 
-                setDisableBtn(false);
-                playFlag = false;
-                buttons[0][0].fire();
-             
+        btnO.setOnMouseClicked(null);
+        btnX.setDisable(true);
+
+        btnO.setDisable(false);
+
+        setDisableBtn(false);
+        playFlag = false;
+        buttons[0][0].fire();
+
     }
-    void setx(){
-    
-          player = new Image("Icons/x.png", 60, 60, true, true);
-                pc = new Image("Icons/o.png", 60, 60, true, true);
-                playerChar = 'X';
-                pcChar = 'O';
-                btnO.setDisable(true);
-                btnX.setDisable(false);
-                btnX.setOnMouseClicked(null);
 
-                setDisableBtn(false);
-    
+    void setx() {
+
+        player = new Image("Icons/x.png", 60, 60, true, true);
+        pc = new Image("Icons/o.png", 60, 60, true, true);
+        playerChar = 'X';
+        pcChar = 'O';
+        btnO.setDisable(true);
+        btnX.setDisable(false);
+        btnX.setOnMouseClicked(null);
+
+        setDisableBtn(false);
+        playFlag = false;
+        buttons[0][0].fire();
+
     }
-    
-     Thread t = new Thread(){
-            @Override
-            public void run() {
-                while (true) {
-                    Move m = gameViewModel.getMove();
-                    if (m != null) {
+
+    Thread t = new Thread() {
+        @Override
+        public void run() {
+            while (true) {
+                Move m = gameViewModel.getMove();
+                String state = gameViewModel.getState();
+                if (m != null) {
+                    if (m.row == -1 ) {
+                        ///// Show winner here
+                        System.out.println(" i win :D ");
+                        move = "win";
+                    }
+                    else if(state.equals("full")){
+                        ///// Show we are evin
+                        System.out.println(" WE are Evin now :) ");
+                    }
+                    else {
                         myBoard[m.row][m.col] = pcChar;
                         Platform.runLater(() -> {
                             buttons[m.row][m.col].setGraphic(new ImageView(pc));
                         });
                         playFlag = true;
-                        
+
                         if (XOModel.checkWin(myBoard)) {
                             clearBoard();
                             setDisableBtn(true);
+
                         } else if (!(XOModel.isEmptyBoard(myBoard))) {
                             clearBoard();
                             setDisableBtn(true);
                         }
                         t.suspend();
                     }
-                    try {
-                        sleep(500);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
+                    if(state.equals("win")){
+                        //// Show i Lose
+                        System.out.println("I lose :( ");
                     }
                 }
+                try {
+                    sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        };
-  
-     EventHandler a = (EventHandler) (Event event) -> {
+        }
+    };
+
+    EventHandler a = (EventHandler) (Event event) -> {
         Button btnTemp = ((Button) event.getSource());
         if (playFlag) {
             int xCord = 0, yCord = 0;
@@ -261,28 +284,33 @@ public class OnlineGame extends AnchorPane {
             if (myBoard[xCord][yCord] == '_') {
                 btnTemp.setGraphic(new ImageView(player));
                 myBoard[xCord][yCord] = playerChar;
-                gameViewModel.sendMove(xCord, yCord);
+                move = "playing";
                 playFlag = false;
 
                 if (checkWin(myBoard)) {
+                    move = "win";
                     clearBoard();
                     setDisableBtn(true);
+
                 } else if (!(isEmptyBoard(myBoard))) {
+                    move = "full";
                     clearBoard();
                     setDisableBtn(true);
-                }              
+                }
+                gameViewModel.sendMove(xCord, yCord, move);
             }
         }
         t.resume();
     };
-      private void setButtons(){
-       for (int i = 0; i < 3; i++) {
+
+    private void setButtons() {
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setOnAction(a);
                 getChildren().add(buttons[i][j]);
             }
+        }
+        btnO.setDisable(false);
+        btnX.setDisable(false);
     }
-       btnO.setDisable(false);
-       btnX.setDisable(false);
-  } 
 }

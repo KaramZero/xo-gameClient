@@ -25,8 +25,7 @@ public static char[][] myBoard  = new char[3][3];
                 buttons[i][j].setMnemonicParsing(false);
                 buttons[i][j].setBackground(null);
                 myBoard[i][j] = '_';
-            }
-        }
+            }}
 
     }
   public static void setDisableBtn(boolean status) {

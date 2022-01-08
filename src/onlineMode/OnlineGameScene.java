@@ -100,7 +100,9 @@ public  class OnlineGameScene extends AnchorPane {
                       
                         if (gameRequest[1].equals("yes")) {
                             Scene s = new Scene(new OnlineGame(myStage, true));
+                            
                             Platform.runLater(() -> {
+                                 t.stop();
                                 myStage.setScene(s);
                             });
                         } else {
@@ -140,14 +142,13 @@ public  class OnlineGameScene extends AnchorPane {
                             if (result.orElse(no) == ok) {
                               
                                 Scene s1 = new Scene(new OnlineGame(myStage,false));
+                                t.stop();
                                 myStage.setScene(s1);
                                gameViewModel.sendRequestConfirm(user, "yes");
                             }else  {
                                gameViewModel.sendRequestConfirm(user, "no");
                             }
-                           
                         });
-                       
                     }
                     try {
                         Thread.sleep(500);

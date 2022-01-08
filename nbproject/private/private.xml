@@ -5,8 +5,11 @@
         <group>
             <file>file:/G:/ITI/Java/xo-game/src/repository/Repo.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/viewModels/GameViewModel.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/home/Home.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineGame.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/xo/XOBoard.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineGameScene.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineMode.java</file>
         </group>
     </open-files>
 </project-private>
