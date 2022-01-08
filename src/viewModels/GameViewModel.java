@@ -31,6 +31,12 @@ public class GameViewModel {
     public void sendMove(int x, int y) {
         repo.sendMove(x, y);
     }
+    
+    public void sendPlayingChar(String s){
+    
+        repo.sendPlayingChar(s);
+    }
+    
     public ObservableList<String> getListUsersOnline() {
 
         ObservableList<String> listUsersOnline = Repo.listUsersOnline;
@@ -62,5 +68,14 @@ public class GameViewModel {
         Move move = Repo.move;
         if(Repo.move != null) Repo.move = null;
         return move;
+    }
+    public String getPlayingChar() {
+        
+        String t = Repo.playingChar;
+        if (Repo.playingChar != null) {
+            Repo.playingChar = null;
+        }
+        return t;
+        
     }
 }

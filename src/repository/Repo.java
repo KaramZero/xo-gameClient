@@ -7,13 +7,9 @@ package repository;
 
 import pojo.LoginModel;
 import java.io.DataInputStream;
-import java.io.DataOutput;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -31,11 +27,13 @@ public class Repo extends Thread {
     private PrintStream ps;
     private JSONObject json;
     private String response;
+    
     public static String requestConfirm[];
     public static ObservableList<String> listUsersOnline;
     public static String gameRequest;
     public static Move move;
     public static String IpAddress;
+    public static String playingChar;
 
     private Repo() {
         try {
@@ -48,6 +46,7 @@ public class Repo extends Thread {
             gameRequest = null;
             requestConfirm = null;
             move = null;
+            playingChar = null;
 
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,6 +128,10 @@ public class Repo extends Thread {
                 move = new Move();
                 move.row = (int) json.get("row");
                 move.col = (int) json.get("col");
+            }else if (json.get("header").equals("playingChar")) {
+               
+                playingChar = new String((String) json.get("char"));
+                
             }
 
         } catch (IOException ex) {
@@ -145,8 +148,6 @@ public class Repo extends Thread {
             json.put("header","request");
             json.put("username",username);
             ps.println(json.toString());
-            System.out.println("request sent from repo to " + username);
-        
         }catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -177,6 +178,19 @@ public class Repo extends Thread {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
     
+    }
+    public void sendPlayingChar(String s){
+    
+        json = new JSONObject();
+        try {
+           json.put("header","playingChar");
+            json.put("char",s);
+            ps.println(json.toString());
+           
+           
+        }catch (JSONException ex) {
+            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
      Thread t = new Thread(){

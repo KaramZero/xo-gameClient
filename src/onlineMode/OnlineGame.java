@@ -19,11 +19,9 @@ import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import xo.XOModel;
-import repository.Repo;
 import viewModels.GameViewModel;
 import vsPcMode.VsPcScene;
 import vsPcMode.levels.Move;
-import xo.XOBoard;
 import static xo.XOBoard.buttons;
 import static xo.XOBoard.clearBoard;
 import static xo.XOBoard.myBoard;
@@ -51,7 +49,7 @@ public class OnlineGame extends AnchorPane {
     ImageView o = new ImageView(pc);
     char pcChar; 
 
-    public OnlineGame(Stage s , boolean f) {
+    public OnlineGame(Stage s , boolean myTurn) {
 
         btnO = new Label();
         btnX = new Label();
@@ -86,7 +84,7 @@ public class OnlineGame extends AnchorPane {
         btnO.setLayoutY(80);
         btnO.setPrefSize(80, 80);
         btnO.setGraphic(new ImageView(new Image("Icons/o.png", 60, 60, true, true)));
-/*
+
         btnX.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -95,7 +93,8 @@ public class OnlineGame extends AnchorPane {
                 playerChar = 'X';
                 pcChar = 'O';
                 btnO.setDisable(true);
-                btnX.setDisable(true);
+                btnX.setOnMouseClicked(null);
+                gameViewModel.sendPlayingChar("X");
 
                 setDisableBtn(false);
             }
@@ -108,19 +107,16 @@ public class OnlineGame extends AnchorPane {
                 playerChar = 'O';
                 pcChar = 'X';
 
-                btnO.setDisable(true);
+                btnO.setOnMouseClicked(null);
                 btnX.setDisable(true);
+                gameViewModel.sendPlayingChar("O");
 
                 setDisableBtn(false);
             }
         });
         
-*/
-        btnO.setDisable(false);
-        btnX.setDisable(false);
         
-        if(f) setx();
-        else seto();
+        if(!myTurn){getMyChar();}
 
         backBTN.setLayoutX(650);
         backBTN.setLayoutY(20);
@@ -129,8 +125,8 @@ public class OnlineGame extends AnchorPane {
         backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Scene scene = new Scene(new Home(s));
-                s.setScene(scene);
+            
+                s.setScene(Home.onlineScene);
             }
         });
 
@@ -159,6 +155,35 @@ public class OnlineGame extends AnchorPane {
         });
     }
     
+    void getMyChar() {
+        btnO.setDisable(true);
+        btnX.setDisable(true);
+        
+        new Thread(){
+            @Override
+            public void run() {
+                
+                while(true){
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    String s = gameViewModel.getPlayingChar();
+                    if(s != null){
+                        if(s.equals("O")) setx();
+                        else if (s.equals("X")) seto();
+                        break;
+                    }
+                
+                }
+            }
+        
+        }.start();
+
+    }
+    
     void seto(){
     
           player = new Image("Icons/o.png", 60, 60, true, true);
@@ -166,8 +191,10 @@ public class OnlineGame extends AnchorPane {
                 playerChar = 'O';
                 pcChar = 'X';
 
-                btnO.setDisable(true);
+                btnO.setOnMouseClicked(null);
                 btnX.setDisable(true);
+
+                btnO.setDisable(false);
 
                 setDisableBtn(false);
                 playFlag = false;
@@ -181,7 +208,8 @@ public class OnlineGame extends AnchorPane {
                 playerChar = 'X';
                 pcChar = 'O';
                 btnO.setDisable(true);
-                btnX.setDisable(true);
+                btnX.setDisable(false);
+                btnX.setOnMouseClicked(null);
 
                 setDisableBtn(false);
     

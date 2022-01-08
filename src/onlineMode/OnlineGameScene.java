@@ -1,6 +1,6 @@
 package onlineMode;
 
-import java.util.ArrayList;
+
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
-import repository.Repo;
 import viewModels.GameViewModel;
 
 public  class OnlineGameScene extends AnchorPane {
@@ -32,7 +31,6 @@ public  class OnlineGameScene extends AnchorPane {
     private Stage myStage;
     private GameViewModel gameViewModel;
     private ObservableList<String> listUsersOnline;
-    private String gameRequest;
 
     public OnlineGameScene(Stage stage) {
         myStage = stage;
