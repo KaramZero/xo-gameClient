@@ -1,5 +1,6 @@
-package xogameclient.onlineMode;
+package onlineMode;
 
+import home.Home;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
@@ -12,11 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import static xogameclient.home.Home.bGround;
-import static xogameclient.home.Home.closeLBL;
-import static xogameclient.home.Home.minimizeLBL;
-import xogameclient.repository.Repo;
-import xogameclient.validation.IpAddressValidation;
+import static home.Home.bGround;
+import static home.Home.closeLBL;
+import static home.Home.minimizeLBL;
+import repository.Repo;
+import validation.Validation;
 
 public  class OnlineMode extends AnchorPane {
 
@@ -76,7 +77,7 @@ public  class OnlineMode extends AnchorPane {
             public void handle(ActionEvent event) {
                 String ipAddress =txtIp.getText().trim();
                 if(!(ipAddress.isEmpty())){
-                if(IpAddressValidation.isValid(ipAddress)){
+                if(Validation.isValid(ipAddress)){
                       Repo.IpAddress =ipAddress;
                     Scene scene = new Scene(new OnlineLoginScene(myStage));
                     myStage.setScene(scene); 

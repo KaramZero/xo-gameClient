@@ -1,4 +1,4 @@
-package xogameclient.onlineMode;
+package onlineMode;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -19,11 +19,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import static xogameclient.home.Home.bGround;
-import static xogameclient.home.Home.closeLBL;
-import static xogameclient.home.Home.minimizeLBL;
-import xogameclient.repository.Repo;
-import xogameclient.viewModels.GameViewModel;
+import static home.Home.bGround;
+import static home.Home.closeLBL;
+import static home.Home.minimizeLBL;
+import repository.Repo;
+import viewModels.GameViewModel;
 
 public  class OnlineGameScene extends AnchorPane {
 
@@ -80,26 +80,30 @@ public  class OnlineGameScene extends AnchorPane {
         t.start();
     }
     
-     Thread t = new Thread(){
+    
+   Thread t = new Thread() {
             @Override
             public void run() {
-                while(true){ 
-                    gameViewModel.getReadStream();
-                  if (gameViewModel.listUsersOnline!=null) {                  
-                      listUsersOnline = gameViewModel.listUsersOnline;
-                      System.out.println("list"+listUsersOnline.size());
-                       Platform.runLater(() -> {
-                          lstOnlinePlayers.setItems(listUsersOnline);
-                    });
-                      Repo.listUsersOnline = null; 
-                  }
-                  
-                 if (gameViewModel.requestConfirm !=null) {
-                        String gameRequest[] = gameViewModel.requestConfirm;
-                        if (gameViewModel.requestConfirm[1].equals("yes")) {
-                            Scene scene = new Scene(new OnlineGame(myStage, true));
+                while (true) {
+ 
+                    ////// Check for new list /////////
+                     ObservableList<String> list = gameViewModel.getListUsersOnline();
+                    if ( list != null) {
+                        listUsersOnline = list;
+                        Platform.runLater(() -> {
+                            lstOnlinePlayers.setItems(listUsersOnline);
+                        });
+                    }
+                    
+                
+                    ////// Check for new Confirm ///////
+                    String gameRequest[] = gameViewModel.getRequestConfirm();
+                    if (gameRequest != null) {
+                      
+                        if (gameRequest[1].equals("yes")) {
+                            Scene s = new Scene(new OnlineGame(myStage, true));
                             Platform.runLater(() -> {
-                                myStage.setScene(scene);
+                                myStage.setScene(s);
                             });
                         } else {
                            Platform.runLater(() -> {
@@ -108,17 +112,20 @@ public  class OnlineGameScene extends AnchorPane {
                         a.show();
                         });
                         }
-                        Repo.requestConfirm = null;
                     }
-                   
-                   if (gameViewModel.gameRequest!=null) {
-                        gameRequest =  gameViewModel.gameRequest ;
+
+               
+                    ////// Check for new Request ///////
+                    String user = gameViewModel.getGameRequest();
+                    if (user != null) {
+                       
                         Platform.runLater(() -> {
                             ButtonType ok = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);                            
                             ButtonType no = new ButtonType("NO", ButtonBar.ButtonData.CANCEL_CLOSE);
-                            Alert alert = new Alert(AlertType.NONE,"Request from "+gameRequest,ok, no);
+                            Alert alert = new Alert(AlertType.NONE,"Request from "+user,ok, no);
                             alert.setTitle("Confirm... ");
-                                            
+                             
+                            
                              new java.util.Timer().schedule(
                                     new java.util.TimerTask() {
                                 @Override
@@ -131,26 +138,25 @@ public  class OnlineGameScene extends AnchorPane {
                             );
                             
                             Optional<ButtonType> result = alert.showAndWait();
+                            
                             if (result.orElse(no) == ok) {
-                                //String gameRequest[] = Repo.requestConfirm;
-                                Scene scene = new Scene(new OnlineGame(myStage,false));
-                                myStage.setScene(scene);
-                               gameViewModel.sendRequestConfirm(gameRequest, "yes");
+                              
+                                Scene s1 = new Scene(new OnlineGame(myStage,false));
+                                myStage.setScene(s1);
+                               gameViewModel.sendRequestConfirm(user, "yes");
                             }else  {
-                               gameViewModel.sendRequestConfirm(gameRequest, "no");
+                               gameViewModel.sendRequestConfirm(user, "no");
                             }
                            
                         });
-                        Repo.gameRequest = null;
-                       }
-                    
-
+                       
+                    }
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(OnlineGameScene.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }       
-            }           
+                }
+            }
         };
 }

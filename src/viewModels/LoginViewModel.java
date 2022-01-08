@@ -1,10 +1,10 @@
 
-package xogameclient.viewModels;
+package viewModels;
 
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
-import xogameclient.pojo.LoginModel;
-import xogameclient.repository.Repo;
+import pojo.LoginModel;
+import repository.Repo;
 
 public class LoginViewModel {
     private Repo repo;

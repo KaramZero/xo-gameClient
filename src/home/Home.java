@@ -1,7 +1,7 @@
-package xogameclient.home;
+package home;
 
-import xogameclient.localPlayingMode.LocalPlayingScene;
-import xogameclient.onlineMode.OnlineLoginScene;
+import localPlayingMode.LocalPlayingScene;
+import onlineMode.OnlineLoginScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -17,8 +17,9 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
-import xogameclient.onlineMode.OnlineMode;
-import xogameclient.vsPcMode.VsPcScene;
+import onlineMode.OnlineGameScene;
+import onlineMode.OnlineMode;
+import vsPcMode.VsPcScene;
 
 public  class Home extends AnchorPane {
 
@@ -31,15 +32,17 @@ public  class Home extends AnchorPane {
     protected final Button btnVsPc;
     protected final Label label;
     private Stage myStage;
+    public static boolean  onlineFlag =false;
+    public static Scene onlineScene;
     
-
     public Home(Stage stage) {
 
+        myStage = stage;
         btnLocal = new Button();
         btnOnline = new Button();
         btnVsPc = new Button();
         label = new Label();
-        myStage = stage;
+        
         closeLBL = new Label();
         minimizeLBL = new Label();
 
@@ -106,8 +109,13 @@ public  class Home extends AnchorPane {
         btnOnline.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-             Scene scene = new Scene(new OnlineMode(stage));
-            myStage.setScene(scene);
+                if(onlineFlag){
+                  myStage.setScene(onlineScene);
+                }
+                else{
+                    Scene scene = new Scene(new OnlineMode(stage));
+                    myStage.setScene(scene);
+                }
             }
         });
 

@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xogameclient.vsPcMode.levels;
+package vsPcMode.levels;
 
 /**
  *
  * @author karam
  */
 public class HardLevel {
-
 
     static char player = 'X', opponent = 'O';
 
@@ -193,5 +192,4 @@ public class HardLevel {
     }
 }
 
-// This code is contributed by PrinciRaj1992
 

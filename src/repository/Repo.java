@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xogameclient.repository;
+package repository;
 
-import xogameclient.pojo.LoginModel;
+import pojo.LoginModel;
 import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.FileNotFoundException;
@@ -21,7 +21,7 @@ import javafx.collections.ObservableList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import xogameclient.vsPcMode.levels.Move;
+import vsPcMode.levels.Move;
 
 public class Repo extends Thread {
 
@@ -39,7 +39,6 @@ public class Repo extends Thread {
 
     private Repo() {
         try {
-            System.out.println("ip"+IpAddress);
             mySocket = new Socket(IpAddress, 7001);
             ps = new PrintStream(mySocket.getOutputStream());
             dis = new DataInputStream(mySocket.getInputStream());
@@ -116,7 +115,6 @@ public class Repo extends Thread {
                 for (int i = 0; i <jsonArray.length(); i++) {
                     listUsersOnline.add(jsonArray.getString(i));
                 }
-                 System.out.println("size"+listUsersOnline.size());
              }
             else if (json.get("header").equals("request")) {
                 gameRequest =new String();

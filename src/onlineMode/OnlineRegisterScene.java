@@ -1,6 +1,6 @@
-package xogameclient.onlineMode;
+package onlineMode;
 
-import xogameclient.onlineMode.OnlineGameScene;
+import onlineMode.OnlineGameScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -13,9 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.stage.Stage;
-import static xogameclient.home.Home.bGround;
-import static xogameclient.home.Home.closeLBL;
-import static xogameclient.home.Home.minimizeLBL;
+import static home.Home.bGround;
+import static home.Home.closeLBL;
+import static home.Home.minimizeLBL;
 
 public  class OnlineRegisterScene extends AnchorPane {
 

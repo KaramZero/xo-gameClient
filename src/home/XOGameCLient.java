@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xogameclient.home;
+package home;
 
-import xogameclient.home.Home;
+import home.Home;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,10 +13,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-/**
- *
- * @author karam
- */
 public class XOGameCLient extends Application {
     
     @Override
@@ -27,15 +23,15 @@ public class XOGameCLient extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         
-        stage.initStyle(StageStyle.UNDECORATED);
+       // stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
     @Override
     public void stop() throws Exception {
-System.exit(0);
+        System.exit(0);
     }
-    
+
 
     /**
      * @param args the command line arguments

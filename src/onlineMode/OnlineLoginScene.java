@@ -1,5 +1,6 @@
-package xogameclient.onlineMode;
+package onlineMode;
 
+import home.Home;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -8,11 +9,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import static xogameclient.home.Home.bGround;
-import static xogameclient.home.Home.closeLBL;
-import static xogameclient.home.Home.minimizeLBL;
-import xogameclient.pojo.LoginModel;
-import xogameclient.viewModels.LoginViewModel;
+import static home.Home.bGround;
+import static home.Home.closeLBL;
+import static home.Home.minimizeLBL;
+import pojo.LoginModel;
+import viewModels.LoginViewModel;
 
 
 public  class OnlineLoginScene extends AnchorPane {
@@ -71,8 +72,9 @@ public  class OnlineLoginScene extends AnchorPane {
                     loginModel.setPassword(password);
                     loginViewModel.sendLoginData(loginModel);
                      if(loginViewModel.getLoginData().equals("true")){
-                         Scene scene = new Scene(new OnlineGameScene(myStage));
-                         myStage.setScene(scene);
+                          Home.onlineFlag = true;
+                          Home.onlineScene = new Scene(new OnlineGameScene(myStage));
+                         myStage.setScene(Home.onlineScene);
                      }
                      else{
                                Alert a = new Alert(Alert.AlertType.ERROR);

@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xogameclient.pojo;
+package xo;
 
 import javafx.scene.control.Button;
 
 public class XOModel {
-    
-    
+   
     //check any player win 
     public static boolean checkWin(char [][] myBoard){
         boolean result = false;
