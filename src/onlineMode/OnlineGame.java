@@ -8,7 +8,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +19,6 @@ import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import xo.XOModel;
 import viewModels.GameViewModel;
-import vsPcMode.VsPcScene;
 import vsPcMode.levels.Move;
 import static xo.XOBoard.backBTN;
 import static xo.XOBoard.boardLBL;
@@ -103,12 +101,13 @@ public class OnlineGame extends AnchorPane {
             @Override
             public void handle(MouseEvent event) {
                 if (move!=null) {
-                    gameViewModel.sendMove(-1, -1,move);
-                    clearBoard();
+                    gameViewModel.sendMove(-1, -1,move);}
+                
+                clearBoard();
                 t.stop();
                 Scene sc = new Scene(new OnlineGameScene(myStage));
                 stage.setScene(Home.onlineScene);
-                }
+                
                 
             }
         });
@@ -260,10 +259,11 @@ public class OnlineGame extends AnchorPane {
                     move = "full";
                     clearBoard();
                     setDisableBtn(true);
-                     backBTN.setDisable(false);
+                    backBTN.setDisable(false);
                 }
+                 gameViewModel.sendMove(xCord, yCord, move);
             }
-            gameViewModel.sendMove(xCord, yCord, move);
+           
         }
         
         t.resume();
