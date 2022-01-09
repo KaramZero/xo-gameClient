@@ -94,8 +94,7 @@ public  class OnlineMode extends AnchorPane {
                                a.setContentText("Ip Address isn't valid");
                                a.show();
                 }
-                }
-               
+                }              
             }
         });
 

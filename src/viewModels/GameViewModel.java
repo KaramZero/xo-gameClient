@@ -22,7 +22,7 @@ public class GameViewModel {
         repo = Repo.getInstance();      
     }
     
-     public void sendRequestGame(String username){
+    public void sendRequestGame(String username){
           repo.sendRequestGame(username);
     }
     public void sendRequestConfirm(String username, String res) {
@@ -30,13 +30,11 @@ public class GameViewModel {
     }
     public void sendMove(int x, int y , String move) {
         repo.sendMove(x, y,move);
-    }
-    
+    }  
     public void sendPlayingChar(String s){
     
         repo.sendPlayingChar(s);
-    }
-    
+    }    
     public ObservableList<String> getListUsersOnline() {
 
         ObservableList<String> listUsersOnline = Repo.listUsersOnline;
@@ -44,39 +42,29 @@ public class GameViewModel {
         return listUsersOnline;
 
     }
-
     public String getGameRequest() {
 
         String gameRequest = Repo.gameRequest;
         Repo.gameRequest = null;
         return gameRequest;
     }
-
     public String[] getRequestConfirm() {
 
         String requestConfirm[] = Repo.requestConfirm;
         Repo.requestConfirm = null;
         return requestConfirm;
     }
-
     public Move getMove() {
 
         Move move = Repo.move;
         Repo.move = null;
         return move;
     }
-
     public String getPlayingChar() {
 
         String t = Repo.playingChar;
         Repo.playingChar = null;
         return t;
 
-    }
-
-    public String getState() {
-        String t = Repo.state;
-        Repo.state = null;
-        return t;
     }
 }

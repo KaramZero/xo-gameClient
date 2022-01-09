@@ -10,10 +10,12 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,14 +29,12 @@ public class Repo extends Thread {
     private PrintStream ps;
     private JSONObject json;
     private String response;
-
     public static String requestConfirm[];
     public static ObservableList<String> listUsersOnline;
     public static String gameRequest;
     public static Move move;
     public static String IpAddress;
     public static String playingChar;
-    public static String state;
 
     private Repo() {
         try {
@@ -48,11 +48,16 @@ public class Repo extends Thread {
             requestConfirm = null;
             move = null;
             playingChar = null;
-            state = null;
+        
 
-        } catch (IOException ex) {
-            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }catch (SocketException ex) {
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+                               a.setContentText("Internet connection error");
+                               a.show();
+        } 
+        catch (IOException ex) {
+                
+        }        
     }
 
     public static Repo getInstance() {
@@ -72,7 +77,6 @@ public class Repo extends Thread {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     public String getLoginData() {
         try {
             response = dis.readLine();
@@ -84,7 +88,6 @@ public class Repo extends Thread {
         }
         return response;
     }
-
     public void sendRegisterData(LoginModel loginData) {
         try {
             json.put("header", "register");
@@ -131,11 +134,9 @@ public class Repo extends Thread {
                 move = new Move();
                 move.row = (int) json.get("row");
                 move.col = (int) json.get("col");
-                state = (String) json.getString("move");
             } else if (json.get("header").equals("playingChar")) {
 
                 playingChar = new String((String) json.get("char"));
-
             }
 
         } catch (IOException ex) {

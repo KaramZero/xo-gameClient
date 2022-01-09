@@ -52,12 +52,16 @@ public  class OnlineGameScene extends AnchorPane {
         lstOnlinePlayers.setPrefHeight(599.0);
         lstOnlinePlayers.setPrefWidth(200.0);   
         lstOnlinePlayers.setBackground(bGround); 
+        
         lstOnlinePlayers.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if(event.getClickCount()==2){
                 String username = new String();
                username = (String) lstOnlinePlayers.getSelectionModel().getSelectedItem();
+                    System.out.println("username"+username);
                gameViewModel.sendRequestGame(username);
+            }
             }
         });
                        
@@ -83,7 +87,7 @@ public  class OnlineGameScene extends AnchorPane {
             @Override
             public void run() {
                 while (true) {
- 
+                    
                     ////// Check for new list /////////
                      ObservableList<String> list = gameViewModel.getListUsersOnline();
                     if ( list != null) {
@@ -92,8 +96,7 @@ public  class OnlineGameScene extends AnchorPane {
                             lstOnlinePlayers.setItems(listUsersOnline);
                         });
                     }
-                    
-                
+                                    
                     ////// Check for new Confirm ///////
                     String gameRequest[] = gameViewModel.getRequestConfirm();
                     if (gameRequest != null) {
@@ -107,14 +110,24 @@ public  class OnlineGameScene extends AnchorPane {
                             });
                         } else {
                            Platform.runLater(() -> {
-                        Alert a = new Alert(AlertType.INFORMATION);
-                        a.setContentText(gameRequest[0]+" says "+ gameRequest[1]);
+                          ButtonType ok = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE); 
+                      Alert a = new Alert(AlertType.INFORMATION,gameRequest[0]+" says "+ gameRequest[1],ok);
+                         new java.util.Timer().schedule(
+                                    new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    Button cancelButton =( Button ) a.getDialogPane().lookupButton(ok);
+                                    Platform.runLater(() -> { cancelButton.fire(); });
+                                }
+                            },
+                                    5000
+                            );
+                            
                         a.show();
                         });
                         }
                     }
 
-               
                     ////// Check for new Request ///////
                     String user = gameViewModel.getGameRequest();
                     if (user != null) {
