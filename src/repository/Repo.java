@@ -101,17 +101,19 @@ public class Repo extends Thread {
         }
     }
 
-    /*  public String getRegisterData() {
+    public String getRegisterData() {
+        String str =null;
         try {
             str = dis.readLine();
+            if (str.equals("true")) {
+            t.start();
+        }
+       
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (str.equals("true")) {
-            t.start();
-        }
-        return str;
-    }*/
+         return str;
+    }
 
     public void readStream() {
         try {
