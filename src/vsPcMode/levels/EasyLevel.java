@@ -9,9 +9,13 @@ package vsPcMode.levels;
  *
  * @author karam
  */
-public class EasyLevel {
+public class EasyLevel implements Level{
+
+    public EasyLevel() {
+    }
     
-     public static Move findEasyMove(char[][] board,char c){
+    
+     public  Move findMove(char[][] board,char c){
          
          // Check Winning 
       Move temp = checkWinning(board, c);

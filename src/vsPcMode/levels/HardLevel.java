@@ -9,7 +9,11 @@ package vsPcMode.levels;
  *
  * @author karam
  */
-public class HardLevel {
+public class HardLevel implements Level {
+
+    public HardLevel() {
+    }
+    
 
     static char player = 'X', opponent = 'O';
 
@@ -150,7 +154,7 @@ public class HardLevel {
 
 // This will return the best possible
 // move for the player
-   public static Move findBestMove(char board[][],char c){
+   public  Move findMove(char board[][],char c){
        player = c;
        if(player=='X')
            opponent='O';

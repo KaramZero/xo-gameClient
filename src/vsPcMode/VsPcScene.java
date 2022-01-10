@@ -2,12 +2,10 @@ package vsPcMode;
 
 import vsPcMode.levels.Move;
 import vsPcMode.levels.HardLevel;
-import vsPcMode.levels.EasyLevel;
 import home.Home;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,10 +17,12 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import vsPcMode.levels.EasyLevel;
+import vsPcMode.levels.Level;
+import vsPcMode.levels.NormalLevel;
 import xo.XOModel;
 import static xo.XOModel.checkWin;
 import static xo.XOModel.isEmptyBoard;
-import xo.XOBoard;
 import static xo.XOBoard.buttons;
 import static xo.XOBoard.clearBoard;
 import static xo.XOBoard.myBoard;
@@ -37,6 +37,7 @@ public class VsPcScene extends AnchorPane {
     private Label newGameBTN;
     private Label boardLBL;
     private Move pcMove;
+    private Level level;
     boolean flag = true;
 
     Image player = new Image("Icons/x.png", 60, 60, true, true);
@@ -72,11 +73,9 @@ public class VsPcScene extends AnchorPane {
                 clearBoard();
                 setDisableBtn(true);
             } else {
-                if (flag) {
-                    pcMove = HardLevel.findBestMove(myBoard, pcChar);
-                } else {
-                    pcMove = EasyLevel.findEasyMove(myBoard, pcChar);
-                }
+               
+                    pcMove = level.findMove(myBoard, pcChar);
+              
                 buttons[pcMove.row][pcMove.col].setGraphic(new ImageView(pc));
                 myBoard[pcMove.row][pcMove.col] = pcChar;
 
@@ -111,19 +110,32 @@ public class VsPcScene extends AnchorPane {
         getChildren().add(boardLBL);
 
         Button hard = new Button();
-        hard.setLayoutX(310);
+        hard.setLayoutX(200);
         hard.setLayoutY(200);
         hard.setPrefSize(80, 80);
-        hard.setText("Hard");
+        hard.setBackground(null);
+        hard.setGraphic(new ImageView(new Image("Icons/hard.png",80,80,true,true)));
+       
 
         Button normal = new Button();
-        normal.setLayoutX(500);
+        normal.setLayoutX(320);
         normal.setLayoutY(200);
         normal.setPrefSize(80, 80);
-        normal.setText("Normal");
+        normal.setBackground(null);
+        normal.setGraphic(new ImageView(new Image("Icons/normal.png",80,80,true,true)));
+        
+        
+        Button easy = new Button();
+        easy.setLayoutX(440);
+        easy.setLayoutY(200);
+        easy.setPrefSize(80, 80);
+        easy.setBackground(null);
+        easy.setGraphic(new ImageView(new Image("Icons/easy.png",80,80,true,true)));
+      
 
         getChildren().add(hard);
         getChildren().add(normal);
+        getChildren().add(easy);
 
         normal.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -132,11 +144,14 @@ public class VsPcScene extends AnchorPane {
                 setButtons();
                 clearBoard();
                 setDisableBtn(true);
-                flag = false;
+                level = new NormalLevel();
                 btnO.setDisable(false);
                 btnX.setDisable(false);
+                
                 getChildren().remove(hard);
                 getChildren().remove(normal);
+                getChildren().remove(easy);
+                
 
             }
         });
@@ -148,14 +163,37 @@ public class VsPcScene extends AnchorPane {
                 setButtons();
                 clearBoard();
                 setDisableBtn(true);
-                flag = true;
+                level = new HardLevel();
+                btnO.setDisable(false);
+                btnX.setDisable(false);
+
+                
+                getChildren().remove(hard);
+                getChildren().remove(normal);
+                getChildren().remove(easy);
+                
+            }
+        });
+        
+         easy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                setBTNs();
+                setButtons();
+                clearBoard();
+                setDisableBtn(true);
+                level = new EasyLevel();
                 btnO.setDisable(false);
                 btnX.setDisable(false);
 
                 getChildren().remove(hard);
                 getChildren().remove(normal);
+                getChildren().remove(easy);
+                
             }
         });
+
 
         setId("AnchorPane");
         setPrefHeight(650);

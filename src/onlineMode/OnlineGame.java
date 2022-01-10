@@ -53,6 +53,8 @@ public class OnlineGame extends AnchorPane {
         myStage = stage;
         gameViewModel = new GameViewModel();
         
+        move = "playing";
+        
         t.start();
         t.suspend();
 
@@ -100,7 +102,7 @@ public class OnlineGame extends AnchorPane {
         backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (move!=null) {
+                if (move.equals("playing")) {
                     gameViewModel.sendMove(-1, -1,move);}
                 
                 clearBoard();
@@ -191,13 +193,13 @@ public class OnlineGame extends AnchorPane {
         @Override
         public void run() {
             while (true) {
-                move = null;
+              
                 Move m = gameViewModel.getMove();
                 if (m != null) {
                     if (m.row == -1 ) {
                         ///// Show winner here
                         System.out.println(" i win :D ");
-                        move = "win";
+                       
                     } 
                     else {
                         myBoard[m.row][m.col] = playerTwoChar;
@@ -206,13 +208,13 @@ public class OnlineGame extends AnchorPane {
                         });
                         playFlag = true;
                         if (XOModel.checkWin(myBoard)){                            
-                            move = "lose";
+                          
                             clearBoard();
                             setDisableBtn(true);
                             backBTN.setDisable(false);
 
                         } else if (!(XOModel.isEmptyBoard(myBoard))) {
-                            move = "full";
+                           
                             clearBoard();
                             setDisableBtn(true);
                             backBTN.setDisable(false);
@@ -232,7 +234,7 @@ public class OnlineGame extends AnchorPane {
     EventHandler a = (EventHandler) (Event event) -> {
         Button btnTemp = ((Button) event.getSource());
         if (playFlag) {
-            move = null;
+          
             int xCord = 0, yCord = 0;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
@@ -246,7 +248,7 @@ public class OnlineGame extends AnchorPane {
             if (myBoard[xCord][yCord] == '_') {
                 btnTemp.setGraphic(new ImageView(player));
                 myBoard[xCord][yCord] = playerChar;
-                move = "playing";
+               
                 playFlag = false;
                 
                 if (checkWin(myBoard)) {

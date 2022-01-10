@@ -7,9 +7,14 @@ package vsPcMode.levels;
 
 import vsPcMode.levels.Move;
 
-public class NormalLevel {
+public class NormalLevel implements Level {
+
+    public NormalLevel() {
+    }
+
     
-     public static Move findNormalMove(char[][] board,char c){
+    
+     public Move findMove(char[][] board,char c){
          
          // Check Winning 
        Move temp = checkWinning(board, c);
@@ -34,7 +39,7 @@ public class NormalLevel {
         return temp;
     }
     
-    private static Move checkWinning(char[][] board,char c){
+    private Move checkWinning(char[][] board,char c){
       Move temp = new Move();
             //   Check for winning Rows
         for(int i = 0 ; i < 3 ; i++)
