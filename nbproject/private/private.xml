@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/G:/ITI/Java/xo-game/src/home/XOGameCLient.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/vsPcMode/levels/Level.java</file>
-            <file>file:/G:/ITI/Java/xo-game/src/vsPcMode/levels/EasyLevel.java</file>
-            <file>file:/G:/ITI/Java/xo-game/src/vsPcMode/VsPcScene.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/home/Home.java</file>
-            <file>file:/G:/ITI/Java/xo-game/src/vsPcMode/levels/NormalLevel.java</file>
-            <file>file:/G:/ITI/Java/xo-game/src/xo/XOBoard.java</file>
-            <file>file:/G:/ITI/Java/xo-game/src/vsPcMode/levels/HardLevel.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineGame.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineGameScene.java</file>
         </group>
     </open-files>
 </project-private>

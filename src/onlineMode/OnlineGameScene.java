@@ -109,22 +109,26 @@ public  class OnlineGameScene extends AnchorPane {
                                 myStage.setScene(s);
                             });
                         } else {
-                           Platform.runLater(() -> {
-                          ButtonType ok = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE); 
-                      Alert a = new Alert(AlertType.INFORMATION,gameRequest[0]+" says "+ gameRequest[1],ok);
-                         new java.util.Timer().schedule(
-                                    new java.util.TimerTask() {
-                                @Override
-                                public void run() {
-                                    Button cancelButton =( Button ) a.getDialogPane().lookupButton(ok);
-                                    Platform.runLater(() -> { cancelButton.fire(); });
-                                }
-                            },
-                                    5000
-                            );
-                            
-                        a.show();
-                        });
+                            Platform.runLater(() -> {
+                                ButtonType ok = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+                                Alert a = new Alert(AlertType.INFORMATION, gameRequest[0] + " says " + gameRequest[1], ok);
+                                a.setX(myStage.getX() + 250);
+                                a.setY(myStage.getY() + 250);
+                                new java.util.Timer().schedule(
+                                        new java.util.TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        Button cancelButton = (Button) a.getDialogPane().lookupButton(ok);
+                                        Platform.runLater(() -> {
+                                            cancelButton.fire();
+                                        });
+                                    }
+                                },
+                                        5000
+                                );
+
+                                a.show();
+                            });
                         }
                     }
 
@@ -136,6 +140,8 @@ public  class OnlineGameScene extends AnchorPane {
                             ButtonType ok = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);                            
                             ButtonType no = new ButtonType("NO", ButtonBar.ButtonData.CANCEL_CLOSE);
                             Alert alert = new Alert(AlertType.NONE,"Request from "+user,ok, no);
+                            alert.setX(myStage.getX()+250);
+                            alert.setY(myStage.getY()+250);
                             alert.setTitle("Confirm... ");
                              
                             

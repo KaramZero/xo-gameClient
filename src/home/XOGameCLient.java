@@ -23,7 +23,7 @@ public class XOGameCLient extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         
-       // stage.initStyle(StageStyle.UNDECORATED);
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
