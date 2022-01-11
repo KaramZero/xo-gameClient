@@ -6,19 +6,35 @@
 package home;
 
 import home.Home;
+import java.io.File;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class XOGameCLient extends Application {
+    
+    
+    private Media sound;
+    public static MediaPlayer mediaPlayer ;
+
     
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = new Home(stage);
         Scene scene = new Scene(root);
+        
+        sound = new Media(new File("sound.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);       
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnEndOfMedia(() -> {
+            mediaPlayer.seek(Duration.ZERO);
+        });
+        mediaPlayer.play();
+       
         
         stage.setScene(scene);
         stage.setResizable(false);

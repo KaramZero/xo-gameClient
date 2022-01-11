@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import vsPcMode.levels.EasyLevel;
 import vsPcMode.levels.Level;
 import vsPcMode.levels.NormalLevel;
@@ -101,32 +104,31 @@ public class VsPcScene extends AnchorPane {
         newGameBTN = new Label();
         boardLBL = new Label();
         pcMove = new Move();
-
+      
+        
         boardLBL.setLayoutX(310);
         boardLBL.setLayoutY(210);
         boardLBL.setPrefSize(270, 270);
         boardLBL.setGraphic(new ImageView(new Image("Icons/board.png", 270, 270, true, true)));
 
-        getChildren().add(boardLBL);
-
         Button hard = new Button();
-        hard.setLayoutX(200);
-        hard.setLayoutY(200);
+        hard.setLayoutX(550);
+        hard.setLayoutY(400);
         hard.setPrefSize(80, 80);
         hard.setBackground(null);
         hard.setGraphic(new ImageView(new Image("Icons/hard.png",80,80,true,true)));
        
 
         Button normal = new Button();
-        normal.setLayoutX(320);
-        normal.setLayoutY(200);
+        normal.setLayoutX(550);
+        normal.setLayoutY(300);
         normal.setPrefSize(80, 80);
         normal.setBackground(null);
         normal.setGraphic(new ImageView(new Image("Icons/normal.png",80,80,true,true)));
         
         
         Button easy = new Button();
-        easy.setLayoutX(440);
+        easy.setLayoutX(550);
         easy.setLayoutY(200);
         easy.setPrefSize(80, 80);
         easy.setBackground(null);
@@ -147,6 +149,8 @@ public class VsPcScene extends AnchorPane {
                 level = new NormalLevel();
                 btnO.setDisable(false);
                 btnX.setDisable(false);
+                boardLBL.setDisable(false);
+
                 
                 getChildren().remove(hard);
                 getChildren().remove(normal);
@@ -186,6 +190,7 @@ public class VsPcScene extends AnchorPane {
                 level = new EasyLevel();
                 btnO.setDisable(false);
                 btnX.setDisable(false);
+
 
                 getChildren().remove(hard);
                 getChildren().remove(normal);
@@ -274,6 +279,8 @@ public class VsPcScene extends AnchorPane {
 
     }
     private void setButtons() {
+        
+        getChildren().add(boardLBL);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setOnAction(a);
