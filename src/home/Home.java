@@ -1,8 +1,6 @@
 package home;
 
-import javafx.application.Platform;
 import localPlayingMode.LocalPlayingScene;
-import onlineMode.OnlineLoginScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -17,31 +15,27 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import onlineMode.OnlineGameScene;
 import onlineMode.OnlineMode;
 import vsPcMode.VsPcScene;
 
-public  class Home extends AnchorPane {
+public class Home extends AnchorPane {
 
     public static Label closeLBL;
     public static Label minimizeLBL;
     public static Label soundLBL;
     public static Background bGround;
-    
+
     protected final Button btnLocal;
     protected final Button btnOnline;
     protected final Button btnVsPc;
     protected final Label label;
     private Stage myStage;
-    public static boolean  onlineFlag = false;
-    boolean soundFlag = true;
-    
+    public static boolean onlineFlag = false;
+
     public static Scene onlineScene;
-    
+
     public Home(Stage stage) {
 
         myStage = stage;
@@ -49,11 +43,10 @@ public  class Home extends AnchorPane {
         btnOnline = new Button();
         btnVsPc = new Button();
         label = new Label();
-        
+
         closeLBL = new Label();
         minimizeLBL = new Label();
         soundLBL = new Label();
-        
 
         Image closeIMG = new Image("Icons/close.png", 50, 50, true, true);
         Image miniIMG = new Image("Icons/minimize.png", 50, 50, true, true);
@@ -70,25 +63,21 @@ public  class Home extends AnchorPane {
         closeLBL.setOnMouseClicked((MouseEvent event) -> {
             System.exit(0);
         });
-        
+
         soundLBL.setLayoutX(30);
         soundLBL.setLayoutY(5);
         soundLBL.setPrefSize(50, 50);
         soundLBL.setGraphic(new ImageView(unmute));
         soundLBL.setOnMouseClicked((MouseEvent event) -> {
-          if(soundFlag){
-              soundFlag = false;
-              soundLBL.setGraphic(new ImageView(mute));
-              XOGameCLient.mediaPlayer.pause();
-          }else{
-              soundFlag = true;
-              soundLBL.setGraphic(new ImageView(unmute));
-              XOGameCLient.mediaPlayer.play();          
-          }
+            if (XOGameCLient.mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                soundLBL.setGraphic(new ImageView(mute));
+                XOGameCLient.mediaPlayer.pause();
+            } else {
+                soundLBL.setGraphic(new ImageView(unmute));
+                XOGameCLient.mediaPlayer.play();
+            }
         });
-                
-        
-        
+
         minimizeLBL.setLayoutX(750);
         minimizeLBL.setLayoutY(5);
         minimizeLBL.setPrefSize(50, 50);
@@ -99,16 +88,14 @@ public  class Home extends AnchorPane {
                 stage.setIconified(true);
             }
         });
-        
-        Image back =new Image("Icons/Back.jpg");
-       
+
+        Image back = new Image("Icons/Back.jpg");
+
         BackgroundImage bImg = new BackgroundImage(back, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-       
-         bGround = new Background(bImg);
-       
+
+        bGround = new Background(bImg);
+
         setBackground(bGround);
-        getChildren().add(minimizeLBL);
-        getChildren().add(closeLBL);
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
@@ -123,9 +110,9 @@ public  class Home extends AnchorPane {
         btnLocal.setPrefWidth(150);
         btnLocal.setBackground(null);
         btnLocal.setGraphic(new ImageView(twoPlayersIMG));
-        
+
         btnLocal.setOnAction((event) -> {
-           Scene scene = new Scene(new LocalPlayingScene(stage));
+            Scene scene = new Scene(new LocalPlayingScene(stage));
             myStage.setScene(scene);
 
         });
@@ -137,14 +124,13 @@ public  class Home extends AnchorPane {
         btnOnline.setPrefWidth(150);
         btnOnline.setBackground(null);
         btnOnline.setGraphic(new ImageView(onlineIMg));
-        
+
         btnOnline.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(onlineFlag){
-                  myStage.setScene(onlineScene);
-                }
-                else{
+                if (onlineFlag) {
+                    myStage.setScene(onlineScene);
+                } else {
                     Scene scene = new Scene(new OnlineMode(stage));
                     myStage.setScene(scene);
                 }
@@ -158,10 +144,9 @@ public  class Home extends AnchorPane {
         btnVsPc.setPrefWidth(150);
         btnVsPc.setBackground(null);
         btnVsPc.setGraphic(new ImageView(vsPCIMG));
-        
-        
-         btnVsPc.setOnAction((event) -> {
-           Scene scene = new Scene(new VsPcScene(stage));
+
+        btnVsPc.setOnAction((event) -> {
+            Scene scene = new Scene(new VsPcScene(stage));
             myStage.setScene(scene);
         });
 
@@ -172,12 +157,13 @@ public  class Home extends AnchorPane {
         label.setPrefWidth(634.0);
         label.setText("Welcome to my Game");
 
+        getChildren().add(minimizeLBL);
+        getChildren().add(closeLBL);
         getChildren().add(soundLBL);
         getChildren().add(btnLocal);
         getChildren().add(btnOnline);
         getChildren().add(btnVsPc);
         getChildren().add(label);
-              
 
     }
 }

@@ -115,6 +115,8 @@ public class OnlineGame extends AnchorPane {
         });
 
 
+        
+        
         if (!myTurn) {
             getMyChar();
         }
