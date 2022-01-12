@@ -2,7 +2,6 @@ package Video;
 
 
 
-import home.Home;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -89,8 +88,11 @@ public class VideoModel extends AnchorPane implements Initializable {
                     Scene scene = new Scene(new VsPcScene(myStage));
                     myStage.setScene(scene);
                 }
-                else if(pageFlag == 3){
-                  Scene scene = new Scene(new OnlineGameScene(myStage));
+                else if (pageFlag == 3) {
+                    if (status.equals("Win")) {
+                        OnlineGameScene.score++;
+                    }
+                    Scene scene = new Scene(new OnlineGameScene(myStage));
                     myStage.setScene(scene);
                 }
            

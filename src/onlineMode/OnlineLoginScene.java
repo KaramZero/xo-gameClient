@@ -13,6 +13,7 @@ import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import javafx.scene.control.PasswordField;
+import modules.GameModule;
 import pojo.LoginModel;
 import modules.LoginModule;
 
@@ -73,6 +74,8 @@ public  class OnlineLoginScene extends AnchorPane {
                     loginModel.setPassword(password);
                     loginViewModel.sendLoginData(loginModel);
                      if(loginViewModel.getLoginData().equals("true")){
+                          OnlineGameScene.score = GameModule.getScore();
+       
                           Home.onlineFlag = true;
                           Home.onlineScene = new Scene(new OnlineGameScene(myStage));
                          myStage.setScene(Home.onlineScene);

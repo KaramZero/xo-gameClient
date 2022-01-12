@@ -77,7 +77,7 @@ public class GameModule {
         return t;
         
     }
-     public int getScore(){
+     public static int getScore(){
         return Repo.score;
         
     }

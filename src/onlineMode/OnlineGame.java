@@ -20,7 +20,6 @@ import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import java.io.File;
-import java.io.IOException;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import xo.XOModel;
@@ -130,7 +129,7 @@ public class OnlineGame extends AnchorPane {
                 clearBoard();
                 t.stop();
                 Scene sc = new Scene(new OnlineGameScene(myStage));
-                stage.setScene(Home.onlineScene);
+                stage.setScene(sc);
 
             }
         });
@@ -246,13 +245,17 @@ public class OnlineGame extends AnchorPane {
 
                 Move m = gameModule.getMove();
                 if (m != null) {
+                   
                     if (m.row == -1) {
                         clearBoard();
-                        t.stop();
-                        Scene s = new Scene(new VideoModel(myStage, "Win", 3));
+                        
                         Platform.runLater(() -> {
+                            t.stop();
+                            Scene s = new Scene(new VideoModel(myStage, "Win", 3));
                             myStage.setScene(s);
+                            
                         });
+                        
 
                     } else {
                         myBoard[m.row][m.col] = playerTwoChar;
@@ -329,6 +332,7 @@ public class OnlineGame extends AnchorPane {
                     setDisableBtn(true);
                     backBTN.setDisable(false);
                     gameModule.sendMove(xCord, yCord, move);
+                   
                     if (recordFlag) recordModel.saveRecord(recordArray,counter-1);
                     Scene s = new Scene(new VideoModel(myStage, "Win", 3));
                     myStage.setScene(s);

@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import modules.RegisterModule;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

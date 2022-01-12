@@ -14,6 +14,7 @@ import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import modules.GameModule;
 import modules.RegisterModule;
 import pojo.RegisterModel;
 
@@ -91,6 +92,7 @@ public  class OnlineRegisterScene extends AnchorPane {
                         registerModule.sendregisterData(registerModel);
 
                         if (registerModule.getregisterData().equals("true")) {
+                            OnlineGameScene.score = GameModule.getScore();
                             Scene scene = new Scene(new OnlineGameScene(myStage));
                             myStage.setScene(scene);
                         } else {

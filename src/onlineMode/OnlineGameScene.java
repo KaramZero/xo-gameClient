@@ -36,6 +36,7 @@ public  class OnlineGameScene extends AnchorPane {
     private Stage myStage;
     private GameModule gameModule;
     private ObservableList<String> listUsersOnline;
+    public static int score = 0  ;
 
     public OnlineGameScene(Stage stage) {
         myStage = stage;
@@ -46,7 +47,8 @@ public  class OnlineGameScene extends AnchorPane {
         label = new Label();
         labelScore = new Label();
         labelUsername = new Label();
-
+        
+       
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -67,7 +69,6 @@ public  class OnlineGameScene extends AnchorPane {
                 if (event.getClickCount() == 2) {
                     String username = new String();
                     username = (String) lstOnlinePlayers.getSelectionModel().getSelectedItem();
-                    System.out.println("username" + username);
                     gameModule.sendRequestGame(username);
                 }
             }
@@ -90,9 +91,8 @@ public  class OnlineGameScene extends AnchorPane {
         labelScore.setPrefHeight(40.0);
         labelScore.setPrefWidth(200.0);
         labelScore.setTextFill(Color.AQUA);
-        int score = gameModule.getScore();
-        System.out.println("score"+score);
-        labelScore.setText(String.valueOf(gameModule.getScore()));
+        
+        labelScore.setText(String.valueOf(score));
 
         getChildren().add(lstOnlinePlayers);
         getChildren().add(label);
