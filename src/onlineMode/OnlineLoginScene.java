@@ -12,16 +12,17 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import javafx.scene.control.PasswordField;
 import pojo.LoginModel;
 import viewModels.LoginViewModel;
 
 
 public  class OnlineLoginScene extends AnchorPane {
 
-    protected final TextField textField;
-    protected final TextField textField0;
-    protected final Button button;
-    protected final Button button0;
+    protected final TextField userNameTXT;
+    protected final PasswordField passwordTXT;
+    protected final Button loginBTN;
+    protected final Button registerBTN;
     private Stage myStage;
     private LoginModel loginModel;
     private LoginViewModel loginViewModel;
@@ -29,10 +30,10 @@ public  class OnlineLoginScene extends AnchorPane {
     public OnlineLoginScene(Stage stage) {
         
         myStage = stage;
-        textField = new TextField();
-        textField0 = new TextField();
-        button = new Button();
-        button0 = new Button();
+        userNameTXT = new TextField();
+        passwordTXT = new PasswordField();
+        loginBTN = new Button();
+        registerBTN = new Button();
         loginModel = new LoginModel();
         loginViewModel = new LoginViewModel();
 
@@ -43,30 +44,30 @@ public  class OnlineLoginScene extends AnchorPane {
         setPrefHeight(650.0);
         setPrefWidth(850.0);
 
-        textField.setLayoutX(277.0);
-        textField.setLayoutY(196.0);
-        textField.setPrefHeight(52.0);
-        textField.setPrefWidth(259.0);
-        textField.setPromptText("user name");
+        userNameTXT.setLayoutX(277.0);
+        userNameTXT.setLayoutY(196.0);
+        userNameTXT.setPrefHeight(52.0);
+        userNameTXT.setPrefWidth(259.0);
+        userNameTXT.setPromptText("user name");
 
-        textField0.setLayoutX(277.0);
-        textField0.setLayoutY(266.0);
-        textField0.setPrefHeight(52.0);
-        textField0.setPrefWidth(259.0);
-        textField0.setPromptText("Password");
+        passwordTXT.setLayoutX(277.0);
+        passwordTXT.setLayoutY(266.0);
+        passwordTXT.setPrefHeight(52.0);
+        passwordTXT.setPrefWidth(259.0);
+        passwordTXT.setPromptText("Password");
 
-        button.setLayoutX(419.0);
-        button.setLayoutY(401.0);
-        button.setMnemonicParsing(false);
-        button.setPrefHeight(52.0);
-        button.setPrefWidth(117.0);
-        button.setText("Login");
+        loginBTN.setLayoutX(419.0);
+        loginBTN.setLayoutY(401.0);
+        loginBTN.setMnemonicParsing(false);
+        loginBTN.setPrefHeight(52.0);
+        loginBTN.setPrefWidth(117.0);
+        loginBTN.setText("Login");
         
-         button.setOnAction(new EventHandler<ActionEvent>() {
+        loginBTN.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String username = textField.getText().trim();
-                String password = textField0.getText().trim();
+                String username = userNameTXT.getText().trim();
+                String password = passwordTXT.getText().trim();
                 if(!(username.isEmpty())&&(!(password.isEmpty()))){
                     loginModel.setUsername(username);
                     loginModel.setPassword(password);
@@ -86,14 +87,14 @@ public  class OnlineLoginScene extends AnchorPane {
         });
 
 
-        button0.setLayoutX(277.0);
-        button0.setLayoutY(403.0);
-        button0.setMnemonicParsing(false);
-        button0.setPrefHeight(52.0);
-        button0.setPrefWidth(117.0);
-        button0.setText("Sign Up");
+        registerBTN.setLayoutX(277.0);
+        registerBTN.setLayoutY(403.0);
+        registerBTN.setMnemonicParsing(false);
+        registerBTN.setPrefHeight(52.0);
+        registerBTN.setPrefWidth(117.0);
+        registerBTN.setText("Sign Up");
         
-        button0.setOnAction(new EventHandler<ActionEvent>() {
+        registerBTN.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Scene scene = new Scene(new OnlineRegisterScene(myStage));
@@ -101,10 +102,10 @@ public  class OnlineLoginScene extends AnchorPane {
             }
         });
         
-        getChildren().add(textField);
-        getChildren().add(textField0);
-        getChildren().add(button);
-        getChildren().add(button0);
+        getChildren().add(userNameTXT);
+        getChildren().add(passwordTXT);
+        getChildren().add(loginBTN);
+        getChildren().add(registerBTN);
         setBackground(bGround);
         getChildren().add(minimizeLBL);
         getChildren().add(closeLBL);
