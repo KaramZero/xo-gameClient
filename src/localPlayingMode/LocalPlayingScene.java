@@ -1,5 +1,6 @@
 package localPlayingMode;
 
+import Video.VideoModel;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -38,6 +39,7 @@ public class LocalPlayingScene extends AnchorPane {
     private Label labelWin;
     private Label boardLBL;
     boolean flag = true;
+    private Stage myStage;
     
     Image xIMG = new Image("Icons/x.png",60,60,true,true);
     ImageView x = new ImageView(xIMG);
@@ -79,6 +81,8 @@ public class LocalPlayingScene extends AnchorPane {
             labelWin.setGraphic(null);
            clearBoard();
            setDisableBtn(true);
+           Scene s= new Scene(new VideoModel(myStage,"Win",1));
+           myStage.setScene(s);
         }
         
         else if (!(isEmptyBoard(myBoard))) {
@@ -89,7 +93,7 @@ public class LocalPlayingScene extends AnchorPane {
     };    
    
     public LocalPlayingScene(Stage s) {
-
+        myStage=s;
         btnO = new Label();
         btnX = new Label();
         boardLBL = new Label();

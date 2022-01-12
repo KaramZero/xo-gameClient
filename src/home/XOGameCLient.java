@@ -29,11 +29,10 @@ public class XOGameCLient extends Application {
         
         sound = new Media(new File("sound.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(sound);       
-        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setAutoPlay(false);
         mediaPlayer.setOnEndOfMedia(() -> {
             mediaPlayer.seek(Duration.ZERO);
         });
-        mediaPlayer.play();
        
         
         stage.setScene(scene);

@@ -5,6 +5,7 @@
  */
 package repository;
 
+import home.Home;
 import pojo.LoginModel;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -13,9 +14,14 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,8 +122,11 @@ public class Repo extends Thread {
     }
 
     public void readStream() {
+
+         
         try {
             response = dis.readLine();
+            
             json = new JSONObject(response);
             if (json.get("header").equals("getOnlineUsers")) {
                 listUsersOnline = FXCollections.observableArrayList();
@@ -140,14 +149,16 @@ public class Repo extends Thread {
 
                 playingChar = new String((String) json.get("char"));
             }
-
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+        } 
+        
 
-    }
+    
 
     public void sendRequestGame(String username) {
         json = new JSONObject();
@@ -208,8 +219,11 @@ public class Repo extends Thread {
         @Override
         public void run() {
             while (true) {
-                readStream();
+                
+                    readStream();
+               
+                }
             }
-        }
+        
     };
 }

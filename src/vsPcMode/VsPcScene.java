@@ -1,5 +1,6 @@
 package vsPcMode;
 
+import Video.VideoModel;
 import vsPcMode.levels.Move;
 import vsPcMode.levels.HardLevel;
 import home.Home;
@@ -42,6 +43,7 @@ public class VsPcScene extends AnchorPane {
     private Move pcMove;
     private Level level;
     boolean flag = true;
+    Stage myStage;
 
     Image player = new Image("Icons/x.png", 60, 60, true, true);
     ImageView x = new ImageView(player);
@@ -72,6 +74,8 @@ public class VsPcScene extends AnchorPane {
             if (checkWin(myBoard)) {
                 clearBoard();
                 setDisableBtn(true);
+                Scene s = new Scene(new VideoModel(myStage, "Win", 2));
+                myStage.setScene(s);
             } else if (!(isEmptyBoard(myBoard))) {
                 clearBoard();
                 setDisableBtn(true);
@@ -83,9 +87,10 @@ public class VsPcScene extends AnchorPane {
                 myBoard[pcMove.row][pcMove.col] = pcChar;
 
                 if (XOModel.checkWin(myBoard)) {
-                    //  labelWin.setText(" Pc Wins :D ");
                     clearBoard();
                     setDisableBtn(true);
+                    Scene s = new Scene(new VideoModel(myStage, "Lose", 2));
+                    myStage.setScene(s);
                 } else if (!(XOModel.isEmptyBoard(myBoard))) {
                     //labelWin.setText(" No one wins .. Play again ");
                     clearBoard();
@@ -104,6 +109,7 @@ public class VsPcScene extends AnchorPane {
         newGameBTN = new Label();
         boardLBL = new Label();
         pcMove = new Move();
+        myStage = s;
       
         
         boardLBL.setLayoutX(310);

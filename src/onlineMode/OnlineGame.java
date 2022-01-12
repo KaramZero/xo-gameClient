@@ -1,5 +1,7 @@
 package onlineMode;
 
+import Record.RecordModel;
+import Video.VideoModel;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +19,10 @@ import home.Home;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import java.io.File;
+import java.io.IOException;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import xo.XOModel;
 import viewModels.GameViewModel;
 import vsPcMode.levels.Move;
@@ -38,6 +44,13 @@ public class OnlineGame extends AnchorPane {
     boolean flag = true;
     boolean playFlag = true;
     private String move;
+    RecordModel recordModel;
+    private Label RecordBTN;
+    boolean recordFlag;
+    File file;
+    ListView<String> list;
+    String[][] recordArray;
+    int counter;
 
     Image player = new Image("Icons/x.png", 60, 60, true, true);
     ImageView x = new ImageView(player);
@@ -49,12 +62,17 @@ public class OnlineGame extends AnchorPane {
     Stage myStage;
 
     public OnlineGame(Stage stage, boolean myTurn) {
+        counter = 0;
+        recordArray = new String[9][3];
+        recordModel = new RecordModel();
+        RecordBTN = new Label();
+        recordFlag = false;
+        list = new ListView<String>();
 
         myStage = stage;
         gameViewModel = new GameViewModel();
-        
         move = "playing";
-        
+
         t.start();
         t.suspend();
 
@@ -69,7 +87,6 @@ public class OnlineGame extends AnchorPane {
         setPrefHeight(650);
         setPrefWidth(850);
 
-        
         btnX.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -82,6 +99,8 @@ public class OnlineGame extends AnchorPane {
                 gameViewModel.sendPlayingChar("X");
 
                 setDisableBtn(false);
+
+                RecordBTN.setDisable(true);
             }
         });
         btnO.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -97,40 +116,56 @@ public class OnlineGame extends AnchorPane {
                 gameViewModel.sendPlayingChar("O");
 
                 setDisableBtn(false);
+
+                RecordBTN.setDisable(true);
             }
         });
         backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (move.equals("playing")) {
-                    gameViewModel.sendMove(-1, -1,move);}
-                
+                    gameViewModel.sendMove(-1, -1, move);
+                }
+
                 clearBoard();
                 t.stop();
                 Scene sc = new Scene(new OnlineGameScene(myStage));
                 stage.setScene(Home.onlineScene);
-                
-                
+
             }
         });
+        RecordBTN.setLayoutX(220);
+        RecordBTN.setLayoutY(60);
+        RecordBTN.setPrefSize(80, 80);
+        RecordBTN.setGraphic(new ImageView(new Image("Icons/record.png", 60, 60, true, true)));
 
+        RecordBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                recordFlag = true;
+                RecordBTN.setDisable(true);
 
-        
-        
+            }
+
+        });
+
         if (!myTurn) {
             getMyChar();
         }
-
+      
         setBackground(bGround);
+        
         Platform.runLater(() -> {
             getChildren().add(btnO);
             getChildren().add(btnX);
             getChildren().add(backBTN);
             getChildren().add(minimizeLBL);
             getChildren().add(closeLBL);
+            getChildren().add(RecordBTN);
         });
     }
-
+    
+   
     private void getMyChar() {
         btnO.setDisable(true);
         btnX.setDisable(true);
@@ -145,7 +180,7 @@ public class OnlineGame extends AnchorPane {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                     String playerChar = gameViewModel.getPlayingChar();
                     if (playerChar != null) {
                         if (playerChar.equals("O")) {
@@ -156,11 +191,13 @@ public class OnlineGame extends AnchorPane {
                         break;
                     }
                 }
+                RecordBTN.setDisable(true);
             }
 
         }.start();
 
     }
+
     private void seto() {
         player = new Image("Icons/o.png", 60, 60, true, true);
         playerTwo = new Image("Icons/x.png", 60, 60, true, true);
@@ -175,8 +212,9 @@ public class OnlineGame extends AnchorPane {
         buttons[0][0].fire();
 
     }
+
     private void setx() {
-        
+
         player = new Image("Icons/x.png", 60, 60, true, true);
         playerTwo = new Image("Icons/o.png", 60, 60, true, true);
         playerChar = 'X';
@@ -184,7 +222,6 @@ public class OnlineGame extends AnchorPane {
         btnX.setOnMouseClicked(null);
         btnO.setDisable(true);
         btnX.setDisable(false);
-        
 
         setDisableBtn(false);
         playFlag = false;
@@ -195,34 +232,52 @@ public class OnlineGame extends AnchorPane {
         @Override
         public void run() {
             while (true) {
-              
+
                 Move m = gameViewModel.getMove();
                 if (m != null) {
-                    if (m.row == -1 ) {
-                        ///// Show winner here
-                        System.out.println(" i win :D ");
-                       
-                    } 
-                    else {
+                    if (m.row == -1) {
+                        clearBoard();
+                        t.stop();
+                        Scene s = new Scene(new VideoModel(myStage, "Win", 3));
+                        Platform.runLater(() -> {
+                            myStage.setScene(s);
+                        });
+
+                    } else {
                         myBoard[m.row][m.col] = playerTwoChar;
                         Platform.runLater(() -> {
                             buttons[m.row][m.col].setGraphic(new ImageView(playerTwo));
                         });
+                        if (recordFlag) {
+                            recordArray[counter][0] = new String("" + playerTwoChar);
+                            recordArray[counter][1] = String.valueOf(m.row);
+                            recordArray[counter][2] = String.valueOf(m.col);
+                            counter++;
+                         }
                         playFlag = true;
-                        if (XOModel.checkWin(myBoard)){                            
-                          
+                        if (XOModel.checkWin(myBoard)) {
+
                             clearBoard();
                             setDisableBtn(true);
                             backBTN.setDisable(false);
+                            if (recordFlag) recordModel.saveRecord(recordArray,counter-1);
+                          
+                            Scene s = new Scene(new VideoModel(myStage, "Lose", 3));
+                            Platform.runLater(() -> {
+                                t.stop();
+                                myStage.setScene(s);
+                            });
 
                         } else if (!(XOModel.isEmptyBoard(myBoard))) {
-                           
+
                             clearBoard();
                             setDisableBtn(true);
                             backBTN.setDisable(false);
+                            if (recordFlag) recordModel.saveRecord(recordArray,counter-1);
+
                         }
                     }
-                         t.suspend();                   
+                    t.suspend();
                 }
                 try {
                     sleep(500);
@@ -236,7 +291,7 @@ public class OnlineGame extends AnchorPane {
     EventHandler a = (EventHandler) (Event event) -> {
         Button btnTemp = ((Button) event.getSource());
         if (playFlag) {
-          
+
             int xCord = 0, yCord = 0;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
@@ -250,26 +305,38 @@ public class OnlineGame extends AnchorPane {
             if (myBoard[xCord][yCord] == '_') {
                 btnTemp.setGraphic(new ImageView(player));
                 myBoard[xCord][yCord] = playerChar;
-               
+                if (recordFlag) {
+                    recordArray[counter][0] = new String("" + playerChar);
+                    recordArray[counter][1] = String.valueOf(xCord);
+                    recordArray[counter][2] = String.valueOf(yCord);
+                    counter++;
+                }
                 playFlag = false;
-                
+
                 if (checkWin(myBoard)) {
                     move = "win";
                     clearBoard();
+                    t.stop();
                     setDisableBtn(true);
                     backBTN.setDisable(false);
+                    gameViewModel.sendMove(xCord, yCord, move);
+                    if (recordFlag) recordModel.saveRecord(recordArray,counter-1);
+                    Scene s = new Scene(new VideoModel(myStage, "Win", 3));
+                    myStage.setScene(s);
 
                 } else if (!(isEmptyBoard(myBoard))) {
                     move = "full";
                     clearBoard();
                     setDisableBtn(true);
                     backBTN.setDisable(false);
-                }
-                 gameViewModel.sendMove(xCord, yCord, move);
+                    gameViewModel.sendMove(xCord, yCord, move);
+                    if (recordFlag) recordModel.saveRecord(recordArray, counter - 1);
+                } else
+                    gameViewModel.sendMove(xCord, yCord, move);
             }
-           
+
         }
-        
+
         t.resume();
     };
 

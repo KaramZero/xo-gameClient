@@ -1,5 +1,6 @@
 package home;
 
+import Record.recordedGamePlayerScene;
 import localPlayingMode.LocalPlayingScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,8 +32,9 @@ public class Home extends AnchorPane {
     protected final Button btnOnline;
     protected final Button btnVsPc;
     protected final Label label;
-    private Stage myStage;
+    public static Stage myStage;
     public static boolean onlineFlag = false;
+    private Label LoadBTN;
 
     public static Scene onlineScene;
 
@@ -43,6 +45,7 @@ public class Home extends AnchorPane {
         btnOnline = new Button();
         btnVsPc = new Button();
         label = new Label();
+        LoadBTN = new Label();
 
         closeLBL = new Label();
         minimizeLBL = new Label();
@@ -64,10 +67,22 @@ public class Home extends AnchorPane {
             System.exit(0);
         });
 
+        minimizeLBL.setLayoutX(750);
+        minimizeLBL.setLayoutY(5);
+        minimizeLBL.setPrefSize(50, 50);
+        minimizeLBL.setGraphic(new ImageView(miniIMG));
+        minimizeLBL.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setIconified(true);
+
+            }
+        });
+
         soundLBL.setLayoutX(30);
         soundLBL.setLayoutY(5);
         soundLBL.setPrefSize(50, 50);
-        soundLBL.setGraphic(new ImageView(unmute));
+        soundLBL.setGraphic(new ImageView(mute));
         soundLBL.setOnMouseClicked((MouseEvent event) -> {
             if (XOGameCLient.mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                 soundLBL.setGraphic(new ImageView(mute));
@@ -78,14 +93,15 @@ public class Home extends AnchorPane {
             }
         });
 
-        minimizeLBL.setLayoutX(750);
-        minimizeLBL.setLayoutY(5);
-        minimizeLBL.setPrefSize(50, 50);
-        minimizeLBL.setGraphic(new ImageView(miniIMG));
-        minimizeLBL.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        LoadBTN.setLayoutX(150);
+        LoadBTN.setLayoutY(150);
+        LoadBTN.setPrefSize(80, 80);
+        LoadBTN.setGraphic(new ImageView(new Image("Icons/recordedGames.png", 60, 60, true, true)));
+        LoadBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                stage.setIconified(true);
+                Scene scene = new Scene(new recordedGamePlayerScene(stage));
+                myStage.setScene(scene);
             }
         });
 
@@ -157,6 +173,7 @@ public class Home extends AnchorPane {
         label.setPrefWidth(634.0);
         label.setText("Welcome to my Game");
 
+        getChildren().add(LoadBTN);
         getChildren().add(minimizeLBL);
         getChildren().add(closeLBL);
         getChildren().add(soundLBL);
