@@ -84,7 +84,7 @@ public  class OnlineMode extends AnchorPane {
             public void handle(ActionEvent event) {
                 String ipAddress =txtIp.getText().trim();
                 if(!(ipAddress.isEmpty())){
-                if(Validation.isValid(ipAddress)){
+                if(Validation.isValidIP(ipAddress)){
                       Repo.IpAddress =ipAddress;
                     Scene scene = new Scene(new OnlineLoginScene(myStage));
                     myStage.setScene(scene); 

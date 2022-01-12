@@ -24,7 +24,7 @@ import java.io.IOException;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import xo.XOModel;
-import viewModels.GameViewModel;
+import modules.GameModule;
 import vsPcMode.levels.Move;
 import static xo.XOBoard.backBTN;
 import static xo.XOBoard.boardLBL;
@@ -40,7 +40,7 @@ import static xo.XOModel.isEmptyBoard;
 
 public class OnlineGame extends AnchorPane {
 
-    private GameViewModel gameViewModel;
+    private GameModule gameModule;
     boolean flag = true;
     boolean playFlag = true;
     private String move;
@@ -70,7 +70,7 @@ public class OnlineGame extends AnchorPane {
         list = new ListView<String>();
 
         myStage = stage;
-        gameViewModel = new GameViewModel();
+        gameModule = new GameModule();
         move = "playing";
 
         t.start();
@@ -96,7 +96,7 @@ public class OnlineGame extends AnchorPane {
                 playerTwoChar = 'O';
                 btnO.setDisable(true);
                 btnX.setOnMouseClicked(null);
-                gameViewModel.sendPlayingChar("X");
+                gameModule.sendPlayingChar("X");
 
                 setDisableBtn(false);
 
@@ -113,7 +113,7 @@ public class OnlineGame extends AnchorPane {
 
                 btnO.setOnMouseClicked(null);
                 btnX.setDisable(true);
-                gameViewModel.sendPlayingChar("O");
+                gameModule.sendPlayingChar("O");
 
                 setDisableBtn(false);
 
@@ -124,7 +124,7 @@ public class OnlineGame extends AnchorPane {
             @Override
             public void handle(MouseEvent event) {
                 if (move.equals("playing")) {
-                    gameViewModel.sendMove(-1, -1, move);
+                    gameModule.sendMove(-1, -1, move);
                 }
 
                 clearBoard();
@@ -181,12 +181,12 @@ public class OnlineGame extends AnchorPane {
                         Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
-                    String er = gameViewModel.getErrors();
+                    String er = gameModule.getErrors();
                     if(er != null){
                     System.out.println("con error ");
                     }
 
-                    String playerChar = gameViewModel.getPlayingChar();
+                    String playerChar = gameModule.getPlayingChar();
                     if (playerChar != null) {
                         if (playerChar.equals("O")) {
                             setx();
@@ -239,12 +239,12 @@ public class OnlineGame extends AnchorPane {
         public void run() {
             while (true) {
 
-                String er = gameViewModel.getErrors();
+                String er = gameModule.getErrors();
                 if (er != null) {
                     System.out.println("con error ");
                 }
 
-                Move m = gameViewModel.getMove();
+                Move m = gameModule.getMove();
                 if (m != null) {
                     if (m.row == -1) {
                         clearBoard();
@@ -267,7 +267,6 @@ public class OnlineGame extends AnchorPane {
                          }
                         playFlag = true;
                         if (XOModel.checkWin(myBoard)) {
-
                             clearBoard();
                             setDisableBtn(true);
                             backBTN.setDisable(false);
@@ -280,7 +279,6 @@ public class OnlineGame extends AnchorPane {
                             });
 
                         } else if (!(XOModel.isEmptyBoard(myBoard))) {
-
                             clearBoard();
                             setDisableBtn(true);
                             backBTN.setDisable(false);
@@ -330,7 +328,7 @@ public class OnlineGame extends AnchorPane {
                     t.stop();
                     setDisableBtn(true);
                     backBTN.setDisable(false);
-                    gameViewModel.sendMove(xCord, yCord, move);
+                    gameModule.sendMove(xCord, yCord, move);
                     if (recordFlag) recordModel.saveRecord(recordArray,counter-1);
                     Scene s = new Scene(new VideoModel(myStage, "Win", 3));
                     myStage.setScene(s);
@@ -340,10 +338,10 @@ public class OnlineGame extends AnchorPane {
                     clearBoard();
                     setDisableBtn(true);
                     backBTN.setDisable(false);
-                    gameViewModel.sendMove(xCord, yCord, move);
+                    gameModule.sendMove(xCord, yCord, move);
                     if (recordFlag) recordModel.saveRecord(recordArray, counter - 1);
                 } else
-                    gameViewModel.sendMove(xCord, yCord, move);
+                    gameModule.sendMove(xCord, yCord, move);
             }
 
         }

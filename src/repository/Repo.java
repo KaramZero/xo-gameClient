@@ -15,9 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import modules.RegisterModule;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import pojo.RegisterModel;
 import vsPcMode.levels.Move;
 
 public class Repo extends Thread {
@@ -84,7 +86,6 @@ public class Repo extends Thread {
             JSONObject js = new JSONObject(response);
             str=js.getString("res");
             if(str.equals("true")){
-               
                 score=js.getInt("score");
                 t.start();
             }
@@ -98,19 +99,18 @@ public class Repo extends Thread {
         }
         return str;
     }
-    public void sendRegisterData(LoginModel loginData) {
+    public void sendRegisterData(RegisterModel registerModel) {
         try {
             json.put("header", "register");
-            json.put("username", loginData.getUsername());
-            json.put("password", loginData.getPassword());
-            json.put("name", loginData.getName());
-            json.put("email", loginData.getEmail());
+            json.put("username", registerModel.getUsername());
+            json.put("password", registerModel.getPassword());
+            json.put("name", registerModel.getName());
+            json.put("email", registerModel.getEmail());
             ps.println(json.toString());
         } catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     public String getRegisterData() {
         String str =null;
         try {
@@ -131,7 +131,6 @@ public class Repo extends Thread {
          
         try {
             response = dis.readLine();
-            
             json = new JSONObject(response);
             if (json.get("header").equals("getOnlineUsers")) {
                 listUsersOnline = FXCollections.observableArrayList();

@@ -17,6 +17,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import onlineMode.OnlineMode;
 import vsPcMode.VsPcScene;
@@ -171,7 +172,9 @@ public class Home extends AnchorPane {
         label.setLayoutY(67.0);
         label.setPrefHeight(43.0);
         label.setPrefWidth(634.0);
+                label.setTextFill(Color.AQUA);
         label.setText("Welcome to my Game");
+
 
         getChildren().add(LoadBTN);
         getChildren().add(minimizeLBL);

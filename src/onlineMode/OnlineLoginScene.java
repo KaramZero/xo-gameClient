@@ -14,7 +14,7 @@ import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import javafx.scene.control.PasswordField;
 import pojo.LoginModel;
-import viewModels.LoginViewModel;
+import modules.LoginModule;
 
 
 public  class OnlineLoginScene extends AnchorPane {
@@ -25,7 +25,7 @@ public  class OnlineLoginScene extends AnchorPane {
     protected final Button registerBTN;
     private Stage myStage;
     private LoginModel loginModel;
-    private LoginViewModel loginViewModel;
+    private LoginModule loginViewModel;
 
     public OnlineLoginScene(Stage stage) {
         
@@ -35,7 +35,7 @@ public  class OnlineLoginScene extends AnchorPane {
         loginBTN = new Button();
         registerBTN = new Button();
         loginModel = new LoginModel();
-        loginViewModel = new LoginViewModel();
+        loginViewModel = new LoginModule();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -82,6 +82,12 @@ public  class OnlineLoginScene extends AnchorPane {
                                a.setContentText("login fails");
                                a.show();
                      }
+                }
+                else{
+                    
+                               Alert a = new Alert(Alert.AlertType.ERROR);
+                               a.setContentText("Please Complete Your Data");
+                               a.show();
                 }
             }
         });

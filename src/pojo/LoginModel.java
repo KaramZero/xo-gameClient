@@ -10,50 +10,35 @@ public class LoginModel {
     private String username;
     private String password;
     private String email;
-    private String name;
-    private int score;
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+   
+    
+     public LoginModel(){
+     
     }
     
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
+ 
     
     public String getEmail() {
         return email;
     }
-
-    public String getName() {
-        return name;
-    }
-    private static int idToken;
-    
-    public LoginModel(){
-        idToken =0;
-    }
+ 
     
     public void setUsername(String username){
         this.username = username;
+    }
+    
+     public String getUsername(){
+       return username;
     }
     
     public void setPassword(String password){
         this.password = password;
     }
     
-    public String getUsername(){
-       return username;
-    }
-    
+   
     public String getPassword(){
        return password;
     }

@@ -12,6 +12,10 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import modules.RegisterModule;
+import pojo.RegisterModel;
 
 public  class OnlineRegisterScene extends AnchorPane {
 
@@ -28,13 +32,17 @@ public  class OnlineRegisterScene extends AnchorPane {
     protected final PasswordField txtConfirmPassword;
     protected final Label lblConfirmPassword;
     private  Stage myStage;
+    private RegisterModel registerModel;
+    private RegisterModule registerModule;
    
 
 
     public OnlineRegisterScene(Stage stage) {
         
         myStage = stage;
-            
+        registerModel = new RegisterModel();
+        registerModule = new RegisterModule();
+                
         txtUserName = new TextField();
         btnSignUp = new Button();
         btnLogin = new Button();
@@ -66,8 +74,45 @@ public  class OnlineRegisterScene extends AnchorPane {
          btnSignUp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                String username = txtUserName.getText().trim();
+                String name = txtName.getText().trim();
+                String password = txtPassword.getText().trim();
+                String confirmPassword = txtConfirmPassword.getText().trim();
+                String email=txtEmail.getText().trim();
                 
+                if(!(username.isEmpty())&&(!(password.isEmpty()))&&(!(confirmPassword.isEmpty()))&&(!(email.isEmpty()))&&(!(name.isEmpty()))){
+                    if (password.equals(confirmPassword)&&validation.Validation.isValidEmail(email)) {
+                        registerModel.setUsername(username);
+                        registerModel.setPassword(password);
+                        registerModel.setName(name);
+                        registerModel.setEmail(email);
+                        registerModel.setScore(0);
+
+                        registerModule.sendregisterData(registerModel);
+
+                        if (registerModule.getregisterData().equals("true")) {
+                            Scene scene = new Scene(new OnlineGameScene(myStage));
+                            myStage.setScene(scene);
+                        } else {
+                            Alert a = new Alert(AlertType.ERROR);
+                            a.setContentText("This UserAccount Already Exist");
+                            a.show();
+                        }
+                    }
+                    else {
+                        Alert a = new Alert(AlertType.ERROR);
+                        a.setContentText("Confirm Your Password Correctly Or email isn't valid");
+                        a.show();
+                    }
+                      
+                }
+                else {
+                    Alert a = new Alert(AlertType.ERROR);
+                    a.setContentText("Please Complete Your Data");
+                    a.show();
+                }
             }
+
         });
 
         btnLogin.setLayoutX(277.0);

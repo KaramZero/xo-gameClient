@@ -23,23 +23,30 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
-import viewModels.GameViewModel;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import modules.GameModule;
 
 public  class OnlineGameScene extends AnchorPane {
 
     protected  ListView lstOnlinePlayers;
     protected final Label label;
+    protected  Label labelUsername;
+    protected  Label labelScore;
     private Stage myStage;
-    private GameViewModel gameViewModel;
+    private GameModule gameModule;
     private ObservableList<String> listUsersOnline;
 
     public OnlineGameScene(Stage stage) {
         myStage = stage;
-        gameViewModel = new GameViewModel();
+        gameModule = new GameModule();
         listUsersOnline= FXCollections.observableArrayList();
 
         lstOnlinePlayers = new ListView();
         label = new Label();
+        labelScore = new Label();
+        labelUsername = new Label();
+
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -61,7 +68,7 @@ public  class OnlineGameScene extends AnchorPane {
                     String username = new String();
                     username = (String) lstOnlinePlayers.getSelectionModel().getSelectedItem();
                     System.out.println("username" + username);
-                    gameViewModel.sendRequestGame(username);
+                    gameModule.sendRequestGame(username);
                 }
             }
         });
@@ -73,9 +80,24 @@ public  class OnlineGameScene extends AnchorPane {
         label.setPrefHeight(40.0);
         label.setPrefWidth(200.0);
         label.setText("Online Now");
+        
+      
+        
+        labelScore.setAlignment(javafx.geometry.Pos.CENTER);
+        labelScore.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
+        labelScore.setLayoutX(300);
+        labelScore.setLayoutY(14.0);
+        labelScore.setPrefHeight(40.0);
+        labelScore.setPrefWidth(200.0);
+        labelScore.setTextFill(Color.AQUA);
+        int score = gameModule.getScore();
+        System.out.println("score"+score);
+        labelScore.setText(String.valueOf(gameModule.getScore()));
 
         getChildren().add(lstOnlinePlayers);
         getChildren().add(label);
+        getChildren().add(labelScore);
+
         setBackground(bGround);
         getChildren().add(minimizeLBL);
         getChildren().add(closeLBL);
@@ -90,10 +112,9 @@ public  class OnlineGameScene extends AnchorPane {
                 while (true) {
                     ////// Check for errors ////////////
                     
-                     String er = gameViewModel.getErrors();
+                     String er = gameModule.getErrors();
                     if(er != null){
                         Home.onlineFlag = false;
-                       
                         Scene scene = new Scene(new Home(myStage));
                         Platform.runLater(() -> {
                             t.stop();
@@ -107,7 +128,7 @@ public  class OnlineGameScene extends AnchorPane {
                     }
                     
                     ////// Check for new list /////////
-                     ObservableList<String> list = gameViewModel.getListUsersOnline();
+                     ObservableList<String> list = gameModule.getListUsersOnline();
                     if ( list != null) {
                         listUsersOnline = list;
                         Platform.runLater(() -> {
@@ -116,7 +137,7 @@ public  class OnlineGameScene extends AnchorPane {
                     }
                                     
                     ////// Check for new Confirm ///////
-                    String gameRequest[] = gameViewModel.getRequestConfirm();
+                    String gameRequest[] = gameModule.getRequestConfirm();
                     if (gameRequest != null) {
                       
                         if (gameRequest[1].equals("yes")) {
@@ -151,7 +172,7 @@ public  class OnlineGameScene extends AnchorPane {
                     }
 
                     ////// Check for new Request ///////
-                    String user = gameViewModel.getGameRequest();
+                    String user = gameModule.getGameRequest();
                     if (user != null) {
                        
                         Platform.runLater(() -> {
@@ -181,9 +202,9 @@ public  class OnlineGameScene extends AnchorPane {
                                 Scene s1 = new Scene(new OnlineGame(myStage,false));
                                 t.stop();
                                 myStage.setScene(s1);
-                               gameViewModel.sendRequestConfirm(user, "yes");
+                               gameModule.sendRequestConfirm(user, "yes");
                             }else  {
-                               gameViewModel.sendRequestConfirm(user, "no");
+                               gameModule.sendRequestConfirm(user, "no");
                             }
                         });
                     }
