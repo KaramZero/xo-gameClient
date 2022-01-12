@@ -129,7 +129,7 @@ public class recordedGamePlayerScene extends AnchorPane {
         boardLBL.setPrefSize(270, 270);
         boardLBL.setGraphic(new ImageView(new Image("Icons/board.png", 270, 270, true, true)));
 
-        getChildren().add(boardLBL);
+        
 
         setBTNs();
         setButtons();
@@ -158,6 +158,7 @@ public class recordedGamePlayerScene extends AnchorPane {
         labelWin.setMinWidth(270);
         labelWin.setAlignment(Pos.CENTER);
 
+        getChildren().add(boardLBL);
         setBackground(bGround);
         getChildren().add(minimizeLBL);
         getChildren().add(closeLBL);

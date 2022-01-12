@@ -81,8 +81,6 @@ public class RecordModel {
         list = new ListView<String>();
         ObservableList<String> items = FXCollections.observableArrayList();
         for (int i = 0; i < files.length; i++) {
-            System.out.println(files[i].getName());
-
             items.add(files[i].getName());
 
         }

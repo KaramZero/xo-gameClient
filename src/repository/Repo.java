@@ -5,7 +5,6 @@
  */
 package repository;
 
-import home.Home;
 import pojo.LoginModel;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -14,14 +13,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +24,7 @@ public class Repo extends Thread {
 
     private static Repo repo;
     private Socket mySocket;
-    private DataInputStream dis;
+    private  DataInputStream dis;
     private PrintStream ps;
     private JSONObject json;
     private String response;
@@ -41,6 +34,7 @@ public class Repo extends Thread {
     public static Move move;
     public static String IpAddress;
     public static String playingChar;
+    public static String errors;
 
     private Repo() {
         try {
@@ -54,15 +48,14 @@ public class Repo extends Thread {
             requestConfirm = null;
             move = null;
             playingChar = null;
+            errors = null;
         
 
         }catch (SocketException ex) {
-                 Alert a = new Alert(Alert.AlertType.ERROR);
-                               a.setContentText("Internet connection error");
-                               a.show();
+             ex.getStackTrace();
         } 
         catch (IOException ex) {
-                
+             ex.getStackTrace();
         }        
     }
 
@@ -91,6 +84,7 @@ public class Repo extends Thread {
             }
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+             errors = new String("error");
         }
         return response;
     }
@@ -117,6 +111,7 @@ public class Repo extends Thread {
        
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+            errors = new String("error");
         }
          return str;
     }
@@ -151,8 +146,13 @@ public class Repo extends Thread {
             }
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+            errors = new String("error");
         } catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+            errors = new String("error");
+        } catch (NullPointerException ex) {
+            errors = new String("error");
+            
         }
             
         } 
@@ -215,7 +215,7 @@ public class Repo extends Thread {
         }
     }
 
-    Thread t = new Thread() {
+    public Thread t = new Thread() {
         @Override
         public void run() {
             while (true) {

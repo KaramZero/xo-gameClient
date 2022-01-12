@@ -1,8 +1,6 @@
 
 package viewModels;
 
-import java.util.ArrayList;
-import javafx.collections.ObservableList;
 import pojo.LoginModel;
 import repository.Repo;
 
@@ -25,4 +23,11 @@ public class LoginViewModel {
     public  String getregisterData(){
          return repo.getLoginData();
     } 
+    public String getErrors(){
+        
+        String t = Repo.errors;
+        Repo.errors = null;
+        return t;
+        
+    }
 }

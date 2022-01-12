@@ -5,7 +5,6 @@
  */
 package viewModels;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import repository.Repo;
 import vsPcMode.levels.Move;
@@ -67,4 +66,16 @@ public class GameViewModel {
         return t;
 
     }
+    
+    public String getErrors(){
+        
+        String t = Repo.errors;
+        if (Repo.errors != null) {
+            repo.t.stop();
+            Repo.errors = null;
+        }
+        return t;
+        
+    }
+  
 }

@@ -1,6 +1,7 @@
 package onlineMode;
 
 
+import home.Home;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,12 +57,12 @@ public  class OnlineGameScene extends AnchorPane {
         lstOnlinePlayers.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(event.getClickCount()==2){
-                String username = new String();
-               username = (String) lstOnlinePlayers.getSelectionModel().getSelectedItem();
-                    System.out.println("username"+username);
-               gameViewModel.sendRequestGame(username);
-            }
+                if (event.getClickCount() == 2) {
+                    String username = new String();
+                    username = (String) lstOnlinePlayers.getSelectionModel().getSelectedItem();
+                    System.out.println("username" + username);
+                    gameViewModel.sendRequestGame(username);
+                }
             }
         });
                        
@@ -87,6 +88,23 @@ public  class OnlineGameScene extends AnchorPane {
             @Override
             public void run() {
                 while (true) {
+                    ////// Check for errors ////////////
+                    
+                     String er = gameViewModel.getErrors();
+                    if(er != null){
+                        Home.onlineFlag = false;
+                       
+                        Scene scene = new Scene(new Home(myStage));
+                        Platform.runLater(() -> {
+                            t.stop();
+                            Alert a = new Alert(AlertType.ERROR);
+                            a.setContentText("connection error");
+                            a.showAndWait();
+
+                            myStage.setScene(scene);
+                        });
+                    
+                    }
                     
                     ////// Check for new list /////////
                      ObservableList<String> list = gameViewModel.getListUsersOnline();

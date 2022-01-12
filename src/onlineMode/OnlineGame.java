@@ -180,6 +180,11 @@ public class OnlineGame extends AnchorPane {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    
+                    String er = gameViewModel.getErrors();
+                    if(er != null){
+                    System.out.println("con error ");
+                    }
 
                     String playerChar = gameViewModel.getPlayingChar();
                     if (playerChar != null) {
@@ -190,6 +195,7 @@ public class OnlineGame extends AnchorPane {
                         }
                         break;
                     }
+                    
                 }
                 RecordBTN.setDisable(true);
             }
@@ -209,7 +215,7 @@ public class OnlineGame extends AnchorPane {
 
         setDisableBtn(false);
         playFlag = false;
-        buttons[0][0].fire();
+        t.resume();
 
     }
 
@@ -225,13 +231,18 @@ public class OnlineGame extends AnchorPane {
 
         setDisableBtn(false);
         playFlag = false;
-        buttons[0][0].fire();
+        t.resume();
     }
 
     Thread t = new Thread() {
         @Override
         public void run() {
             while (true) {
+
+                String er = gameViewModel.getErrors();
+                if (er != null) {
+                    System.out.println("con error ");
+                }
 
                 Move m = gameViewModel.getMove();
                 if (m != null) {
