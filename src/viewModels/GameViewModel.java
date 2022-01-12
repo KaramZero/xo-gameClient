@@ -77,5 +77,11 @@ public class GameViewModel {
         return t;
         
     }
+     public int getScore(){
+    
+        return Repo.score;
+        
+    }
+    
   
 }

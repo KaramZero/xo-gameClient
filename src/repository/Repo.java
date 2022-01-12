@@ -35,6 +35,7 @@ public class Repo extends Thread {
     public static String IpAddress;
     public static String playingChar;
     public static String errors;
+    public static int score = 0;
 
     private Repo() {
         try {
@@ -77,16 +78,25 @@ public class Repo extends Thread {
         }
     }
     public String getLoginData() {
+        String str= new String();
         try {
             response = dis.readLine();
-            if (response.equals("true")) {
+            JSONObject js = new JSONObject(response);
+            str=js.getString("res");
+            if(str.equals("true")){
+               
+                score=js.getInt("score");
                 t.start();
             }
+            
         } catch (IOException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
              errors = new String("error");
+        } catch (JSONException ex) {
+            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+            errors = new String("error");
         }
-        return response;
+        return str;
     }
     public void sendRegisterData(LoginModel loginData) {
         try {
