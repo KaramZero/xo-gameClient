@@ -16,7 +16,14 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import repository.Repo;
+import static repository.Repo.IpAddress;
+import static repository.Repo.mySocket;
 import validation.Validation;
 
 public  class OnlineMode extends AnchorPane {
@@ -85,16 +92,47 @@ public  class OnlineMode extends AnchorPane {
                 String ipAddress =txtIp.getText().trim();
                 if(!(ipAddress.isEmpty())){
                 if(Validation.isValidIP(ipAddress)){
-                      Repo.IpAddress =ipAddress;
-                    Scene scene = new Scene(new OnlineLoginScene(myStage));
-                    myStage.setScene(scene); 
+                    Thread t = new Thread(){
+                        @Override
+                        public void run() {
+                             try {
+                        Repo.mySocket = new Socket(ipAddress, 7001);
+                    } catch (IOException ex) {
+                        Logger.getLogger(OnlineMode.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    }                      
+                    };
+                    t.start();
+                    new java.util.Timer().schedule(
+                                        new java.util.TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        Platform.runLater(() -> {
+                                              t.stop();
+                                           if(Repo.mySocket!=null&&Repo.mySocket.isConnected()){
+                                               Scene scene = new Scene(new OnlineLoginScene(myStage));
+                                               myStage.setScene(scene);
+                                           }
+                                           else{
+                                               Alert a = new Alert(Alert.AlertType.ERROR);
+                                               a.setContentText("connection error");
+                                               a.show();
+                                               txtIp.clear();
+                                           }
+                                        });
+                                    }
+                                },
+                                        2000
+                                );
+                 
+                }
                 }
                  else{
                      Alert a = new Alert(Alert.AlertType.ERROR);
                                a.setContentText("Ip Address isn't valid");
                                a.show();
                 }
-                }              
+                              
             }
         });
 

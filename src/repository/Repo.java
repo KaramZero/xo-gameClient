@@ -24,7 +24,7 @@ import vsPcMode.levels.Move;
 public class Repo extends Thread {
 
     private static Repo repo;
-    private Socket mySocket;
+    public static  Socket mySocket;
     private  DataInputStream dis;
     private PrintStream ps;
     private JSONObject json;
@@ -40,7 +40,6 @@ public class Repo extends Thread {
 
     private Repo() {
         try {
-            mySocket = new Socket(IpAddress, 7001);
             ps = new PrintStream(mySocket.getOutputStream());
             dis = new DataInputStream(mySocket.getInputStream());
             response = null;
@@ -127,7 +126,6 @@ public class Repo extends Thread {
 
     public void readStream() {
 
-         
         try {
             response = dis.readLine();
             json = new JSONObject(response);
