@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class XOGameCLient extends Application {
@@ -38,7 +39,7 @@ public class XOGameCLient extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         
-        //stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 

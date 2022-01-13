@@ -18,6 +18,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import onlineMode.OnlineMode;
 import vsPcMode.VsPcScene;
@@ -36,6 +37,9 @@ public class Home extends AnchorPane {
     public static Stage myStage;
     public static boolean onlineFlag = false;
     private Label LoadBTN;
+    
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     public static Scene onlineScene;
 
@@ -51,6 +55,20 @@ public class Home extends AnchorPane {
         closeLBL = new Label();
         minimizeLBL = new Label();
         soundLBL = new Label();
+        
+ 
+        setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
+        
+        
+        
+        
 
         Image closeIMG = new Image("Icons/close.png", 50, 50, true, true);
         Image miniIMG = new Image("Icons/minimize.png", 50, 50, true, true);
@@ -169,10 +187,11 @@ public class Home extends AnchorPane {
 
         label.setAlignment(javafx.geometry.Pos.CENTER);
         label.setLayoutX(91.0);
-        label.setLayoutY(67.0);
+        label.setLayoutY(77.0);
         label.setPrefHeight(43.0);
         label.setPrefWidth(634.0);
-                label.setTextFill(Color.AQUA);
+        label.setTextFill(Color.AQUA);
+        label.setFont(new Font(30));
         label.setText("Welcome to my Game");
 
 

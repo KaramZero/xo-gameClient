@@ -1,5 +1,6 @@
 package onlineMode;
 
+import home.Home;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -12,9 +13,12 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import modules.GameModule;
+import modules.LoginModule;
 import modules.RegisterModule;
 import pojo.RegisterModel;
 
@@ -35,6 +39,12 @@ public  class OnlineRegisterScene extends AnchorPane {
     private  Stage myStage;
     private RegisterModel registerModel;
     private RegisterModule registerModule;
+    String str = null;
+    
+    
+    private double xOffset = 0;
+    private double yOffset = 0;
+
    
 
 
@@ -56,6 +66,17 @@ public  class OnlineRegisterScene extends AnchorPane {
         lblEmail = new Label();
         txtConfirmPassword = new PasswordField();
         lblConfirmPassword = new Label();
+        
+        
+         
+        this.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        this.setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -82,7 +103,7 @@ public  class OnlineRegisterScene extends AnchorPane {
                 String email=txtEmail.getText().trim();
                 
                 if(!(username.isEmpty())&&(!(password.isEmpty()))&&(!(confirmPassword.isEmpty()))&&(!(email.isEmpty()))&&(!(name.isEmpty()))){
-                    if (password.equals(confirmPassword)&&validation.Validation.isValidEmail(email)) {
+                    if (password.equals(confirmPassword) && validation.Validation.isValidEmail(email)) {
                         registerModel.setUsername(username);
                         registerModel.setPassword(password);
                         registerModel.setName(name);
@@ -90,21 +111,59 @@ public  class OnlineRegisterScene extends AnchorPane {
                         registerModel.setScore(0);
 
                         registerModule.sendregisterData(registerModel);
+                        
+                         Thread t = new Thread() {
+                            @Override
+                            public void run() {
+                                str = registerModule.getregisterData();
+                            }
 
-                        if (registerModule.getregisterData().equals("true")) {
-                            OnlineGameScene.score = GameModule.getScore();
-                            Scene scene = new Scene(new OnlineGameScene(myStage));
-                            myStage.setScene(scene);
-                        } else {
-                            Alert a = new Alert(AlertType.ERROR);
-                            a.setContentText("This UserAccount Already Exist");
-                            a.show();
-                        }
+                        };
+                        t.start();
+                        
+                        new java.util.Timer().schedule(
+                                new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                Platform.runLater(() -> {
+                                    t.stop();
+                                    if (str == null) {
+                                        Alert a = new Alert(Alert.AlertType.ERROR);
+                                        a.setContentText("connection error");
+                                        a.showAndWait();
+                                        LoginModule l = new LoginModule();
+                                        l.resetRepo();
+                                        myStage.setScene(new Scene(new Home(myStage)));
+                                    } else if (str.equals("true")) {
+                                        OnlineGameScene.score = GameModule.getScore();
+
+                                        Home.onlineFlag = true;
+                                        Home.onlineScene = new Scene(new OnlineGameScene(myStage));
+                                        myStage.setScene(Home.onlineScene);
+                                    } else {
+                                        Alert a = new Alert(AlertType.ERROR);
+                                        a.setContentText("This UserAccount Already Exist");
+                                        a.show();
+                                    }
+
+                                });
+                            }
+                        },
+                                2000
+                        );
+
                     }
                     else {
-                        Alert a = new Alert(AlertType.ERROR);
-                        a.setContentText("Confirm Your Password Correctly Or email isn't valid");
-                        a.show();
+                        if (! validation.Validation.isValidEmail(email)) {
+                            Alert a = new Alert(AlertType.ERROR);
+                            a.setContentText("Email isn't valid");
+                            a.show();
+                        }else if (! password.equals(confirmPassword)) {
+                            Alert a = new Alert(AlertType.ERROR);
+                            a.setContentText("Confirm Your Password Correctly ");
+                            a.show();
+                        }
+                        
                     }
                       
                 }

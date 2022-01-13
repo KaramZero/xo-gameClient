@@ -52,6 +52,11 @@ public class VsPcScene extends AnchorPane {
     Image pc = new Image("Icons/o.png", 60, 60, true, true);
     ImageView o = new ImageView(pc);
     char pcChar;
+    
+        
+    private double xOffset = 0;
+    private double yOffset = 0;
+
 
     EventHandler a = (EventHandler) (Event event) -> {
 
@@ -110,6 +115,17 @@ public class VsPcScene extends AnchorPane {
         boardLBL = new Label();
         pcMove = new Move();
         myStage = s;
+        
+         
+        this.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        this.setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
+        
       
         
         boardLBL.setLayoutX(310);

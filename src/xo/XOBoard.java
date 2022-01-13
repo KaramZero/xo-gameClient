@@ -1,6 +1,5 @@
 package xo;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,12 +7,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class XOBoard {
-public static Button[][] buttons = new Button[3][3];
-public static char[][] myBoard  = new char[3][3];
-public static Label backBTN;
-public static Label btnX;
-public static  Label btnO;
-public static  Label boardLBL;
+
+    public static Button[][] buttons = new Button[3][3];
+    public static char[][] myBoard = new char[3][3];
+    public static Label backBTN;
+    public static Label btnX;
+    public static Label btnO;
+    public static Label boardLBL;
 
   static{
       btnO = new Label();
@@ -43,9 +43,8 @@ public static  Label boardLBL;
       backBTN.setGraphic(new ImageView(new Image("Icons/Home.png", 80, 80, true, true)));
 }
     
-  private XOBoard(){ 
-      
-  }
+  private XOBoard(){ }
+  
   public static  void setBTNs() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

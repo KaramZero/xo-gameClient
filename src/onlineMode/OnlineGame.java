@@ -16,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import static home.Home.bGround;
-import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import java.io.File;
 import javafx.scene.control.Label;
@@ -49,6 +48,12 @@ public class OnlineGame extends AnchorPane {
     ListView<String> list;
     String[][] recordArray;
     int counter;
+    
+        
+    private double xOffset = 0;
+    private double yOffset = 0;
+
+
 
     Image player = new Image("Icons/x.png", 60, 60, true, true);
     ImageView x = new ImageView(player);
@@ -57,6 +62,9 @@ public class OnlineGame extends AnchorPane {
     Image playerTwo = new Image("Icons/o.png", 60, 60, true, true);
     ImageView o = new ImageView(playerTwo);
     char playerTwoChar;
+    
+     public static Label closeLBL;
+     
     Stage myStage;
 
     public OnlineGame(Stage stage, boolean myTurn) {
@@ -70,6 +78,20 @@ public class OnlineGame extends AnchorPane {
         myStage = stage;
         gameModule = new GameModule();
         move = "playing";
+        
+        closeLBL = new Label();
+        
+         
+        this.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        this.setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
+        
+        
 
         t.start();
         t.suspend();
@@ -132,6 +154,24 @@ public class OnlineGame extends AnchorPane {
 
             }
         });
+        
+        closeLBL.setLayoutX(800);
+        closeLBL.setLayoutY(5);
+        closeLBL.setPrefSize(50, 50);
+        closeLBL.setGraphic(new ImageView(new Image("Icons/close.png", 50, 50, true, true)));
+         closeLBL.setOnMouseClicked((MouseEvent event) -> {
+            if (move.equals("playing")) {
+                gameModule.sendMove(-1, -1, move);
+            }
+            try {
+                sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.exit(0);
+        });
+       
+        
         RecordBTN.setLayoutX(220);
         RecordBTN.setLayoutY(60);
         RecordBTN.setPrefSize(80, 80);

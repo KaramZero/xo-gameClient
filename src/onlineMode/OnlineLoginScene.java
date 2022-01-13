@@ -14,6 +14,7 @@ import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import javafx.application.Platform;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.MouseEvent;
 import modules.GameModule;
 import pojo.LoginModel;
 import modules.LoginModule;
@@ -29,6 +30,11 @@ public  class OnlineLoginScene extends AnchorPane {
     private LoginModel loginModel;
     private LoginModule loginViewModel;
     private String str;
+    
+    
+    private double xOffset = 0;
+    private double yOffset = 0;
+
 
     public OnlineLoginScene(Stage stage) {
         
@@ -39,6 +45,17 @@ public  class OnlineLoginScene extends AnchorPane {
         registerBTN = new Button();
         loginModel = new LoginModel();
         loginViewModel = new LoginModule();
+        
+        
+        this.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        this.setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
+        
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);

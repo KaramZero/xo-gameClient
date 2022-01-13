@@ -76,7 +76,6 @@ public class Repo extends Thread {
             js.put("header", "login");
             js.put("username", loginData.getUsername());
             js.put("password", loginData.getPassword());
-            System.out.println(js.toString());
             ps.println(js.toString());
         } catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);

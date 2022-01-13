@@ -38,6 +38,12 @@ public class recordedGamePlayerScene extends AnchorPane {
     String[][] loadArray;
 
     private Stage myStage;
+    
+    
+        
+    private double xOffset = 0;
+    private double yOffset = 0;
+
 
     Image xIMG = new Image("Icons/x.png", 60, 60, true, true);
     ImageView x = new ImageView(xIMG);
@@ -86,6 +92,17 @@ public class recordedGamePlayerScene extends AnchorPane {
         boardLBL = new Label();
         backBTN = new Label();
         labelWin = new Label();
+        
+        
+        setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
+        
 
         LoadBTN.setLayoutX(150);
         LoadBTN.setLayoutY(150);

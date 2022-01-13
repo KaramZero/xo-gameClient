@@ -23,8 +23,13 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import modules.GameModule;
 
 public  class OnlineGameScene extends AnchorPane {
@@ -37,6 +42,12 @@ public  class OnlineGameScene extends AnchorPane {
     private GameModule gameModule;
     private ObservableList<String> listUsersOnline;
     public static int score = 0  ;
+    
+        
+    private double xOffset = 0;
+    private double yOffset = 0;
+
+
 
     public OnlineGameScene(Stage stage) {
         myStage = stage;
@@ -48,6 +59,15 @@ public  class OnlineGameScene extends AnchorPane {
         labelScore = new Label();
         labelUsername = new Label();
         
+         
+        this.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        this.setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
        
 
         setMaxHeight(USE_PREF_SIZE);
@@ -62,6 +82,7 @@ public  class OnlineGameScene extends AnchorPane {
         lstOnlinePlayers.setPrefHeight(599.0);
         lstOnlinePlayers.setPrefWidth(200.0);   
         lstOnlinePlayers.setBackground(bGround); 
+        lstOnlinePlayers.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         
         lstOnlinePlayers.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -86,13 +107,14 @@ public  class OnlineGameScene extends AnchorPane {
         
         labelScore.setAlignment(javafx.geometry.Pos.CENTER);
         labelScore.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
-        labelScore.setLayoutX(300);
+        labelScore.setLayoutX(200);
         labelScore.setLayoutY(14.0);
-        labelScore.setPrefHeight(40.0);
-        labelScore.setPrefWidth(200.0);
+        labelScore.setPrefHeight(40);
+        labelScore.setPrefWidth(400);
         labelScore.setTextFill(Color.AQUA);
+        labelScore.setFont(new Font(30));
         
-        labelScore.setText(String.valueOf(score));
+        labelScore.setText("your Score is "+String.valueOf(score));
 
         getChildren().add(lstOnlinePlayers);
         getChildren().add(label);

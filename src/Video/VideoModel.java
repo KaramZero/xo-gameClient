@@ -22,21 +22,37 @@ import onlineMode.OnlineGameScene;
 import vsPcMode.VsPcScene;
 
 
-public class VideoModel extends AnchorPane implements Initializable {
-        private Stage myStage;
-        private MediaView mediaView;
-        File file;
-        Media media;
-        MediaPlayer mediaPlayer;
-        AnchorPane pane;
-        Button skipBtn;
-        int pageFlag;
-        
+public class VideoModel extends AnchorPane {
+    private Stage myStage;
+    private MediaView mediaView;
+    File file;
+    Media media;
+    MediaPlayer mediaPlayer;
+    AnchorPane pane;
+    Button skipBtn;
+    int pageFlag;
+
+    private double xOffset = 0;
+    private double yOffset = 0;
+
+
 
    public VideoModel(Stage stage , String status, int flag){
        pageFlag=flag;
        myStage=stage;
        skipBtn= new Button();
+       
+         
+        this.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        this.setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
+       
+       
        skipBtn.setLayoutX(stage.getWidth()-100);
        skipBtn.setLayoutY(20.0);
        skipBtn.setText("Skip ->");
@@ -103,12 +119,6 @@ public class VideoModel extends AnchorPane implements Initializable {
        getChildren().add(skipBtn);
        
     }
-
-   @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
-
-    
     
     
 }

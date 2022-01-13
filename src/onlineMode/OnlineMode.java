@@ -1,6 +1,5 @@
 package onlineMode;
 
-import home.Home;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -19,6 +18,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.input.MouseEvent;
 import repository.Repo;
 import validation.Validation;
 
@@ -31,6 +31,9 @@ public  class OnlineMode extends AnchorPane {
     protected final Button btnSubmit;
     private Stage myStage;
 
+    private double xOffset = 0;
+    private double yOffset = 0;
+
     public OnlineMode(Stage stage) {
         
         myStage = stage;
@@ -39,6 +42,19 @@ public  class OnlineMode extends AnchorPane {
         txtIp = new TextField();
         label0 = new Label();
         btnSubmit = new Button();
+        
+        
+  
+        this.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        this.setOnMouseDragged((MouseEvent event) -> {
+            myStage.setX(event.getScreenX() - xOffset);
+            myStage.setY(event.getScreenY() - yOffset);
+        });
+        
+
 
         setId("AnchorPane");
         setPrefHeight(400.0);
