@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import home.Home;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
@@ -193,8 +192,7 @@ public class OnlineGame extends AnchorPane {
                             seto();
                         }
                         break;
-                    }
-                    
+                    }  
                 }
                 RecordBTN.setDisable(true);
             }
@@ -248,12 +246,10 @@ public class OnlineGame extends AnchorPane {
                    
                     if (m.row == -1) {
                         clearBoard();
-                        
                         Platform.runLater(() -> {
-                            t.stop();
                             Scene s = new Scene(new VideoModel(myStage, "Win", 3));
                             myStage.setScene(s);
-                            
+                            t.stop();
                         });
                         
 

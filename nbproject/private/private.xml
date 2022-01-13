@@ -3,18 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/Video/VideoModel.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/home/Home.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/onlineMode/OnlineGameScene.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/xo/XOBoard.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/Record/RecordModel.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/onlineMode/OnlineMode.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/vsPcMode/VsPcScene.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/repository/Repo.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/onlineMode/OnlineLoginScene.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/modules/LoginModule.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/modules/GameModule.java</file>
-            <file>file:/E:/ITI/Java/Labs/Final%20project/GameXOClient/xo-game/src/onlineMode/OnlineGame.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/repository/Repo.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/Video/VideoModel.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineGame.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineGameScene.java</file>
         </group>
     </open-files>
 </project-private>

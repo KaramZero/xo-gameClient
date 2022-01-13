@@ -25,8 +25,8 @@ public class Repo extends Thread {
 
     private static Repo repo;
     public static  Socket mySocket;
-    private  DataInputStream dis;
-    private PrintStream ps;
+    public DataInputStream dis;
+    public PrintStream ps;
     private JSONObject json;
     private String response;
     public static String requestConfirm[];
@@ -66,13 +66,18 @@ public class Repo extends Thread {
         }
         return repo;
     }
+    public static void setNull(){
+        repo = null;
+    }
 
     public void sendLoginData(LoginModel loginData) {
+        JSONObject js =new JSONObject();
         try {
-            json.put("header", "login");
-            json.put("username", loginData.getUsername());
-            json.put("password", loginData.getPassword());
-            ps.println(json.toString());
+            js.put("header", "login");
+            js.put("username", loginData.getUsername());
+            js.put("password", loginData.getPassword());
+            System.out.println(js.toString());
+            ps.println(js.toString());
         } catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import javafx.application.Platform;
 import javafx.scene.control.PasswordField;
 import modules.GameModule;
 import pojo.LoginModel;
@@ -27,6 +28,7 @@ public  class OnlineLoginScene extends AnchorPane {
     private Stage myStage;
     private LoginModel loginModel;
     private LoginModule loginViewModel;
+    private String str;
 
     public OnlineLoginScene(Stage stage) {
         
@@ -73,18 +75,49 @@ public  class OnlineLoginScene extends AnchorPane {
                     loginModel.setUsername(username);
                     loginModel.setPassword(password);
                     loginViewModel.sendLoginData(loginModel);
-                     if(loginViewModel.getLoginData().equals("true")){
-                          OnlineGameScene.score = GameModule.getScore();
-       
-                          Home.onlineFlag = true;
-                          Home.onlineScene = new Scene(new OnlineGameScene(myStage));
-                         myStage.setScene(Home.onlineScene);
-                     }
-                     else{
-                               Alert a = new Alert(Alert.AlertType.ERROR);
-                               a.setContentText("login fails");
-                               a.show();
-                     }
+                    
+                    str = null;
+                    Thread t = new Thread(){
+                        @Override
+                        public void run() {
+                            str = loginViewModel.getLoginData();
+                        }
+                    
+                    };
+                    t.start();
+                    
+                     new java.util.Timer().schedule(
+                                        new java.util.TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        Platform.runLater(() -> {
+                                              t.stop();
+                                              if(str == null){
+                                                  Alert a = new Alert(Alert.AlertType.ERROR);
+                                                  a.setContentText("connection error");
+                                                  a.showAndWait();
+                                                  LoginModule l =new LoginModule();
+                                                  l.resetRepo();
+                                                  myStage.setScene(new Scene(new Home(myStage)));
+                                              } else if (str.equals("true")) {
+                                                  OnlineGameScene.score = GameModule.getScore();
+
+                                                  Home.onlineFlag = true;
+                                                  Home.onlineScene = new Scene(new OnlineGameScene(myStage));
+                                                  myStage.setScene(Home.onlineScene);
+                                            } else {
+                                                Alert a = new Alert(Alert.AlertType.ERROR);
+                                                a.setContentText("login fails");
+                                                a.show();
+                                            }
+                 
+                                           
+                                        });
+                                    }
+                                },
+                                        2000
+                                );
+                    
                 }
                 else{
                     

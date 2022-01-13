@@ -1,8 +1,6 @@
 package onlineMode;
 
 import home.Home;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -22,8 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import repository.Repo;
-import static repository.Repo.IpAddress;
-import static repository.Repo.mySocket;
 import validation.Validation;
 
 public  class OnlineMode extends AnchorPane {
@@ -92,6 +88,9 @@ public  class OnlineMode extends AnchorPane {
                 String ipAddress =txtIp.getText().trim();
                 if(!(ipAddress.isEmpty())){
                 if(Validation.isValidIP(ipAddress)){
+                    btnSubmit.setDisable(true);
+                    
+                    
                     Thread t = new Thread(){
                         @Override
                         public void run() {
@@ -118,6 +117,7 @@ public  class OnlineMode extends AnchorPane {
                                                a.setContentText("connection error");
                                                a.show();
                                                txtIp.clear();
+                                               btnSubmit.setDisable(false);
                                            }
                                         });
                                     }
