@@ -2,6 +2,7 @@ package onlineMode;
 
 import Record.RecordModel;
 import Video.VideoModel;
+import home.Home;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +19,12 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.minimizeLBL;
 import java.io.File;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import xo.XOModel;
 import modules.GameModule;
 import vsPcMode.levels.Move;
-import static xo.XOBoard.backBTN;
 import static xo.XOBoard.boardLBL;
 import static xo.XOBoard.btnO;
 import static xo.XOBoard.btnX;
@@ -48,6 +49,7 @@ public class OnlineGame extends AnchorPane {
     ListView<String> list;
     String[][] recordArray;
     int counter;
+    Label backBTN = new Label();
     
         
     private double xOffset = 0;
@@ -140,6 +142,11 @@ public class OnlineGame extends AnchorPane {
                 RecordBTN.setDisable(true);
             }
         });
+      
+        backBTN.setLayoutX(650);
+        backBTN.setLayoutY(80);
+        backBTN.setPrefSize(80, 80);
+        backBTN.setGraphic(new ImageView(new Image("Icons/Home.png", 80, 80, true, true)));
         backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -172,8 +179,8 @@ public class OnlineGame extends AnchorPane {
         });
        
         
-        RecordBTN.setLayoutX(220);
-        RecordBTN.setLayoutY(60);
+        RecordBTN.setLayoutX(120);
+        RecordBTN.setLayoutY(80);
         RecordBTN.setPrefSize(80, 80);
         RecordBTN.setGraphic(new ImageView(new Image("Icons/record.png", 60, 60, true, true)));
 
@@ -218,11 +225,33 @@ public class OnlineGame extends AnchorPane {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(OnlineGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                     ////// Check for errors ////////////
                     
-                    String er = gameModule.getErrors();
+                     String er = gameModule.getErrors();
                     if(er != null){
-                    System.out.println("con error ");
+                        Home.onlineFlag = false;
+                        Scene scene = new Scene(new Home(myStage));
+                        Platform.runLater(() -> {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setContentText("connection error");
+                            a.showAndWait();
+                            myStage.setScene(scene);
+                        });
+                    
                     }
+                     Move m = gameModule.getMove();
+                if (m != null) {
+                   
+                    if (m.row == -1) {
+                        clearBoard();
+                        Platform.runLater(() -> {
+                            Scene s = new Scene(new VideoModel(myStage, "Win", 3));
+                            myStage.setScene(s);
+                            t.stop();
+                        });
+                        
+
+                    }}
 
                     String playerChar = gameModule.getPlayingChar();
                     if (playerChar != null) {
@@ -275,11 +304,23 @@ public class OnlineGame extends AnchorPane {
         @Override
         public void run() {
             while (true) {
+                 ////// Check for errors ////////////
+                    
+                     String er = gameModule.getErrors();
+                    if(er != null){
+                        Home.onlineFlag = false;
+                        Scene scene = new Scene(new Home(myStage));
+                        Platform.runLater(() -> {
+                            t.stop();
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setContentText("connection error");
+                            a.showAndWait();
 
-                String er = gameModule.getErrors();
-                if (er != null) {
-                    System.out.println("con error ");
-                }
+                            myStage.setScene(scene);
+                        });
+                    
+                    }
+
 
                 Move m = gameModule.getMove();
                 if (m != null) {

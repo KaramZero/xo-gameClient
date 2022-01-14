@@ -1,5 +1,6 @@
 package onlineMode;
 
+import home.Home;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -18,7 +19,13 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import repository.Repo;
 import validation.Validation;
 
@@ -29,7 +36,9 @@ public  class OnlineMode extends AnchorPane {
     protected final TextField txtIp;
     protected final Label label0;
     protected final Button btnSubmit;
+    private Label backBTN;
     private Stage myStage;
+    public ProgressIndicator pb = new ProgressIndicator();
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -42,6 +51,7 @@ public  class OnlineMode extends AnchorPane {
         txtIp = new TextField();
         label0 = new Label();
         btnSubmit = new Button();
+        backBTN = new Label();
         
         
   
@@ -69,34 +79,40 @@ public  class OnlineMode extends AnchorPane {
         anchorPane.setMinWidth(USE_PREF_SIZE);
         anchorPane.setPrefHeight(650.0);
         anchorPane.setPrefWidth(850.0);
-
-     
-
+        
+       
         label.setAlignment(javafx.geometry.Pos.CENTER);
         label.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         label.setLayoutX(160.0);
         label.setLayoutY(51.0);
         label.setPrefHeight(34.0);
         label.setPrefWidth(218.0);
+        label.setFont(new Font(30));
+        label.setTextFill(Color.AQUA);
         label.setText("Online Mode");
-        label.setFont(new Font(18.0));
 
-        txtIp.setLayoutX(196.0);
-        txtIp.setLayoutY(140.0);
+        txtIp.setLayoutX(320);
+        txtIp.setLayoutY(300);
         txtIp.setPrefHeight(25.0);
         txtIp.setPrefWidth(164.0);
 
         label0.setAlignment(javafx.geometry.Pos.CENTER);
-        label0.setLayoutX(181.0);
-        label0.setLayoutY(106.0);
+        label0.setLayoutX(150);
+        label0.setLayoutY(250.0);
         label0.setPrefHeight(17.0);
-        label0.setPrefWidth(210.0);
+        label0.setPrefWidth(500);
+        label0.setTextFill(Color.AQUA);
+        label0.setFont(new Font(20));
         label0.setText("Please enter IP address of servier");
+        
+        pb.setLayoutX(380);
+        pb.setLayoutY(400);
 
-        btnSubmit.setLayoutX(252.0);
-        btnSubmit.setLayoutY(200.0);
+        btnSubmit.setLayoutX(370);
+        btnSubmit.setLayoutY(350);
         btnSubmit.setMnemonicParsing(false);
         btnSubmit.setText("Submit");
+        
         
         btnSubmit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -105,7 +121,8 @@ public  class OnlineMode extends AnchorPane {
                 if(!(ipAddress.isEmpty())){
                 if(Validation.isValidIP(ipAddress)){
                     btnSubmit.setDisable(true);
-                    
+                    anchorPane.getChildren().add(pb);
+
                     
                     Thread t = new Thread(){
                         @Override
@@ -132,6 +149,7 @@ public  class OnlineMode extends AnchorPane {
                                                Alert a = new Alert(Alert.AlertType.ERROR);
                                                a.setContentText("connection error");
                                                a.show();
+                                               anchorPane.getChildren().remove(pb);
                                                txtIp.clear();
                                                btnSubmit.setDisable(false);
                                            }
@@ -144,6 +162,7 @@ public  class OnlineMode extends AnchorPane {
                 }
                 }
                  else{
+                      anchorPane.getChildren().remove(pb);
                      Alert a = new Alert(Alert.AlertType.ERROR);
                                a.setContentText("Ip Address isn't valid");
                                a.show();
@@ -151,11 +170,24 @@ public  class OnlineMode extends AnchorPane {
                               
             }
         });
+        
+        backBTN.setLayoutX(650);
+        backBTN.setLayoutY(80);
+        backBTN.setPrefSize(80, 80);
+        backBTN.setGraphic(new ImageView(new Image("Icons/Home.png", 80, 80, true, true)));
+        backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Scene scene = new Scene(new Home(myStage));
+                myStage.setScene(scene);
+            }
+        });
 
         anchorPane.getChildren().add(label);
         anchorPane.getChildren().add(txtIp);
         anchorPane.getChildren().add(label0);
         anchorPane.getChildren().add(btnSubmit);
+        anchorPane.getChildren().add(backBTN);
         getChildren().add(anchorPane);
         setBackground(bGround);
         getChildren().add(minimizeLBL);

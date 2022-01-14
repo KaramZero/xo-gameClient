@@ -81,6 +81,7 @@ public class Repo extends Thread {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public String getLoginData() {
         String str= new String();
         try {
@@ -93,10 +94,10 @@ public class Repo extends Thread {
             }
             
         } catch (IOException ex) {
-            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
              errors = new String("error");
         } catch (JSONException ex) {
-            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
+            errors = new String("error");
+        } catch (NullPointerException ex){
             errors = new String("error");
         }
         return str;
@@ -112,20 +113,6 @@ public class Repo extends Thread {
         } catch (JSONException ex) {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public String getRegisterData() {
-        String str =null;
-        try {
-            str = dis.readLine();
-            if (str.equals("true")) {
-            t.start();
-        }
-       
-        } catch (IOException ex) {
-            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
-            errors = new String("error");
-        }
-         return str;
     }
 
     public void readStream() {
@@ -155,10 +142,8 @@ public class Repo extends Thread {
                 playingChar = new String((String) json.get("char"));
             }
         } catch (IOException ex) {
-            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
             errors = new String("error");
         } catch (JSONException ex) {
-            Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
             errors = new String("error");
         } catch (NullPointerException ex) {
             errors = new String("error");

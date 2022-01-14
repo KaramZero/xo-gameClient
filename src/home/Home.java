@@ -20,6 +20,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import onlineMode.OnlineGameScene;
 import onlineMode.OnlineMode;
 import vsPcMode.VsPcScene;
 
@@ -164,7 +165,8 @@ public class Home extends AnchorPane {
             @Override
             public void handle(ActionEvent event) {
                 if (onlineFlag) {
-                    myStage.setScene(onlineScene);
+                    Scene s = new Scene(new OnlineGameScene(myStage));
+                    myStage.setScene(s);
                 } else {
                     Scene scene = new Scene(new OnlineMode(stage));
                     myStage.setScene(scene);

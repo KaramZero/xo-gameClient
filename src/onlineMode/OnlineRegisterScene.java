@@ -16,7 +16,11 @@ import static home.Home.minimizeLBL;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import modules.GameModule;
 import modules.LoginModule;
 import modules.RegisterModule;
@@ -39,6 +43,7 @@ public  class OnlineRegisterScene extends AnchorPane {
     private  Stage myStage;
     private RegisterModel registerModel;
     private RegisterModule registerModule;
+    public ProgressIndicator pb = new ProgressIndicator();
     String str = null;
     
     
@@ -84,10 +89,15 @@ public  class OnlineRegisterScene extends AnchorPane {
         setMinWidth(USE_PREF_SIZE);
         setPrefHeight(650.0);
         setPrefWidth(850.0);
+        
+                 
+        pb.setLayoutX(380);
+        pb.setLayoutY(400);
 
+        
   
-        btnSignUp.setLayoutX(419.0);
-        btnSignUp.setLayoutY(503.0);
+        btnSignUp.setLayoutX(445.0);
+        btnSignUp.setLayoutY(450.0);
         btnSignUp.setMnemonicParsing(false);
         btnSignUp.setPrefHeight(52.0);
         btnSignUp.setPrefWidth(117.0);
@@ -109,6 +119,10 @@ public  class OnlineRegisterScene extends AnchorPane {
                         registerModel.setName(name);
                         registerModel.setEmail(email);
                         registerModel.setScore(0);
+                        getChildren().add(pb);
+                        btnSignUp.setDisable(true);
+                        btnLogin.setDisable(true);
+                        
 
                         registerModule.sendregisterData(registerModel);
                         
@@ -139,8 +153,12 @@ public  class OnlineRegisterScene extends AnchorPane {
 
                                         Home.onlineFlag = true;
                                         Home.onlineScene = new Scene(new OnlineGameScene(myStage));
+                                        OnlineGameScene.userName = txtUserName.getText().trim();
                                         myStage.setScene(Home.onlineScene);
                                     } else {
+                                        getChildren().remove(pb);
+                                        btnSignUp.setDisable(false);
+                                        btnLogin.setDisable(false);
                                         Alert a = new Alert(AlertType.ERROR);
                                         a.setContentText("This UserAccount Already Exist");
                                         a.show();
@@ -176,8 +194,8 @@ public  class OnlineRegisterScene extends AnchorPane {
 
         });
 
-        btnLogin.setLayoutX(277.0);
-        btnLogin.setLayoutY(505.0);
+        btnLogin.setLayoutX(303.0);
+        btnLogin.setLayoutY(450.0);
         btnLogin.setMnemonicParsing(false);
         btnLogin.setPrefHeight(52.0);
         btnLogin.setPrefWidth(117.0);
@@ -196,6 +214,7 @@ public  class OnlineRegisterScene extends AnchorPane {
         lblUserName.setLayoutY(97.0);
         lblUserName.setPrefHeight(52.0);
         lblUserName.setPrefWidth(117.0);
+        lblUserName.setTextFill(Color.AQUA);
         lblUserName.setText("User  Name");
 
         txtUserName.setLayoutX(303.0);
@@ -208,6 +227,7 @@ public  class OnlineRegisterScene extends AnchorPane {
         lblPassword.setLayoutY(293.0);
         lblPassword.setPrefHeight(52.0);
         lblPassword.setPrefWidth(117.0);
+        lblPassword.setTextFill(Color.AQUA);
         lblPassword.setText("Password");
         
         txtPassword.setLayoutX(303.0);
@@ -220,6 +240,7 @@ public  class OnlineRegisterScene extends AnchorPane {
         lblName.setLayoutY(163.0);
         lblName.setPrefHeight(52.0);
         lblName.setPrefWidth(117.0);
+        lblName.setTextFill(Color.AQUA);
         lblName.setText("Name");
         
         txtName.setLayoutX(303.0);
@@ -233,6 +254,7 @@ public  class OnlineRegisterScene extends AnchorPane {
         lblEmail.setLayoutY(230.0);
         lblEmail.setPrefHeight(52.0);
         lblEmail.setPrefWidth(117.0);
+        lblEmail.setTextFill(Color.AQUA);
         lblEmail.setText("Email");
 
         txtEmail.setLayoutX(303.0);
@@ -245,6 +267,7 @@ public  class OnlineRegisterScene extends AnchorPane {
         lblConfirmPassword.setLayoutX(152.0);
         lblConfirmPassword.setLayoutY(366.0);
         lblConfirmPassword.setPrefHeight(52.0);
+        lblConfirmPassword.setTextFill(Color.AQUA);
         lblConfirmPassword.setPrefWidth(117.0);
         lblConfirmPassword.setText("Confirm pass");
 
@@ -253,6 +276,23 @@ public  class OnlineRegisterScene extends AnchorPane {
         txtConfirmPassword.setPrefHeight(52.0);
         txtConfirmPassword.setPrefWidth(259.0);
         txtConfirmPassword.setPromptText("Password");
+        
+        Label backBTN =new Label();
+        backBTN.setLayoutX(650);
+        backBTN.setLayoutY(80);
+        backBTN.setPrefSize(80, 80);
+        backBTN.setGraphic(new ImageView(new Image("Icons/Home.png", 80, 80, true, true)));
+        backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                LoginModule l =new LoginModule();
+                l.resetRepo();
+                Scene scene = new Scene(new Home(myStage));
+                myStage.setScene(scene);
+            }
+        });
+        
+        getChildren().add(backBTN);
 
         getChildren().add(txtUserName);
         getChildren().add(btnSignUp);

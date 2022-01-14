@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/ITI/Java/xo-game/src/modules/LoginModule.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/repository/Repo.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/Record/recordedGamePlayerScene.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/Video/VideoModel.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineRegisterScene.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/home/Home.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/vsPcMode/VsPcScene.java</file>
+            <file>file:/G:/ITI/Java/xo-game/src/localPlayingMode/LocalPlayingScene.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineGame.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineGameScene.java</file>
-            <file>file:/G:/ITI/Java/xo-game/src/modules/GameModule.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineMode.java</file>
             <file>file:/G:/ITI/Java/xo-game/src/onlineMode/OnlineLoginScene.java</file>
         </group>

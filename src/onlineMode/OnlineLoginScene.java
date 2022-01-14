@@ -13,7 +13,11 @@ import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import modules.GameModule;
 import pojo.LoginModel;
@@ -21,6 +25,7 @@ import modules.LoginModule;
 
 
 public  class OnlineLoginScene extends AnchorPane {
+    public ProgressIndicator pb = new ProgressIndicator();
 
     protected final TextField userNameTXT;
     protected final PasswordField passwordTXT;
@@ -83,6 +88,11 @@ public  class OnlineLoginScene extends AnchorPane {
         loginBTN.setPrefWidth(117.0);
         loginBTN.setText("Login");
         
+         
+        pb.setLayoutX(380);
+        pb.setLayoutY(400);
+
+        
         loginBTN.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -92,7 +102,11 @@ public  class OnlineLoginScene extends AnchorPane {
                     loginModel.setUsername(username);
                     loginModel.setPassword(password);
                     loginViewModel.sendLoginData(loginModel);
+                    getChildren().add(pb);
                     
+
+                    loginBTN.setDisable(true);
+                    registerBTN.setDisable(true);
                     str = null;
                     Thread t = new Thread(){
                         @Override
@@ -118,11 +132,14 @@ public  class OnlineLoginScene extends AnchorPane {
                                                   myStage.setScene(new Scene(new Home(myStage)));
                                               } else if (str.equals("true")) {
                                                   OnlineGameScene.score = GameModule.getScore();
-
                                                   Home.onlineFlag = true;
+                                                  OnlineGameScene.userName = userNameTXT.getText().trim();
                                                   Home.onlineScene = new Scene(new OnlineGameScene(myStage));
                                                   myStage.setScene(Home.onlineScene);
                                             } else {
+                                                getChildren().remove(pb);
+                                                registerBTN.setDisable(false);
+                                                loginBTN.setDisable(false);
                                                 Alert a = new Alert(Alert.AlertType.ERROR);
                                                 a.setContentText("login fails");
                                                 a.show();
@@ -137,7 +154,6 @@ public  class OnlineLoginScene extends AnchorPane {
                     
                 }
                 else{
-                    
                                Alert a = new Alert(Alert.AlertType.ERROR);
                                a.setContentText("Please Complete Your Data");
                                a.show();
@@ -160,6 +176,22 @@ public  class OnlineLoginScene extends AnchorPane {
                      myStage.setScene(scene);
             }
         });
+        Label backBTN =new Label();
+        backBTN.setLayoutX(650);
+        backBTN.setLayoutY(80);
+        backBTN.setPrefSize(80, 80);
+        backBTN.setGraphic(new ImageView(new Image("Icons/Home.png", 80, 80, true, true)));
+        backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                LoginModule l =new LoginModule();
+                l.resetRepo();
+                Scene scene = new Scene(new Home(myStage));
+                myStage.setScene(scene);
+            }
+        });
+        
+        getChildren().add(backBTN);
         
         getChildren().add(userNameTXT);
         getChildren().add(passwordTXT);

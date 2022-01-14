@@ -18,9 +18,6 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 import vsPcMode.levels.EasyLevel;
 import vsPcMode.levels.Level;
 import vsPcMode.levels.NormalLevel;
@@ -97,7 +94,6 @@ public class VsPcScene extends AnchorPane {
                     Scene s = new Scene(new VideoModel(myStage, "Lose", 2));
                     myStage.setScene(s);
                 } else if (!(XOModel.isEmptyBoard(myBoard))) {
-                    //labelWin.setText(" No one wins .. Play again ");
                     clearBoard();
                     setDisableBtn(true);
                 }
@@ -134,7 +130,7 @@ public class VsPcScene extends AnchorPane {
         boardLBL.setGraphic(new ImageView(new Image("Icons/board.png", 270, 270, true, true)));
 
         Button hard = new Button();
-        hard.setLayoutX(550);
+        hard.setLayoutX(375);
         hard.setLayoutY(400);
         hard.setPrefSize(80, 80);
         hard.setBackground(null);
@@ -142,7 +138,7 @@ public class VsPcScene extends AnchorPane {
        
 
         Button normal = new Button();
-        normal.setLayoutX(550);
+        normal.setLayoutX(375);
         normal.setLayoutY(300);
         normal.setPrefSize(80, 80);
         normal.setBackground(null);
@@ -150,7 +146,7 @@ public class VsPcScene extends AnchorPane {
         
         
         Button easy = new Button();
-        easy.setLayoutX(550);
+        easy.setLayoutX(375);
         easy.setLayoutY(200);
         easy.setPrefSize(80, 80);
         easy.setBackground(null);
@@ -267,7 +263,7 @@ public class VsPcScene extends AnchorPane {
         btnX.setDisable(true);
 
         backBTN.setLayoutX(650);
-        backBTN.setLayoutY(20);
+        backBTN.setLayoutY(80);
         backBTN.setPrefSize(100, 30);
         backBTN.setGraphic(new ImageView(new Image("Icons/Home.png", 80, 80, true, true)));
         backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -279,7 +275,7 @@ public class VsPcScene extends AnchorPane {
         });
 
         newGameBTN.setLayoutX(130);
-        newGameBTN.setLayoutY(20);
+        newGameBTN.setLayoutY(80);
         newGameBTN.setPrefSize(100, 30);
 
         newGameBTN.setGraphic(new ImageView(new Image("Icons/reNew.png", 80, 80, true, true)));

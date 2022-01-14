@@ -1,7 +1,6 @@
 package localPlayingMode;
 
 import Video.VideoModel;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -12,13 +11,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
-import xo.XOModel;
-import javafx.scene.layout.Background;
 import home.Home;
 import xo.XOBoard;
 import static xo.XOBoard.buttons;
@@ -92,7 +88,6 @@ public class LocalPlayingScene extends AnchorPane {
         }
         
         else if (!(isEmptyBoard(myBoard))) {
-            //labelWin.setText(" No one wins .. Play again ");
            clearBoard();
            setDisableBtn(true);
         }
@@ -145,7 +140,7 @@ public class LocalPlayingScene extends AnchorPane {
 
         
         backBTN.setLayoutX(650);
-        backBTN.setLayoutY(60);
+        backBTN.setLayoutY(80);
         backBTN.setPrefSize(80, 80);
         backBTN.setGraphic(new ImageView(new Image("Icons/Home.png",80,80,true,true)));
         backBTN.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -157,7 +152,7 @@ public class LocalPlayingScene extends AnchorPane {
         });
         
         newGameBTN.setLayoutX(130);
-        newGameBTN.setLayoutY(60);
+        newGameBTN.setLayoutY(80);
         newGameBTN.setPrefSize(80, 80);
         newGameBTN.setGraphic(new ImageView(new Image("Icons/reNew.png",80,80,true,true)));
 

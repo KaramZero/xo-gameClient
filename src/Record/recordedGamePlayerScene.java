@@ -105,9 +105,9 @@ public class recordedGamePlayerScene extends AnchorPane {
         
 
         LoadBTN.setLayoutX(150);
-        LoadBTN.setLayoutY(150);
+        LoadBTN.setLayoutY(80);
         LoadBTN.setPrefSize(80, 80);
-        LoadBTN.setGraphic(new ImageView(new Image("Icons/reNew.png", 60, 60, true, true)));
+        LoadBTN.setGraphic(new ImageView(new Image("Icons/folder.png", 60, 60, true, true)));
 
         LoadBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -131,6 +131,10 @@ public class recordedGamePlayerScene extends AnchorPane {
                         }
                     }
                 });
+                
+                list.setLayoutY(180);
+                list.setLayoutX(90);
+                list.setPrefSize(210, 380);
 
                 getChildren().add(list);
 
@@ -157,7 +161,7 @@ public class recordedGamePlayerScene extends AnchorPane {
         setPrefWidth(850);
 
         backBTN.setLayoutX(650);
-        backBTN.setLayoutY(60);
+        backBTN.setLayoutY(80);
         backBTN.setPrefSize(80, 80);
         backBTN.setGraphic(new ImageView(new Image("Icons/Home.png", 80, 80, true, true)));
         backBTN.setOnMouseClicked(new EventHandler<MouseEvent>() {
