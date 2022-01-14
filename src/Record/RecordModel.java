@@ -35,14 +35,6 @@ public class RecordModel {
         }
         counter = 0;
 
-        // file filter 
-        FilenameFilter filter = new FilenameFilter() {
-
-            public boolean accept(File f, String name) {
-                return name.endsWith("game.txt");
-            }
-        };
-
     }  // end of constructor 
 
     // saverecord method  
@@ -96,7 +88,6 @@ public class RecordModel {
     // record loadrecord method 
     public String[][] loadRecord(String fname) throws IOException {
 
-        Button[][] btn = new Button[3][3];
         String[][] movearray = new String[9][3];
         fileReader = new FileReader(fname);
         buffer2 = new BufferedReader(fileReader);

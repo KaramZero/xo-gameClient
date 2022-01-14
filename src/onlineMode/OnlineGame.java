@@ -168,7 +168,7 @@ public class OnlineGame extends AnchorPane {
         closeLBL.setLayoutY(5);
         closeLBL.setPrefSize(50, 50);
         closeLBL.setGraphic(new ImageView(new Image("Icons/close.png", 50, 50, true, true)));
-         closeLBL.setOnMouseClicked((MouseEvent event) -> {
+        closeLBL.setOnMouseClicked((MouseEvent event) -> {
             if (move.equals("playing")) {
                 gameModule.sendMove(-1, -1, move);
             }

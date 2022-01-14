@@ -81,8 +81,6 @@ public  class OnlineGameScene extends AnchorPane {
         lstOnlinePlayers.setLayoutY(110.0);
         lstOnlinePlayers.setPrefHeight(440.0);
         lstOnlinePlayers.setPrefWidth(200.0); 
-        //lstOnlinePlayers.getItems();
-        //lstOnlinePlayers.setStyle("-fx-background-radius: 20px;");
         lstOnlinePlayers.setBackground(bGround); 
         lstOnlinePlayers.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -234,7 +232,6 @@ public  class OnlineGameScene extends AnchorPane {
                                 },
                                         5000
                                 );
-
                                 a.show();
                             });
                         }

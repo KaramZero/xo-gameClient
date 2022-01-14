@@ -24,7 +24,7 @@ import vsPcMode.levels.Move;
 public class Repo extends Thread {
 
     private static Repo repo;
-    public static  Socket mySocket;
+    public static Socket mySocket;
     public DataInputStream dis;
     public PrintStream ps;
     private JSONObject json;
@@ -50,14 +50,12 @@ public class Repo extends Thread {
             move = null;
             playingChar = null;
             errors = null;
-        
 
-        }catch (SocketException ex) {
-             ex.getStackTrace();
-        } 
-        catch (IOException ex) {
-             ex.getStackTrace();
-        }        
+        } catch (SocketException ex) {
+            ex.getStackTrace();
+        } catch (IOException ex) {
+            ex.getStackTrace();
+        }
     }
 
     public static Repo getInstance() {
@@ -66,12 +64,13 @@ public class Repo extends Thread {
         }
         return repo;
     }
-    public static void setNull(){
+
+    public static void setNull() {
         repo = null;
     }
 
     public void sendLoginData(LoginModel loginData) {
-        JSONObject js =new JSONObject();
+        JSONObject js = new JSONObject();
         try {
             js.put("header", "login");
             js.put("username", loginData.getUsername());
@@ -81,27 +80,28 @@ public class Repo extends Thread {
             Logger.getLogger(Repo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public String getLoginData() {
-        String str= new String();
+        String str = new String();
         try {
             response = dis.readLine();
             JSONObject js = new JSONObject(response);
-            str=js.getString("res");
-            if(str.equals("true")){
-                score=js.getInt("score");
+            str = js.getString("res");
+            if (str.equals("true")) {
+                score = js.getInt("score");
                 t.start();
             }
-            
+
         } catch (IOException ex) {
-             errors = new String("error");
+            errors = new String("error");
         } catch (JSONException ex) {
             errors = new String("error");
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             errors = new String("error");
         }
         return str;
     }
+
     public void sendRegisterData(RegisterModel registerModel) {
         try {
             json.put("header", "register");
@@ -147,13 +147,10 @@ public class Repo extends Thread {
             errors = new String("error");
         } catch (NullPointerException ex) {
             errors = new String("error");
-            
-        }
-            
-        } 
-        
 
-    
+        }
+
+    }
 
     public void sendRequestGame(String username) {
         json = new JSONObject();
@@ -181,7 +178,7 @@ public class Repo extends Thread {
 
     }
 
-    public void sendMove(int x, int y,String move) {
+    public void sendMove(int x, int y, String move) {
         json = new JSONObject();
         try {
             json.put("header", "move");
@@ -214,11 +211,11 @@ public class Repo extends Thread {
         @Override
         public void run() {
             while (true) {
-                
-                    readStream();
-               
-                }
+
+                readStream();
+
             }
-        
+        }
+
     };
 }

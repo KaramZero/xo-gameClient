@@ -115,7 +115,6 @@ public  class OnlineLoginScene extends AnchorPane {
                         public void run() {
                             str = loginViewModel.getLoginData();
                         }
-                    
                     };
                     t.start();
                     
