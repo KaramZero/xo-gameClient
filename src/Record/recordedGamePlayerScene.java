@@ -103,7 +103,7 @@ public class recordedGamePlayerScene extends AnchorPane {
             myStage.setY(event.getScreenY() - yOffset);
         });
         
-
+        getStylesheets().add("/Style/listViewStyle.css");
         LoadBTN.setLayoutX(150);
         LoadBTN.setLayoutY(80);
         LoadBTN.setPrefSize(80, 80);
@@ -193,7 +193,7 @@ public class recordedGamePlayerScene extends AnchorPane {
             @Override
             public void run() {
                 try {
-                    String s = "G:\\ITI\\Java\\xo-game\\" + list.getSelectionModel().getSelectedItem();
+                    String s = "C:\\Users\\2y\\Documents\\GitHub\\xo-game\\" + list.getSelectionModel().getSelectedItem();
                     loadArray = recordModel.loadRecord(s);
 
                     System.out.println("");

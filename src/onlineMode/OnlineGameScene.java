@@ -78,7 +78,9 @@ public  class OnlineGameScene extends AnchorPane {
         lstOnlinePlayers.setLayoutX(325.0);
         lstOnlinePlayers.setLayoutY(110.0);
         lstOnlinePlayers.setPrefHeight(440.0);
-        lstOnlinePlayers.setPrefWidth(200.0);   
+        lstOnlinePlayers.setPrefWidth(200.0); 
+        //lstOnlinePlayers.getItems();
+        //lstOnlinePlayers.setStyle("-fx-background-radius: 20px;");
         lstOnlinePlayers.setBackground(bGround); 
         lstOnlinePlayers.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -90,7 +92,7 @@ public  class OnlineGameScene extends AnchorPane {
                 }
             }
         });
-                       
+        getStylesheets().add("/Style/listViewStyle.css");           
         label.setAlignment(javafx.geometry.Pos.CENTER);
         label.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         label.setLayoutX(325.0);

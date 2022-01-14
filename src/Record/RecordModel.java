@@ -27,7 +27,7 @@ public class RecordModel {
     ListView<String> list;
 
     public RecordModel() {
-        file = new File("G:\\ITI\\Java\\xo-game");
+        file = new File("C:\\Users\\2y\\Documents\\GitHub\\xo-game");
         counter = 0;
 
         // file filter 
@@ -47,7 +47,7 @@ public class RecordModel {
         Date date = new Date();
         try {
 
-            fileWriter = new FileWriter("G:\\ITI\\Java\\xo-game\\" + dateFormat.format(date) + "game.txt");
+            fileWriter = new FileWriter("C:\\Users\\2y\\Documents\\GitHub\\xo-game\\" + dateFormat.format(date) + "game.txt");
             buffer = new BufferedWriter(fileWriter);
 
             // buffer.close();
