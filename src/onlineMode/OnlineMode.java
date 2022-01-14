@@ -14,22 +14,22 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import home.XOGameCLient;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import repository.Repo;
 import validation.Validation;
 
-public  class OnlineMode extends AnchorPane {
+public class OnlineMode extends AnchorPane {
 
     protected final AnchorPane anchorPane;
     protected final Label label;
@@ -44,7 +44,7 @@ public  class OnlineMode extends AnchorPane {
     private double yOffset = 0;
 
     public OnlineMode(Stage stage) {
-        
+
         myStage = stage;
         anchorPane = new AnchorPane();
         label = new Label();
@@ -52,9 +52,7 @@ public  class OnlineMode extends AnchorPane {
         label0 = new Label();
         btnSubmit = new Button();
         backBTN = new Label();
-        
-        
-  
+
         this.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -63,13 +61,11 @@ public  class OnlineMode extends AnchorPane {
             myStage.setX(event.getScreenX() - xOffset);
             myStage.setY(event.getScreenY() - yOffset);
         });
-        
-
 
         setId("AnchorPane");
         setPrefHeight(400.0);
         setPrefWidth(600.0);
-     
+
         anchorPane.setBackground(bGround);
         anchorPane.getChildren().add(minimizeLBL);
         anchorPane.getChildren().add(closeLBL);
@@ -79,8 +75,7 @@ public  class OnlineMode extends AnchorPane {
         anchorPane.setMinWidth(USE_PREF_SIZE);
         anchorPane.setPrefHeight(650.0);
         anchorPane.setPrefWidth(850.0);
-        
-       
+
         label.setAlignment(javafx.geometry.Pos.CENTER);
         label.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         label.setLayoutX(160.0);
@@ -104,7 +99,7 @@ public  class OnlineMode extends AnchorPane {
         label0.setTextFill(Color.AQUA);
         label0.setFont(new Font(20));
         label0.setText("Please enter IP address of servier");
-        
+
         pb.setLayoutX(380);
         pb.setLayoutY(400);
 
@@ -112,65 +107,60 @@ public  class OnlineMode extends AnchorPane {
         btnSubmit.setLayoutY(350);
         btnSubmit.setMnemonicParsing(false);
         btnSubmit.setText("Submit");
-        
-        
+
         btnSubmit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String ipAddress =txtIp.getText().trim();
-                if(!(ipAddress.isEmpty())){
-                if(Validation.isValidIP(ipAddress)){
+                String ipAddress = txtIp.getText().trim();
+                if (!(ipAddress.isEmpty()) && Validation.isValidIP(ipAddress)) {
+
                     btnSubmit.setDisable(true);
                     anchorPane.getChildren().add(pb);
 
-                    
-                    Thread t = new Thread(){
+                    Thread t = new Thread() {
                         @Override
                         public void run() {
-                             try {
-                        Repo.mySocket = new Socket(ipAddress, 7001);
-                    } catch (IOException ex) {
-                        Logger.getLogger(OnlineMode.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    }                      
+                            try {
+                                Repo.mySocket = new Socket(ipAddress, 7001);
+                            } catch (IOException ex) {
+                                Logger.getLogger(OnlineMode.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                     };
                     t.start();
                     new java.util.Timer().schedule(
-                                        new java.util.TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        Platform.runLater(() -> {
-                                              t.stop();
-                                           if(Repo.mySocket!=null&&Repo.mySocket.isConnected()){
-                                               Scene scene = new Scene(new OnlineLoginScene(myStage));
-                                               myStage.setScene(scene);
-                                           }
-                                           else{
-                                               Alert a = new Alert(Alert.AlertType.ERROR);
-                                               a.setContentText("connection error");
-                                               a.show();
-                                               anchorPane.getChildren().remove(pb);
-                                               txtIp.clear();
-                                               btnSubmit.setDisable(false);
-                                           }
-                                        });
-                                    }
-                                },
-                                        2000
-                                );
-                 
+                            new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            Platform.runLater(() -> {
+                                t.stop();
+                                if (Repo.mySocket != null && Repo.mySocket.isConnected()) {
+                                    Scene scene = new Scene(new OnlineLoginScene(myStage));
+                                    myStage.setScene(scene);
+                                } else {
+                                    Alert a = new Alert(Alert.AlertType.ERROR);
+                                    a.setContentText("connection error");
+                                    a.show();
+                                    anchorPane.getChildren().remove(pb);
+                                    txtIp.clear();
+                                    btnSubmit.setDisable(false);
+                                }
+                            });
+                        }
+                    },
+                            2000
+                    );
+
+                } else {
+                    anchorPane.getChildren().remove(pb);
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Ip Address isn't valid");
+                    a.show();
                 }
-                }
-                 else{
-                      anchorPane.getChildren().remove(pb);
-                     Alert a = new Alert(Alert.AlertType.ERROR);
-                               a.setContentText("Ip Address isn't valid");
-                               a.show();
-                }
-                              
+
             }
         });
-        
+
         backBTN.setLayoutX(650);
         backBTN.setLayoutY(80);
         backBTN.setPrefSize(80, 80);
@@ -182,6 +172,22 @@ public  class OnlineMode extends AnchorPane {
                 myStage.setScene(scene);
             }
         });
+
+        Label soundLBL = new Label();
+        soundLBL.setLayoutX(30);
+        soundLBL.setLayoutY(5);
+        soundLBL.setPrefSize(50, 50);
+        soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+        soundLBL.setOnMouseClicked((MouseEvent event) -> {
+            if (XOGameCLient.mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.pause();
+            } else {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/unmute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.play();
+            }
+        });
+        anchorPane.getChildren().add(soundLBL);
 
         anchorPane.getChildren().add(label);
         anchorPane.getChildren().add(txtIp);

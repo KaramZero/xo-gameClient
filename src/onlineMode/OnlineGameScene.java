@@ -23,8 +23,10 @@ import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
+import home.XOGameCLient;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import modules.GameModule;
@@ -141,6 +143,23 @@ public  class OnlineGameScene extends AnchorPane {
                 myStage.setScene(scene);
             }
         });
+        
+        Label soundLBL = new Label();
+        soundLBL.setLayoutX(30);
+        soundLBL.setLayoutY(5);
+        soundLBL.setPrefSize(50, 50);
+        soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+        soundLBL.setOnMouseClicked((MouseEvent event) -> {
+            if (XOGameCLient.mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.pause();
+            } else {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/unmute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.play();
+            }
+        });
+        getChildren().add(soundLBL);
+        
         
         getChildren().add(backBTN);
         getChildren().add(userLBL);

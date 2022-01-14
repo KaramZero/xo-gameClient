@@ -16,6 +16,8 @@ import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import home.Home;
+import home.XOGameCLient;
+import javafx.scene.media.MediaPlayer;
 import xo.XOBoard;
 import static xo.XOBoard.buttons;
 import static xo.XOBoard.clearBoard;
@@ -188,6 +190,22 @@ public class LocalPlayingScene extends AnchorPane {
         labelWin.setMinHeight(50);
         labelWin.setMinWidth(270);
         labelWin.setAlignment(Pos.CENTER);
+        
+        Label soundLBL = new Label();
+        soundLBL.setLayoutX(30);
+        soundLBL.setLayoutY(5);
+        soundLBL.setPrefSize(50, 50);
+        soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+        soundLBL.setOnMouseClicked((MouseEvent event) -> {
+            if (XOGameCLient.mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.pause();
+            } else {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/unmute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.play();
+            }
+        });
+        getChildren().add(soundLBL);
         
 
         setBackground(bGround);

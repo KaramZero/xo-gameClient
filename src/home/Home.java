@@ -28,7 +28,6 @@ public class Home extends AnchorPane {
 
     public static Label closeLBL;
     public static Label minimizeLBL;
-    public static Label soundLBL;
     public static Background bGround;
 
     protected final Button btnLocal;
@@ -55,7 +54,7 @@ public class Home extends AnchorPane {
 
         closeLBL = new Label();
         minimizeLBL = new Label();
-        soundLBL = new Label();
+          
         
  
         setOnMousePressed((MouseEvent event) -> {
@@ -99,6 +98,7 @@ public class Home extends AnchorPane {
             }
         });
 
+        Label soundLBL = new Label();
         soundLBL.setLayoutX(30);
         soundLBL.setLayoutY(5);
         soundLBL.setPrefSize(50, 50);
@@ -112,6 +112,7 @@ public class Home extends AnchorPane {
                 XOGameCLient.mediaPlayer.play();
             }
         });
+
 
         LoadBTN.setLayoutX(150);
         LoadBTN.setLayoutY(150);

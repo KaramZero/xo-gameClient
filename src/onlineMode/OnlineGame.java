@@ -18,10 +18,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import static home.Home.bGround;
 import static home.Home.minimizeLBL;
+import home.XOGameCLient;
 import java.io.File;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.media.MediaPlayer;
 import xo.XOModel;
 import modules.GameModule;
 import vsPcMode.levels.Move;
@@ -197,6 +199,23 @@ public class OnlineGame extends AnchorPane {
         if (!myTurn) {
             getMyChar();
         }
+        
+        Label soundLBL = new Label();
+        soundLBL.setLayoutX(30);
+        soundLBL.setLayoutY(5);
+        soundLBL.setPrefSize(50, 50);
+        soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+        soundLBL.setOnMouseClicked((MouseEvent event) -> {
+            if (XOGameCLient.mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.pause();
+            } else {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/unmute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.play();
+            }
+        });
+        getChildren().add(soundLBL);
+        
       
         setBackground(bGround);
         

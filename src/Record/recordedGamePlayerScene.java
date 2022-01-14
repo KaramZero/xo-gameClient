@@ -15,11 +15,14 @@ import static home.Home.bGround;
 import static home.Home.closeLBL;
 import static home.Home.minimizeLBL;
 import home.Home;
+import home.XOGameCLient;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.scene.media.MediaPlayer;
 import xo.XOBoard;
 import static xo.XOBoard.buttons;
 import static xo.XOBoard.setBTNs;
@@ -178,6 +181,23 @@ public class recordedGamePlayerScene extends AnchorPane {
         labelWin.setMinHeight(50);
         labelWin.setMinWidth(270);
         labelWin.setAlignment(Pos.CENTER);
+        
+        Label soundLBL = new Label();
+        soundLBL.setLayoutX(30);
+        soundLBL.setLayoutY(5);
+        soundLBL.setPrefSize(50, 50);
+        soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+        soundLBL.setOnMouseClicked((MouseEvent event) -> {
+            if (XOGameCLient.mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/mute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.pause();
+            } else {
+                soundLBL.setGraphic(new ImageView(new Image("Icons/unmute.png", 50, 50, true, true)));
+                XOGameCLient.mediaPlayer.play();
+            }
+        });
+        getChildren().add(soundLBL);
+        
 
         getChildren().add(boardLBL);
         setBackground(bGround);
@@ -193,7 +213,7 @@ public class recordedGamePlayerScene extends AnchorPane {
             @Override
             public void run() {
                 try {
-                    String s = "C:\\Users\\2y\\Documents\\GitHub\\xo-game\\" + list.getSelectionModel().getSelectedItem();
+                    String s = "Records/" + list.getSelectionModel().getSelectedItem();
                     loadArray = recordModel.loadRecord(s);
 
                     System.out.println("");
@@ -224,7 +244,11 @@ public class recordedGamePlayerScene extends AnchorPane {
 
                     RecordModel.counter = 0;
                 } catch (IOException ex) {
-                    //  Logger.getLogger(LocalPlayingScene.class.getName()).log(Level.SEVERE, null, ex);
+                    Platform.runLater(() -> {
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.setContentText("The File doesn't exist any more");
+                        a.show();
+                    });                    
                 }
             }
 

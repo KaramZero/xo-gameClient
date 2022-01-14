@@ -3,10 +3,7 @@ package Video;
 
 
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -80,9 +77,8 @@ public class VideoModel extends AnchorPane {
        else if (status.equals("Lose")){
           file = new File("lose.mp4"); 
        }
-       //file= new File("win.mp4");
+       
         media=new Media(file.toURI().toString());
-        //System.out.println(file.toURI().toString());
         mediaPlayer= new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         
