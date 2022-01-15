@@ -118,12 +118,12 @@ public class LocalPlayingScene extends AnchorPane {
         boardLBL.setLayoutY(210);
         boardLBL.setPrefSize(270, 270);
         boardLBL.setGraphic(new ImageView(new Image("Icons/board.png",270,270,true,true)));
-        
-       getChildren().add(boardLBL);
-        
-      setBTNs();
-      setButtons();
-      setDisableBtn(true);
+     
+        getChildren().add(boardLBL);
+
+        setBTNs();
+        setButtons();
+        setDisableBtn(true);
 
         setId("AnchorPane");
         setPrefHeight(650);
