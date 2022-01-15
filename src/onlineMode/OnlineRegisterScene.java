@@ -152,10 +152,9 @@ public  class OnlineRegisterScene extends AnchorPane {
                                         myStage.setScene(new Scene(new Home(myStage)));
                                     } else if (str.equals("true")) {
                                         OnlineGameScene.score = GameModule.getScore();
-
-                                        Home.onlineFlag = true;
-                                        Home.onlineScene = new Scene(new OnlineGameScene(myStage));
                                         OnlineGameScene.userName = txtUserName.getText().trim();
+                                        Home.onlineScene = new Scene(new OnlineGameScene(myStage));
+                                        Home.onlineFlag = true;
                                         myStage.setScene(Home.onlineScene);
                                     } else {
                                         getChildren().remove(pb);
